@@ -490,6 +490,16 @@ def generate_pbxproj() -> None:
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1600;
 				LastUpgradeCheck = 1600;
+				TargetAttributes = {{
+					{app_target} = {{
+						DevelopmentTeam = R9VURFRPRC;
+						ProvisioningStyle = Automatic;
+					}};
+					{widget_target} = {{
+						DevelopmentTeam = R9VURFRPRC;
+						ProvisioningStyle = Automatic;
+					}};
+				}};
 			}};
 			buildConfigurationList = {cl_proj} /* Build configuration list for PBXProject "Stillway" */;
 			compatibilityVersion = "Xcode 14.0";
@@ -604,11 +614,12 @@ def generate_pbxproj() -> None:
 				CODE_SIGN_ENTITLEMENTS = Stillway/Stillway.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = R9VURFRPRC;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Stillway/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Stillway;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -616,7 +627,7 @@ def generate_pbxproj() -> None:
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.stillway.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sinannergiz.stillway;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -634,11 +645,12 @@ def generate_pbxproj() -> None:
 				CODE_SIGN_ENTITLEMENTS = Stillway/Stillway.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = R9VURFRPRC;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Stillway/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Stillway;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -646,7 +658,7 @@ def generate_pbxproj() -> None:
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.stillway.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sinannergiz.stillway;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -662,12 +674,14 @@ def generate_pbxproj() -> None:
 				CODE_SIGN_ENTITLEMENTS = StillwayWidgets/StillwayWidgets.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = R9VURFRPRC;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = StillwayWidgets/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Stillway;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.stillway.app.widgets;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sinannergiz.stillway.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -682,12 +696,14 @@ def generate_pbxproj() -> None:
 				CODE_SIGN_ENTITLEMENTS = StillwayWidgets/StillwayWidgets.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = R9VURFRPRC;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = StillwayWidgets/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Stillway;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.stillway.app.widgets;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sinannergiz.stillway.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

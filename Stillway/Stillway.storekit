@@ -29,14 +29,14 @@
           "locale" : "fr"
         }
       ],
-      "productID" : "com.stillway.app.pro",
+      "productID" : "com.sinannergiz.stillway.pro",
       "referenceName" : "Stillway Pro",
       "type" : "NonConsumable"
     }
   ],
   "settings" : {
     "_applicationInternalID" : "0",
-    "_developerTeamID" : ""
+    "_developerTeamID" : "R9VURFRPRC"
   },
   "subscriptionGroups" : [],
   "version" : {

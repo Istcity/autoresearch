@@ -275,7 +275,7 @@ final class ContextEngine {
     }
 
     private func publishWidgetState() {
-        let defaults = UserDefaults(suiteName: "group.com.stillway.app")
+        let defaults = UserDefaults(suiteName: "group.com.sinannergiz.stillway")
         defaults?.set(localization.string(themeEngine.currentContext.localizationKey), forKey: "contextName")
         defaults?.set(localization.string((audioEngine.primarySound ?? Sound.find("tokyo_rain")!).localizationKey), forKey: "soundName")
         defaults?.set(TimerRing.format(audioEngine.remainingSeconds), forKey: "remaining")

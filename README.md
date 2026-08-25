@@ -21,19 +21,56 @@ Stillway is an offline, dark-only ambient companion for iPhone. It watches where
 - Xcode 16+
 - iOS 17.0+
 - macOS 14+
-- A Development Team for signing
+- Apple Developer Team `R9VURFRPRC` (same team as Lokus / FLOW)
 - Physical device for geofence, motion, and Dynamic Island
+
+## Signing
+
+Matches your other App Store apps (`com.sinannergiz.lokus`, `com.sinannergiz.flow`):
+
+| | |
+|---|---|
+| Team | `R9VURFRPRC` |
+| App bundle ID | `com.sinannergiz.stillway` |
+| Widget bundle ID | `com.sinannergiz.stillway.widget` |
+| App Group | `group.com.sinannergiz.stillway` |
+| Pro IAP | `com.sinannergiz.stillway.pro` |
+
+Automatic signing is on. Xcode creates the App IDs and the App Group on first device/archive build.
 
 ## Setup
 
-1. Open `Stillway.xcodeproj`.
-2. Select the **Stillway** scheme (iPhone).
-3. Set your team under Signing & Capabilities for **Stillway** and **StillwayWidgets**.
-4. Confirm App Group `group.com.stillway.app` on both targets.
-5. Run.
+1. `git pull` then open `Stillway.xcodeproj`.
+2. Scheme **Stillway**, destination an iPhone simulator or your device.
+3. Signing & Capabilities → Team should already be **R9VURFRPRC** on **Stillway** and **StillwayWidgets**.
+4. Run (`⌘R`). Do not Archive until the App Store Connect record exists (next section).
 
-Bundle IDs: `com.stillway.app` · `com.stillway.app.widgets`  
-Pro product: `com.stillway.app.pro` (StoreKit config: `Stillway/Stillway.storekit`)
+## TestFlight / App Store
+
+`IDEDistribution.DistributionAppRecordProviderError error 0` means App Store Connect has no app for this bundle ID yet. Create it **before** Archive → Distribute:
+
+1. [developer.apple.com](https://developer.apple.com/account) → **Identifiers** (Xcode usually registers these on first signed build):
+   - App ID `com.sinannergiz.stillway` — App Groups + Background Modes
+   - App ID `com.sinannergiz.stillway.widget` — App Groups
+   - App Group `group.com.sinannergiz.stillway`
+2. [App Store Connect](https://appstoreconnect.apple.com) → **My Apps → + → New App**
+   - Platform: iOS
+   - Name: **Stillway**
+   - Bundle ID: **`com.sinannergiz.stillway`** (must match exactly)
+   - SKU: `stillway`
+3. In-App Purchase: create non-consumable `com.sinannergiz.stillway.pro`
+4. Xcode → **Product → Archive** → Organizer → **Distribute App** → **App Store Connect** → **Upload**
+
+CLI (same pattern as Şantiye Asist):
+
+```bash
+xcodebuild -project Stillway.xcodeproj -scheme Stillway \
+  -configuration Release -destination 'generic/platform=iOS' \
+  -archivePath build/Stillway.xcarchive archive
+
+xcodebuild -exportArchive -archivePath build/Stillway.xcarchive \
+  -exportPath build/export -exportOptionsPlist ExportOptions.plist
+```
 
 ## Station database
 
@@ -63,7 +100,7 @@ Until those files exist, `AudioEngine` generates looping ambient buffers so the 
 - [ ] 12 field recordings in the bundle
 - [ ] Full `stations.json` from GTFS
 - [ ] `TrainClassifier.mlmodel` (optional; motion automotive is the fallback)
-- [ ] StoreKit product `com.stillway.app.pro` live in App Store Connect
+- [ ] StoreKit product `com.sinannergiz.stillway.pro` live in App Store Connect
 - [ ] Privacy nutrition label: location and motion, on-device only
 - [ ] Screenshots and metadata in TR / JA / EN / FR
 - [ ] TestFlight on a real device (geofence + headphones auto-start)
