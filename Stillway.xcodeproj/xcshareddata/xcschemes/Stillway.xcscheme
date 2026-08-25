@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "000000000000000000A10097"
+               BlueprintIdentifier = "000000000000000000A1009D"
                BuildableName = "Stillway.app"
                BlueprintName = "Stillway"
                ReferencedContainer = "container:Stillway.xcodeproj">
@@ -46,7 +46,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "000000000000000000A10097"
+            BlueprintIdentifier = "000000000000000000A1009D"
             BuildableName = "Stillway.app"
             BlueprintName = "Stillway"
             ReferencedContainer = "container:Stillway.xcodeproj">
@@ -63,7 +63,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "000000000000000000A10097"
+            BlueprintIdentifier = "000000000000000000A1009D"
             BuildableName = "Stillway.app"
             BlueprintName = "Stillway"
             ReferencedContainer = "container:Stillway.xcodeproj">

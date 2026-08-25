@@ -3,6 +3,7 @@ import SwiftData
 import CoreLocation
 
 enum PlaceLabel: String, Codable, CaseIterable, Identifiable, Sendable {
+    case unknown
     case home
     case work
     case library
@@ -14,6 +15,7 @@ enum PlaceLabel: String, Codable, CaseIterable, Identifiable, Sendable {
 
     var localizationKey: String {
         switch self {
+        case .unknown: return "place_unknown"
         case .home: return "place_home"
         case .work: return "place_work"
         case .library: return "place_library"
@@ -23,8 +25,9 @@ enum PlaceLabel: String, Codable, CaseIterable, Identifiable, Sendable {
         }
     }
 
-    var symbolName: String {
+    var sfSymbol: String {
         switch self {
+        case .unknown: return "mappin"
         case .home: return "house.fill"
         case .work: return "briefcase.fill"
         case .library: return "book.fill"
@@ -34,13 +37,15 @@ enum PlaceLabel: String, Codable, CaseIterable, Identifiable, Sendable {
         }
     }
 
+    var symbolName: String { sfSymbol }
+
     var suggestedContext: AppContext {
         switch self {
         case .home: return .reset
         case .work, .library: return .focus
         case .cafe: return .focus
         case .gym: return .reset
-        case .other: return .unknown
+        case .unknown, .other: return .unknown
         }
     }
 }
@@ -50,18 +55,19 @@ final class UserPlace {
     @Attribute(.unique) var id: UUID
     var latitude: Double
     var longitude: Double
-    var labelRaw: String?
+    var radius: Double
+    var labelRaw: String
     var visitCount: Int
-    var lastSeen: Date
     var firstSeen: Date
-    var autoStartEnabled: Bool
+    var lastSeen: Date
     var defaultSoundID: String?
+    var autoStartEnabled: Bool
     var homeConfidence: Double
     var customName: String?
 
-    var label: PlaceLabel? {
-        get { labelRaw.flatMap(PlaceLabel.init(rawValue:)) }
-        set { labelRaw = newValue?.rawValue }
+    var label: PlaceLabel {
+        get { PlaceLabel(rawValue: labelRaw) ?? .unknown }
+        set { labelRaw = newValue.rawValue }
     }
 
     var coordinate: CLLocationCoordinate2D {
@@ -72,24 +78,26 @@ final class UserPlace {
         id: UUID = UUID(),
         latitude: Double,
         longitude: Double,
-        label: PlaceLabel? = nil,
+        radius: Double = 100,
+        label: PlaceLabel = .unknown,
         visitCount: Int = 1,
-        lastSeen: Date = .now,
         firstSeen: Date = .now,
-        autoStartEnabled: Bool = false,
+        lastSeen: Date = .now,
         defaultSoundID: String? = nil,
+        autoStartEnabled: Bool = false,
         homeConfidence: Double = 0,
         customName: String? = nil
     ) {
         self.id = id
         self.latitude = latitude
         self.longitude = longitude
-        self.labelRaw = label?.rawValue
+        self.radius = radius
+        self.labelRaw = label.rawValue
         self.visitCount = visitCount
-        self.lastSeen = lastSeen
         self.firstSeen = firstSeen
-        self.autoStartEnabled = autoStartEnabled
+        self.lastSeen = lastSeen
         self.defaultSoundID = defaultSoundID
+        self.autoStartEnabled = autoStartEnabled
         self.homeConfidence = homeConfidence
         self.customName = customName
     }
@@ -97,89 +105,112 @@ final class UserPlace {
     func distance(to location: CLLocation) -> CLLocationDistance {
         CLLocation(latitude: latitude, longitude: longitude).distance(from: location)
     }
+
+    func distance(to coordinate: CLLocationCoordinate2D) -> Double {
+        CLLocation(latitude: latitude, longitude: longitude)
+            .distance(from: CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude))
+    }
 }
 
 @Model
-final class CommuteSession {
+final class CommutSession {
     @Attribute(.unique) var id: UUID
-    var startedAt: Date
-    var endedAt: Date?
-    var contextRaw: String
+    var startDate: Date
+    var endDate: Date?
+    var contextRaw: Int
     var soundID: String
-    var triggerRaw: String
-    var stationID: String?
+    var fromStationID: String?
+    var toStationID: String?
+    var triggeredAutomatically: Bool
+    var durationSeconds: Double
 
     var context: AppContext {
         get { AppContext(rawValue: contextRaw) ?? .unknown }
         set { contextRaw = newValue.rawValue }
     }
 
-    var trigger: TriggerType {
-        get { TriggerType(rawValue: triggerRaw) ?? .manual }
-        set { triggerRaw = newValue.rawValue }
-    }
-
     init(
         id: UUID = UUID(),
-        startedAt: Date = .now,
-        endedAt: Date? = nil,
+        startDate: Date = .now,
+        endDate: Date? = nil,
         context: AppContext,
         soundID: String,
-        trigger: TriggerType,
-        stationID: String? = nil
+        fromStationID: String? = nil,
+        toStationID: String? = nil,
+        triggeredAutomatically: Bool = false,
+        durationSeconds: Double = 0
     ) {
         self.id = id
-        self.startedAt = startedAt
-        self.endedAt = endedAt
+        self.startDate = startDate
+        self.endDate = endDate
         self.contextRaw = context.rawValue
         self.soundID = soundID
-        self.triggerRaw = trigger.rawValue
-        self.stationID = stationID
+        self.fromStationID = fromStationID
+        self.toStationID = toStationID
+        self.triggeredAutomatically = triggeredAutomatically
+        self.durationSeconds = durationSeconds
+    }
+
+    func end() {
+        let finished = Date()
+        endDate = finished
+        durationSeconds = finished.timeIntervalSince(startDate)
     }
 }
+
+typealias CommuteSession = CommutSession
 
 @Model
 final class UserPreferences {
     @Attribute(.unique) var id: UUID
-    var hasCompletedOnboarding: Bool
     var contextDetectionEnabled: Bool
     var sleepModeEnabled: Bool
     var sleepStartHour: Int
     var sleepEndHour: Int
     var hapticBreathingEnabled: Bool
+    var shortcutOnboardingDone: Bool
+    var isPro: Bool
+    var onboardingCompleted: Bool
     var selectedLanguage: String
+    var lastKnownLatitude: Double
+    var lastKnownLongitude: Double
     var lastSoundID: String
     var lastTimerMinutes: Int
-    var selectedContextRaw: String
 
-    var selectedContext: AppContext {
-        get { AppContext(rawValue: selectedContextRaw) ?? .unknown }
-        set { selectedContextRaw = newValue.rawValue }
+    var hasCompletedOnboarding: Bool {
+        get { onboardingCompleted }
+        set { onboardingCompleted = newValue }
     }
 
     init(
         id: UUID = UUID(),
-        hasCompletedOnboarding: Bool = false,
         contextDetectionEnabled: Bool = true,
         sleepModeEnabled: Bool = true,
         sleepStartHour: Int = 22,
         sleepEndHour: Int = 7,
         hapticBreathingEnabled: Bool = false,
-        selectedLanguage: String = LanguageCode.autoDetect().rawValue,
+        shortcutOnboardingDone: Bool = false,
+        isPro: Bool = false,
+        onboardingCompleted: Bool = false,
+        selectedLanguage: String = LanguageCode.detect().rawValue,
+        lastKnownLatitude: Double = 0,
+        lastKnownLongitude: Double = 0,
         lastSoundID: String = "tokyo_rain",
-        lastTimerMinutes: Int = 30,
-        selectedContext: AppContext = .unknown
+        lastTimerMinutes: Int = 30
     ) {
         self.id = id
-        self.hasCompletedOnboarding = hasCompletedOnboarding
         self.contextDetectionEnabled = contextDetectionEnabled
         self.sleepModeEnabled = sleepModeEnabled
         self.sleepStartHour = sleepStartHour
         self.sleepEndHour = sleepEndHour
         self.hapticBreathingEnabled = hapticBreathingEnabled
+        self.shortcutOnboardingDone = shortcutOnboardingDone
+        self.isPro = isPro
+        self.onboardingCompleted = onboardingCompleted
         self.selectedLanguage = selectedLanguage
+        self.lastKnownLatitude = lastKnownLatitude
+        self.lastKnownLongitude = lastKnownLongitude
         self.lastSoundID = lastSoundID
         self.lastTimerMinutes = lastTimerMinutes
-        self.selectedContextRaw = selectedContext.rawValue
     }
 }

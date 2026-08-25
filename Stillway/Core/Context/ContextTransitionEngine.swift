@@ -10,6 +10,6 @@ final class ContextTransitionEngine {
     }
 
     func sweep(to context: AppContext) {
-        Task { await theme.transition(to: context) }
+        theme.apply(context: context)
     }
 }

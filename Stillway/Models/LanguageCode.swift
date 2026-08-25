@@ -17,12 +17,23 @@ enum LanguageCode: String, CaseIterable, Identifiable, Codable, Sendable {
         }
     }
 
+    var flag: String {
+        switch self {
+        case .tr: return "🇹🇷"
+        case .ja: return "🇯🇵"
+        case .en: return "🇺🇸"
+        case .fr: return "🇫🇷"
+        }
+    }
+
     var locale: Locale {
         Locale(identifier: rawValue)
     }
 
-    static func autoDetect() -> LanguageCode {
+    static func detect() -> LanguageCode {
         let code = Locale.current.language.languageCode?.identifier ?? "en"
         return LanguageCode(rawValue: code) ?? .en
     }
+
+    static func autoDetect() -> LanguageCode { detect() }
 }

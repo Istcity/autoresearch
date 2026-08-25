@@ -5,7 +5,6 @@ import Foundation
 final class HapticBreathingEngine {
     private var engine: CHHapticEngine?
     private var player: CHHapticAdvancedPatternPlayer?
-    private var loopTask: Task<Void, Never>?
     private(set) var isRunning = false
 
     var isSupported: Bool {
@@ -19,11 +18,7 @@ final class HapticBreathingEngine {
             engine = try CHHapticEngine()
             try engine?.start()
             isRunning = true
-            loopTask = Task { [weak self] in
-                while let engine = self, engine.isRunning, !Task.isCancelled {
-                    await engine.playBoxCycle()
-                }
-            }
+            playCycle()
         } catch {
             isRunning = false
         }
@@ -31,19 +26,22 @@ final class HapticBreathingEngine {
 
     func stop() {
         isRunning = false
-        loopTask?.cancel()
         try? player?.stop(atTime: CHHapticTimeImmediate)
         engine?.stop()
         engine = nil
     }
 
-    /// Box breathing 4-4-4-4: 3 short buzz inhale, silence hold, 1 long buzz exhale, silence wait.
-    private func playBoxCycle() async {
-        playEvents(count: 3, duration: 0.12, interval: 0.18, intensity: 0.8)
-        try? await Task.sleep(for: .seconds(4))
-        playEvents(count: 1, duration: 0.9, interval: 0, intensity: 0.55)
-        try? await Task.sleep(for: .seconds(4))
-        try? await Task.sleep(for: .seconds(4))
+    /// Box breathing 4-4-4-4 on a 16s recursive loop.
+    private func playCycle() {
+        guard isRunning else { return }
+        playEvents(count: 3, duration: 0.12, interval: 0.15, intensity: 0.85)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 8) { [weak self] in
+            guard let self, self.isRunning else { return }
+            self.playEvents(count: 1, duration: 0.8, interval: 0, intensity: 0.55)
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 16) { [weak self] in
+            self?.playCycle()
+        }
     }
 
     private func playEvents(count: Int, duration: TimeInterval, interval: TimeInterval, intensity: Float) {
@@ -52,7 +50,7 @@ final class HapticBreathingEngine {
         for _ in 0..<count {
             events.append(
                 CHHapticEvent(
-                    eventType: .hapticContinuous,
+                    eventType: count == 1 ? .hapticContinuous : .hapticTransient,
                     parameters: [
                         CHHapticEventParameter(parameterID: .hapticIntensity, value: intensity),
                         CHHapticEventParameter(parameterID: .hapticSharpness, value: 0.4)

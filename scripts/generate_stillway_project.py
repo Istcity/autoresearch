@@ -41,29 +41,47 @@ HEX_COLORS = {
     "ctxDeepWorkMid": "2D0000",
     "ctxDeepWorkEnd": "3D0A0A",
     "ctxDeepWorkAccent": "FF453A",
-    "LaunchBackground": "050505",
+    "ctxCommuteGlow": "1B3FDB",
+    "ctxFocusGlow": "0A84FF",
+    "ctxSleepGlow": "5E5CE6",
+    "ctxResetGlow": "FF9F0A",
+    "ctxWalkingGlow": "30D158",
+    "ctxDeepWorkGlow": "FF453A",
+    "ctxUnknownBg": "050505",
+    "ctxUnknownMid": "0A0A0A",
+    "ctxUnknownEnd": "111111",
+    "ctxUnknownAccent": "8A8A8E",
+    "ctxUnknownGlow": "48484A",
 }
 
 SAMPLE_STATIONS = [
-    {"id": "jp-tokyo-ginza", "name": "Ginza", "city": "Tokyo", "country": "JP", "latitude": 35.6717, "longitude": 139.7649, "transitType": "metro"},
-    {"id": "jp-tokyo-shibuya", "name": "Shibuya", "city": "Tokyo", "country": "JP", "latitude": 35.6580, "longitude": 139.7016, "transitType": "rail"},
-    {"id": "jp-tokyo-shinjuku", "name": "Shinjuku", "city": "Tokyo", "country": "JP", "latitude": 35.6909, "longitude": 139.7003, "transitType": "rail"},
-    {"id": "jp-osaka-umeda", "name": "Umeda", "city": "Osaka", "country": "JP", "latitude": 34.7055, "longitude": 135.4983, "transitType": "metro"},
-    {"id": "jp-kyoto-kyoto", "name": "Kyoto", "city": "Kyoto", "country": "JP", "latitude": 34.9858, "longitude": 135.7588, "transitType": "rail"},
-    {"id": "us-nyc-timesq", "name": "Times Square-42 St", "city": "New York", "country": "US", "latitude": 40.7559, "longitude": -73.9871, "transitType": "metro"},
-    {"id": "us-nyc-union", "name": "Union Square", "city": "New York", "country": "US", "latitude": 40.7359, "longitude": -73.9906, "transitType": "metro"},
-    {"id": "us-sf-montgomery", "name": "Montgomery", "city": "San Francisco", "country": "US", "latitude": 37.7894, "longitude": -122.4011, "transitType": "rail"},
-    {"id": "us-chi-state", "name": "State/Lake", "city": "Chicago", "country": "US", "latitude": 41.8857, "longitude": -87.6278, "transitType": "metro"},
-    {"id": "fr-paris-chatelet", "name": "Châtelet", "city": "Paris", "country": "FR", "latitude": 48.8583, "longitude": 2.3475, "transitType": "metro"},
-    {"id": "fr-paris-nation", "name": "Nation", "city": "Paris", "country": "FR", "latitude": 48.8483, "longitude": 2.3958, "transitType": "metro"},
-    {"id": "fr-lyon-bellecour", "name": "Bellecour", "city": "Lyon", "country": "FR", "latitude": 45.7578, "longitude": 4.8320, "transitType": "metro"},
-    {"id": "gb-london-kingsx", "name": "King's Cross St Pancras", "city": "London", "country": "GB", "latitude": 51.5308, "longitude": -0.1238, "transitType": "metro"},
-    {"id": "gb-london-oxford", "name": "Oxford Circus", "city": "London", "country": "GB", "latitude": 51.5152, "longitude": -0.1418, "transitType": "metro"},
-    {"id": "tr-ist-taksim", "name": "Taksim", "city": "Istanbul", "country": "TR", "latitude": 41.0369, "longitude": 28.9850, "transitType": "metro"},
-    {"id": "tr-ist-kadikoy", "name": "Kadıköy", "city": "Istanbul", "country": "TR", "latitude": 40.9909, "longitude": 29.0290, "transitType": "ferry"},
-    {"id": "tr-ist-mecidiyekoy", "name": "Mecidiyeköy", "city": "Istanbul", "country": "TR", "latitude": 41.0670, "longitude": 28.9870, "transitType": "metro"},
-    {"id": "tr-ank-kizilay", "name": "Kızılay", "city": "Ankara", "country": "TR", "latitude": 39.9208, "longitude": 32.8541, "transitType": "metro"},
-    {"id": "tr-izm-konak", "name": "Konak", "city": "Izmir", "country": "TR", "latitude": 38.4192, "longitude": 27.1287, "transitType": "metro"},
+    {"id": "jp-tokyo-shibuya", "name": "渋谷", "name_en": "Shibuya", "lat": 35.6580, "lon": 139.7016, "country": "JP", "city": "Tokyo", "type": "RAIL", "lines": ["JY", "G"]},
+    {"id": "jp-tokyo-shinjuku", "name": "新宿", "name_en": "Shinjuku", "lat": 35.6909, "lon": 139.7003, "country": "JP", "city": "Tokyo", "type": "RAIL", "lines": ["JY", "M"]},
+    {"id": "jp-tokyo-ikebukuro", "name": "池袋", "name_en": "Ikebukuro", "lat": 35.7295, "lon": 139.7109, "country": "JP", "city": "Tokyo", "type": "RAIL", "lines": ["JY", "F"]},
+    {"id": "jp-tokyo-tokyo", "name": "東京", "name_en": "Tokyo", "lat": 35.6812, "lon": 139.7671, "country": "JP", "city": "Tokyo", "type": "RAIL", "lines": ["JY"]},
+    {"id": "jp-tokyo-ueno", "name": "上野", "name_en": "Ueno", "lat": 35.7138, "lon": 139.7773, "country": "JP", "city": "Tokyo", "type": "RAIL", "lines": ["JY"]},
+    {"id": "jp-tokyo-akihabara", "name": "秋葉原", "name_en": "Akihabara", "lat": 35.6984, "lon": 139.7731, "country": "JP", "city": "Tokyo", "type": "RAIL", "lines": ["JY"]},
+    {"id": "jp-tokyo-otemachi", "name": "大手町", "name_en": "Otemachi", "lat": 35.6846, "lon": 139.7660, "country": "JP", "city": "Tokyo", "type": "METRO", "lines": ["M", "C"]},
+    {"id": "jp-osaka-osaka", "name": "大阪", "name_en": "Osaka", "lat": 34.7024, "lon": 135.4959, "country": "JP", "city": "Osaka", "type": "RAIL", "lines": ["JR"]},
+    {"id": "jp-osaka-umeda", "name": "梅田", "name_en": "Umeda", "lat": 34.7055, "lon": 135.4983, "country": "JP", "city": "Osaka", "type": "METRO", "lines": ["M"]},
+    {"id": "us-nyc-timesq", "name": "Times Sq-42 St", "name_en": "Times Square", "lat": 40.7559, "lon": -73.9871, "country": "US", "city": "New York", "type": "METRO", "lines": ["1", "2", "N"]},
+    {"id": "us-nyc-grandcentral", "name": "Grand Central-42 St", "name_en": "Grand Central", "lat": 40.7527, "lon": -73.9772, "country": "US", "city": "New York", "type": "METRO", "lines": ["4", "5", "6"]},
+    {"id": "us-nyc-union", "name": "14 St-Union Sq", "name_en": "Union Square", "lat": 40.7359, "lon": -73.9906, "country": "US", "city": "New York", "type": "METRO", "lines": ["L", "N"]},
+    {"id": "us-nyc-penn", "name": "34 St-Penn Station", "name_en": "Penn Station", "lat": 40.7506, "lon": -73.9935, "country": "US", "city": "New York", "type": "METRO", "lines": ["1", "2", "3"]},
+    {"id": "us-nyc-fulton", "name": "Fulton St", "name_en": "Fulton", "lat": 40.7094, "lon": -74.0083, "country": "US", "city": "New York", "type": "METRO", "lines": ["A", "C"]},
+    {"id": "fr-paris-chatelet", "name": "Châtelet", "name_en": "Chatelet", "lat": 48.8583, "lon": 2.3475, "country": "FR", "city": "Paris", "type": "METRO", "lines": ["1", "4", "14"]},
+    {"id": "fr-paris-garedunord", "name": "Gare du Nord", "name_en": "Gare du Nord", "lat": 48.8809, "lon": 2.3553, "country": "FR", "city": "Paris", "type": "RAIL", "lines": ["B", "D"]},
+    {"id": "fr-paris-stgermain", "name": "Saint-Germain-des-Prés", "name_en": "St-Germain", "lat": 48.8534, "lon": 2.3338, "country": "FR", "city": "Paris", "type": "METRO", "lines": ["4"]},
+    {"id": "fr-paris-montparnasse", "name": "Montparnasse-Bienvenüe", "name_en": "Montparnasse", "lat": 48.8435, "lon": 2.3219, "country": "FR", "city": "Paris", "type": "METRO", "lines": ["4", "6", "12"]},
+    {"id": "gb-london-kingsx", "name": "King's Cross St Pancras", "name_en": "King's Cross", "lat": 51.5308, "lon": -0.1238, "country": "GB", "city": "London", "type": "METRO", "lines": ["Northern", "Victoria"]},
+    {"id": "gb-london-waterloo", "name": "Waterloo", "name_en": "Waterloo", "lat": 51.5033, "lon": -0.1149, "country": "GB", "city": "London", "type": "METRO", "lines": ["Bakerloo", "Jubilee"]},
+    {"id": "gb-london-oxford", "name": "Oxford Circus", "name_en": "Oxford Circus", "lat": 51.5152, "lon": -0.1418, "country": "GB", "city": "London", "type": "METRO", "lines": ["Central", "Victoria"]},
+    {"id": "gb-london-canary", "name": "Canary Wharf", "name_en": "Canary Wharf", "lat": 51.5036, "lon": -0.0186, "country": "GB", "city": "London", "type": "METRO", "lines": ["Jubilee"]},
+    {"id": "tr-ist-taksim", "name": "Taksim", "name_en": "Taksim", "lat": 41.0369, "lon": 28.9850, "country": "TR", "city": "Istanbul", "type": "METRO", "lines": ["M2"]},
+    {"id": "tr-ist-kadikoy", "name": "Kadıköy", "name_en": "Kadikoy", "lat": 40.9909, "lon": 29.0290, "country": "TR", "city": "Istanbul", "type": "FERRY", "lines": ["IDO"]},
+    {"id": "tr-ist-eminonu", "name": "Eminönü", "name_en": "Eminonu", "lat": 41.0171, "lon": 28.9700, "country": "TR", "city": "Istanbul", "type": "FERRY", "lines": ["Sehir Hatlari"]},
+    {"id": "tr-ist-levent", "name": "Levent", "name_en": "Levent", "lat": 41.0818, "lon": 29.0119, "country": "TR", "city": "Istanbul", "type": "METRO", "lines": ["M2"]},
+    {"id": "tr-ist-yenikapi", "name": "Yenikapı", "name_en": "Yenikapi", "lat": 41.0054, "lon": 28.9527, "country": "TR", "city": "Istanbul", "type": "METRO", "lines": ["M1", "M2"]},
 ]
 
 
@@ -164,11 +182,9 @@ def write_xcstrings() -> None:
                 for lang, val in (("tr", tr), ("ja", ja), ("en", en), ("fr", fr))
             }
         }
-    write_json(
-        APP / "Resources" / "Localizable.xcstrings",
-        {"sourceLanguage": "en", "strings": strings, "version": "1.0"},
-    )
-    print(f"xcstrings keys: {len(strings)}")
+    if not strings:
+        print("xcstrings: keep existing catalog")
+        return
 
 
 class IDs:
@@ -192,6 +208,8 @@ def file_type(path: pathlib.Path) -> str:
         ".json": "text.json",
         ".xcstrings": "text.json.xcstrings",
         ".xcassets": "folder.assetcatalog",
+        ".lproj": "folder",
+        ".strings": "text.plist.strings",
     }.get(path.suffix, "text")
 
 
@@ -204,6 +222,10 @@ def generate_pbxproj() -> None:
         APP / "Resources" / "Localizable.xcstrings",
         APP / "Resources" / "stations.json",
         APP / "PrivacyInfo.xcprivacy",
+        APP / "Resources" / "tr.lproj",
+        APP / "Resources" / "ja.lproj",
+        APP / "Resources" / "en.lproj",
+        APP / "Resources" / "fr.lproj",
     ]
     extra_app = [
         APP / "Info.plist",

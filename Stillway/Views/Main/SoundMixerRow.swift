@@ -3,9 +3,12 @@ import SwiftUI
 struct SoundMixerRow: View {
     let sound: Sound
     @Binding var volume: Float
+    var secondaryVolume: Binding<Float>? = nil
+    var isPro: Bool = false
     var onTap: () -> Void
-    @Environment(LocalizationManager.self) private var lm
+    @Environment(\.lm) private var lm
     @Environment(ThemeEngine.self) private var theme
+    @Environment(ContextEngine.self) private var runtime
     @State private var lastHapticBucket = 0
 
     var body: some View {
@@ -14,11 +17,22 @@ struct SoundMixerRow: View {
                 Button(action: onTap) {
                     HStack {
                         VStack(alignment: .leading, spacing: 4) {
+                            HStack(spacing: 6) {
+                                Text(lm.string(sound.localizationKey))
+                                    .font(.system(size: 17, weight: .regular))
+                                    .foregroundStyle(.white)
+                                Text(sound.region.flag)
+                                    .font(.system(size: 13))
+                                if !sound.isFree {
+                                    Text(lm.string("pro_badge"))
+                                        .font(.system(size: 11, weight: .semibold))
+                                        .padding(.horizontal, 6)
+                                        .padding(.vertical, 2)
+                                        .background(theme.gradient.accentColor.opacity(0.25), in: Capsule())
+                                }
+                            }
                             Text(lm.string(sound.localizationKey))
-                                .font(.system(size: 17, weight: .regular))
-                                .foregroundStyle(.white)
-                            Text(lm.string(sound.localizationKey))
-                                .font(.system(size: 13, weight: .regular))
+                                .font(.system(size: 13))
                                 .foregroundStyle(.white.opacity(0.4))
                         }
                         Spacer()
@@ -30,15 +44,27 @@ struct SoundMixerRow: View {
                 .buttonStyle(.plain)
 
                 VolumeSlider(value: $volume, accent: theme.gradient.accentColor) { newValue in
-                    let bucket = Int(newValue * 10)
-                    if bucket != lastHapticBucket {
-                        lastHapticBucket = bucket
-                        HapticEngine.select()
+                    bump(newValue)
+                }
+
+                if isPro, let secondaryVolume {
+                    Text(lm.string("mix_layer"))
+                        .font(.system(size: 13, weight: .medium))
+                        .foregroundStyle(.white.opacity(0.45))
+                    VolumeSlider(value: secondaryVolume, accent: theme.gradient.accentColor) { newValue in
+                        bump(newValue)
                     }
                 }
             }
         }
-        .accessibilityElement(children: .contain)
+    }
+
+    private func bump(_ value: Float) {
+        let bucket = Int(value * 10)
+        if bucket != lastHapticBucket {
+            lastHapticBucket = bucket
+            HapticEngine.select()
+        }
     }
 }
 

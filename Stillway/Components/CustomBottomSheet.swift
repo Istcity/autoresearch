@@ -26,7 +26,7 @@ struct CustomBottomSheet<Content: View>: View {
                 .offset(y: max(0, dragOffset))
                 .gesture(
                     DragGesture()
-                        .onChanged { dragOffset = drag.translation.height }
+                        .onChanged { dragOffset = $0.translation.height }
                         .onEnded { value in
                             if value.translation.height > 120 {
                                 dismiss()
@@ -48,5 +48,25 @@ struct CustomBottomSheet<Content: View>: View {
             isPresented = false
             dragOffset = 0
         }
+    }
+}
+
+struct CustomSheetModifier<SheetContent: View>: ViewModifier {
+    @Binding var isPresented: Bool
+    @ViewBuilder var sheetContent: () -> SheetContent
+
+    func body(content: Content) -> some View {
+        content.overlay {
+            CustomBottomSheet(isPresented: $isPresented, content: sheetContent)
+        }
+    }
+}
+
+extension View {
+    func customSheet<Content: View>(
+        isPresented: Binding<Bool>,
+        @ViewBuilder content: @escaping () -> Content
+    ) -> some View {
+        modifier(CustomSheetModifier(isPresented: isPresented, sheetContent: content))
     }
 }

@@ -11,13 +11,13 @@ struct GlassCard<Content: View>: View {
             .background {
                 if reduceTransparency {
                     RoundedRectangle(cornerRadius: 20, style: .continuous)
-                        .fill(theme.gradient.cardBackground)
+                        .fill(theme.gradient.cardTint)
                 } else {
                     RoundedRectangle(cornerRadius: 20, style: .continuous)
                         .fill(.ultraThinMaterial)
                         .overlay {
                             RoundedRectangle(cornerRadius: 20, style: .continuous)
-                                .fill(theme.gradient.cardBackground.opacity(0.35))
+                                .fill(theme.gradient.cardTint.opacity(0.35))
                         }
                 }
             }

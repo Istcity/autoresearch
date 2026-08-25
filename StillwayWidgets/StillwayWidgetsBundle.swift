@@ -3,13 +3,15 @@ import SwiftUI
 import AppIntents
 
 @main
-struct StillwayWidgetsBundle: WidgetBundle {
+struct StillwayWidgetBundle: WidgetBundle {
     var body: some Widget {
-        LockScreenWidget()
         HomeScreenWidget()
+        LockScreenWidget()
         StillwayLiveActivity()
     }
 }
+
+typealias StillwayWidgetsBundle = StillwayWidgetBundle
 
 struct ToggleStillwayIntent: AppIntent {
     static var title: LocalizedStringResource = "Toggle Stillway"

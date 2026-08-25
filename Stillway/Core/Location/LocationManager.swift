@@ -3,23 +3,34 @@ import CoreLocation
 import Observation
 
 @Observable
-@MainActor
-final class LocationManager: NSObject {
-    var authorization: CLAuthorizationStatus = .notDetermined
+final class LocationManager: NSObject, CLLocationManagerDelegate {
+    static let shared = LocationManager()
+
+    var authStatus: CLAuthorizationStatus
+    var authorization: CLAuthorizationStatus { authStatus }
     var currentLocation: CLLocation?
     var lastVisit: CLVisit?
     var lastError: String?
 
-    private let manager = CLLocationManager()
     var onVisit: ((CLVisit) -> Void)?
+    var onRegionEnter: ((String) -> Void)?
+    var onRegionExit: ((String) -> Void)?
     var onSignificantChange: ((CLLocation) -> Void)?
 
-    override init() {
+    private let manager = CLLocationManager()
+
+    private override init() {
+        authStatus = manager.authorizationStatus
         super.init()
         manager.delegate = self
-        manager.pausesLocationUpdatesAutomatically = true
-        manager.desiredAccuracy = kCLLocationAccuracyHundredMeters
-        authorization = manager.authorizationStatus
+        manager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
+        manager.distanceFilter = 500
+        manager.allowsBackgroundLocationUpdates = true
+        manager.pausesLocationUpdatesAutomatically = false
+    }
+
+    func requestAlwaysAuthorization() {
+        manager.requestAlwaysAuthorization()
     }
 
     func requestWhenInUse() {
@@ -27,52 +38,66 @@ final class LocationManager: NSObject {
     }
 
     func requestAlways() {
-        manager.requestAlwaysAuthorization()
+        requestAlwaysAuthorization()
     }
 
-    func start() {
+    func startAllServices() {
+        manager.startUpdatingLocation()
         manager.startMonitoringVisits()
         manager.startMonitoringSignificantLocationChanges()
-        if authorization == .authorizedAlways || authorization == .authorizedWhenInUse {
-            manager.startUpdatingLocation()
-        }
     }
 
-    func stop() {
+    func start() { startAllServices() }
+
+    func stopAllServices() {
+        manager.stopUpdatingLocation()
         manager.stopMonitoringVisits()
         manager.stopMonitoringSignificantLocationChanges()
-        manager.stopUpdatingLocation()
     }
-}
 
-extension LocationManager: CLLocationManagerDelegate {
-    nonisolated func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        Task { @MainActor in
-            authorization = manager.authorizationStatus
-            if authorization == .authorizedAlways || authorization == .authorizedWhenInUse {
-                start()
-            }
+    func stop() { stopAllServices() }
+
+    func startMonitoring(region: CLCircularRegion) {
+        manager.startMonitoring(for: region)
+    }
+
+    func stopMonitoring(region: CLCircularRegion) {
+        manager.stopMonitoring(for: region)
+    }
+
+    func stopAllGeofences() {
+        for region in manager.monitoredRegions {
+            manager.stopMonitoring(for: region)
         }
     }
 
-    nonisolated func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        authStatus = manager.authorizationStatus
+        if authStatus == .authorizedAlways || authStatus == .authorizedWhenInUse {
+            startAllServices()
+        }
+    }
+
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
-        Task { @MainActor in
-            currentLocation = location
-            onSignificantChange?(location)
-        }
+        currentLocation = location
+        onSignificantChange?(location)
     }
 
-    nonisolated func locationManager(_ manager: CLLocationManager, didVisit visit: CLVisit) {
-        Task { @MainActor in
-            lastVisit = visit
-            onVisit?(visit)
-        }
+    func locationManager(_ manager: CLLocationManager, didVisit visit: CLVisit) {
+        lastVisit = visit
+        onVisit?(visit)
     }
 
-    nonisolated func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        Task { @MainActor in
-            lastError = error.localizedDescription
-        }
+    func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
+        onRegionEnter?(region.identifier)
+    }
+
+    func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
+        onRegionExit?(region.identifier)
+    }
+
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        lastError = error.localizedDescription
     }
 }

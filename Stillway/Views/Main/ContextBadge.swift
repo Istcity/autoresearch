@@ -3,7 +3,7 @@ import SwiftUI
 struct ContextBadge: View {
     let context: AppContext
     var isAutomatic: Bool = false
-    @Environment(LocalizationManager.self) private var lm
+    @Environment(\.lm) private var lm
     @Environment(ThemeEngine.self) private var theme
 
     var body: some View {
@@ -13,7 +13,7 @@ struct ContextBadge: View {
                 .tracking(2)
             if isAutomatic {
                 PulsingDot()
-                Text(lm.string("auto_badge").uppercased())
+                Text(lm.string("ctx_auto").uppercased())
                     .font(.system(size: 11, weight: .medium))
                     .tracking(0.5)
                     .opacity(0.85)
@@ -27,6 +27,6 @@ struct ContextBadge: View {
         .transition(.scale(scale: 0.8).combined(with: .opacity))
         .animation(.spring(response: 0.3, dampingFraction: 0.8), value: context)
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(lm.string(context.localizationKey)) \(isAutomatic ? lm.string("auto_badge") : "")")
+        .accessibilityLabel("\(lm.string(context.localizationKey)) \(isAutomatic ? lm.string("ctx_auto") : "")")
     }
 }

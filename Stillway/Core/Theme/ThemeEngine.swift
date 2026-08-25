@@ -6,39 +6,34 @@ import SwiftUI
 @MainActor
 final class ThemeEngine {
     var currentContext: AppContext = .unknown
-    var displayedContext: AppContext = .unknown
-    var waveAmplitudeScale: Double = 1
     var isTransitioning = false
-    var transitionProgress: Double = 1
+    var transitionAmplitude: Double = 1
 
-    var gradient: ContextGradient { ContextGradient.for(displayedContext) }
-    var waveConfig: WaveConfig { WaveConfig.for(displayedContext) }
-    var targetGradient: ContextGradient { ContextGradient.for(currentContext) }
+    var displayedContext: AppContext { currentContext }
+    var gradient: ContextGradient { ContextGradient.gradient(for: currentContext) }
+    var waveConfig: WaveConfig { WaveConfig.config(for: currentContext) }
+    var effectiveAmplitude: Double { waveConfig.amplitude * transitionAmplitude }
+    var waveAmplitudeScale: Double { transitionAmplitude }
 
-    func apply(_ context: AppContext) {
+    func apply(context: AppContext) {
         guard context != currentContext else { return }
         Task { await transition(to: context) }
+    }
+
+    func apply(_ context: AppContext) {
+        apply(context: context)
     }
 
     func transition(to context: AppContext) async {
         guard context != currentContext else { return }
         isTransitioning = true
-        currentContext = context
-
         withAnimation(.easeIn(duration: 0.4)) {
-            waveAmplitudeScale = 0
+            transitionAmplitude = 0
         }
         try? await Task.sleep(for: .milliseconds(400))
-
-        withAnimation(.easeInOut(duration: 0.6)) {
-            displayedContext = context
-            transitionProgress = 0
-        }
-        try? await Task.sleep(for: .milliseconds(600))
-
+        currentContext = context
         withAnimation(.spring(response: 0.8, dampingFraction: 0.82)) {
-            waveAmplitudeScale = 1
-            transitionProgress = 1
+            transitionAmplitude = 1
         }
         try? await Task.sleep(for: .milliseconds(800))
         isTransitioning = false

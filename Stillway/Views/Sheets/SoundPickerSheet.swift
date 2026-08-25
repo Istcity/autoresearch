@@ -2,16 +2,17 @@ import SwiftUI
 import SwiftData
 
 struct SoundPickerSheet: View {
-    @Environment(StillwayRuntime.self) private var runtime
-    @Environment(LocalizationManager.self) private var lm
+    @Environment(ContextEngine.self) private var runtime
+    @Environment(\.lm) private var lm
     @Environment(ThemeEngine.self) private var theme
+    @Environment(PurchaseManager.self) private var store
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
 
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(alignment: .leading, spacing: 20) {
+                LazyVStack(alignment: .leading, spacing: 20) {
                     ForEach(grouped, id: \.context) { group in
                         VStack(alignment: .leading, spacing: 10) {
                             Text(lm.string(group.context.localizationKey).uppercased())
@@ -39,31 +40,34 @@ struct SoundPickerSheet: View {
     }
 
     private var grouped: [(context: AppContext, sounds: [Sound])] {
-        let contexts: [AppContext] = [.commute, .focus, .reset, .sleep]
-        return contexts.map { ctx in
-            (ctx, SoundLibrary.all.filter { $0.context == ctx })
+        [.commute, .focus, .reset, .sleep].map { ctx in
+            (ctx, Sound.sounds(for: ctx))
         }
     }
 
     private func soundRow(_ sound: Sound) -> some View {
-        let locked = !sound.isFree && !runtime.store.isPro
-        let selected = runtime.audio.primarySound.id == sound.id
+        let locked = !sound.isFree && !store.isPro
+        let selected = runtime.audio.primarySound?.id == sound.id
         return Button {
             if locked {
                 runtime.showSettings = true
                 dismiss()
             } else {
                 let prefs = try? modelContext.fetch(FetchDescriptor<UserPreferences>()).first
-                runtime.selectSound(sound, isPro: runtime.store.isPro, preferences: prefs)
+                runtime.selectSound(sound, isPro: store.isPro, preferences: prefs)
+                HapticEngine.select()
                 dismiss()
             }
         } label: {
             GlassCard {
                 HStack {
                     VStack(alignment: .leading, spacing: 4) {
-                        Text(lm.string(sound.localizationKey))
-                            .font(.system(size: 17))
-                            .foregroundStyle(.white)
+                        HStack {
+                            Text(lm.string(sound.localizationKey))
+                                .font(.system(size: 17))
+                                .foregroundStyle(.white)
+                            Text(sound.region.flag)
+                        }
                         if locked {
                             Text(lm.string("mixer_locked"))
                                 .font(.system(size: 13))
@@ -79,6 +83,10 @@ struct SoundPickerSheet: View {
                             .foregroundStyle(theme.gradient.accentColor)
                     }
                 }
+            }
+            .overlay {
+                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                    .stroke(selected ? theme.gradient.accentColor : .clear, lineWidth: 1.5)
             }
             .scaleEffect(selected ? 1.03 : 1)
         }

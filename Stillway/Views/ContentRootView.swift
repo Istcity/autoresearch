@@ -1,12 +1,15 @@
 import SwiftUI
+import SwiftData
 
 struct ContentRootView: View {
-    @Environment(StillwayRuntime.self) private var runtime
+    @Environment(ContextEngine.self) private var runtime
+    @Environment(\.lm) private var lm
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Query private var prefs: [UserPreferences]
 
     var body: some View {
         ZStack {
-            if runtime.hasCompletedOnboarding {
+            if prefs.first?.onboardingCompleted == true {
                 MainView()
                     .transition(.opacity)
             } else {
@@ -14,11 +17,7 @@ struct ContentRootView: View {
                     .transition(.opacity)
             }
         }
-        .animation(reduceMotion ? .none : .easeInOut(duration: 0.6), value: runtime.hasCompletedOnboarding)
-        .onOpenURL { url in
-            guard url.host == "toggle" else { return }
-            runtime.handleStartStop(preferences: nil)
-        }
+        .animation(reduceMotion ? .none : .easeInOut(duration: 0.6), value: prefs.first?.onboardingCompleted)
         .sheet(isPresented: Bindable(runtime).showSettings) {
             SettingsSheet()
                 .presentationDetents([.large])
@@ -38,6 +37,10 @@ struct ContentRootView: View {
             PlaceLabelSheet()
                 .presentationDetents([.medium])
                 .presentationDragIndicator(.visible)
+        }
+        .onOpenURL { url in
+            guard url.host == "toggle" else { return }
+            runtime.handleStartStop(preferences: prefs.first)
         }
     }
 }

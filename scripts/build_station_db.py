@@ -80,16 +80,20 @@ def ingest_zip(path: pathlib.Path) -> list[dict]:
                 lon = float(stop["stop_lon"])
             except (KeyError, TypeError, ValueError):
                 continue
-            transit = stop_ids.get(sid, "metro")
+            transit = stop_ids.get(sid, "metro").upper()
+            if transit == "METRO":
+                transit = "METRO"
             stations.append(
                 {
                     "id": f"{country.lower()}-{path.stem}-{sid}",
                     "name": stop.get("stop_name") or sid,
-                    "city": stop.get("stop_desc") or path.stem,
+                    "name_en": stop.get("stop_name") or sid,
+                    "lat": lat,
+                    "lon": lon,
                     "country": country,
-                    "latitude": lat,
-                    "longitude": lon,
-                    "transitType": transit,
+                    "city": path.stem,
+                    "type": transit,
+                    "lines": [],
                 }
             )
     return stations
@@ -105,7 +109,7 @@ def main() -> None:
     # Dedup by rounded coordinate
     unique: dict[tuple, dict] = {}
     for station in stations:
-        key = (round(station["latitude"], 4), round(station["longitude"], 4), station["country"])
+        key = (round(station["lat"], 4), round(station["lon"], 4), station["country"])
         unique[key] = station
     out = list(unique.values())
     OUT.parent.mkdir(parents=True, exist_ok=True)

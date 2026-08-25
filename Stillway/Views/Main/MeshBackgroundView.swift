@@ -8,7 +8,7 @@ struct MeshBackgroundView: View {
         let colors = theme.gradient.bgColors
         TimelineView(.animation(minimumInterval: reduceMotion ? 1 : 1.0 / 30.0, paused: reduceMotion)) { timeline in
             let t = timeline.date.timeIntervalSinceReferenceDate
-            let drift = reduceMotion ? 0.0 : sin(t / 12.0) * 0.08
+            let drift = reduceMotion ? 0.0 : sin(t / 12.0) * 0.06
             ZStack {
                 if #available(iOS 18.0, *) {
                     MeshGradient(

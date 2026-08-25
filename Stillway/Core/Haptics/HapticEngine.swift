@@ -5,6 +5,14 @@ enum HapticEngine {
         UIImpactFeedbackGenerator(style: .rigid).impactOccurred()
     }
 
+    static func soft() {
+        UIImpactFeedbackGenerator(style: .soft).impactOccurred()
+    }
+
+    static func medium() {
+        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+    }
+
     static func select() {
         UISelectionFeedbackGenerator().selectionChanged()
     }
@@ -17,7 +25,7 @@ enum HapticEngine {
         UINotificationFeedbackGenerator().notificationOccurred(.warning)
     }
 
-    static func soft() {
-        UIImpactFeedbackGenerator(style: .soft).impactOccurred()
+    static func error() {
+        UINotificationFeedbackGenerator().notificationOccurred(.error)
     }
 }

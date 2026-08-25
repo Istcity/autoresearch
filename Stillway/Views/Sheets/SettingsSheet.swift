@@ -2,21 +2,88 @@ import SwiftUI
 import SwiftData
 
 struct SettingsSheet: View {
-    @Environment(StillwayRuntime.self) private var runtime
-    @Environment(LocalizationManager.self) private var lm
+    @Environment(ContextEngine.self) private var runtime
+    @Environment(\.lm) private var lm
     @Environment(ThemeEngine.self) private var theme
+    @Environment(PurchaseManager.self) private var store
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.modelContext) private var modelContext
     @Query private var preferences: [UserPreferences]
 
     var body: some View {
         NavigationStack {
-            List {
-                generalSection
-                languageSection
-                proSection
-                aboutSection
+            ScrollView {
+                VStack(alignment: .leading, spacing: 28) {
+                    section(lm.string("settings_general")) {
+                        toggle(lm.string("settings_context"), subtitle: lm.string("settings_context_desc"), keyPath: \.contextDetectionEnabled)
+                        toggle(lm.string("settings_sleep"), subtitle: lm.string("settings_sleep_desc"), keyPath: \.sleepModeEnabled)
+                        DatePicker(
+                            lm.string("settings_sleep_start"),
+                            selection: sleepDate,
+                            displayedComponents: .hourAndMinute
+                        )
+                        .tint(theme.gradient.accentColor)
+                        toggle(lm.string("settings_haptic"), subtitle: lm.string("settings_haptic_desc"), keyPath: \.hapticBreathingEnabled)
+                            .disabled(!runtime.breathing.isSupported)
+                    }
+
+                    section(lm.string("settings_language")) {
+                        Picker(lm.string("settings_language"), selection: languageBinding) {
+                            ForEach(LanguageCode.allCases) { code in
+                                Text("\(code.flag)  \(code.displayName)").tag(code.rawValue)
+                            }
+                        }
+                        .onChange(of: lm.currentLanguage) { _, newValue in
+                            prefs?.selectedLanguage = newValue.rawValue
+                        }
+                        Text(lm.string("settings_language_note"))
+                            .font(.system(size: 13))
+                            .foregroundStyle(.white.opacity(0.5))
+                    }
+
+                    section(lm.string("settings_pro_section")) {
+                        if store.isPro {
+                            Label(lm.string("pro_active"), systemImage: "checkmark.seal.fill")
+                                .foregroundStyle(.green)
+                        } else {
+                            ForEach(1...6, id: \.self) { index in
+                                Label(lm.string("settings_pro_feature_\(index)"), systemImage: "sparkle")
+                                    .font(.system(size: 15))
+                            }
+                            PillButton(label: lm.string("settings_pro_btn")) {
+                                Task { await store.purchase() }
+                            }
+                            Button(lm.string("settings_restore")) {
+                                Task { await store.restorePurchases() }
+                            }
+                            .foregroundStyle(.white.opacity(0.7))
+                            if store.isLoading {
+                                ProgressView()
+                            }
+                            if let error = store.errorMessage {
+                                Text(error)
+                                    .font(.system(size: 13))
+                                    .foregroundStyle(.red.opacity(0.8))
+                            }
+                        }
+                    }
+
+                    section(lm.string("settings_about")) {
+                        HStack {
+                            Text(lm.string("settings_version"))
+                            Spacer()
+                            Text(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0")
+                                .foregroundStyle(.white.opacity(0.5))
+                                .font(.system(.body, design: .monospaced))
+                        }
+                        Text(lm.string("privacy_body"))
+                            .font(.system(size: 13))
+                            .foregroundStyle(.white.opacity(0.55))
+                        Link(lm.string("settings_privacy"), destination: URL(string: "https://stillway.app/privacy")!)
+                    }
+                }
+                .padding(20)
             }
-            .scrollContentBackground(.hidden)
             .navigationTitle(lm.string("settings_title"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -27,115 +94,62 @@ struct SettingsSheet: View {
         }
         .presentationBackground(.regularMaterial)
         .onAppear { ensurePreferences() }
+        .onChange(of: store.isPro) { _, isPro in
+            prefs?.isPro = isPro
+        }
     }
 
-    @Environment(\.modelContext) private var modelContext
+    private var languageBinding: Binding<String> {
+        Binding(
+            get: { lm.currentLanguage.rawValue },
+            set: { lm.currentLanguage = LanguageCode(rawValue: $0) ?? .en }
+        )
+    }
 
     private var prefs: UserPreferences? { preferences.first }
 
-    private var generalSection: some View {
-        Section(lm.string("settings_general")) {
-            Toggle(lm.string("settings_context_detection"), isOn: bind(\.contextDetectionEnabled))
-            Toggle(lm.string("settings_sleep_mode"), isOn: bind(\.sleepModeEnabled))
-            Picker(lm.string("settings_sleep_start"), selection: bindHour()) {
-                ForEach(20...24, id: \.self) { hour in
-                    Text(String(format: "%02d:00", hour == 24 ? 0 : hour)).tag(hour == 24 ? 0 : hour)
-                }
+    private var sleepDate: Binding<Date> {
+        Binding(
+            get: {
+                Calendar.current.date(bySettingHour: prefs?.sleepStartHour ?? 22, minute: 0, second: 0, of: Date()) ?? Date()
+            },
+            set: { date in
+                prefs?.sleepStartHour = Calendar.current.component(.hour, from: date)
             }
-            Toggle(lm.string("settings_haptic_breath"), isOn: bind(\.hapticBreathingEnabled))
-                .disabled(!runtime.breathing.isSupported)
-        }
-        .listRowBackground(Color.white.opacity(0.05))
+        )
     }
 
-    private var languageSection: some View {
-        Section {
-            Picker(lm.string("settings_language"), selection: Bindable(runtime.localization).selectedLanguage) {
-                ForEach(LanguageCode.allCases) { code in
-                    Text(code.displayName).tag(code.rawValue)
-                }
-            }
-            .onChange(of: runtime.localization.selectedLanguage) { _, newValue in
-                prefs?.selectedLanguage = newValue
-            }
-            Text(lm.string("settings_language_note"))
-                .font(.system(size: 13))
-                .foregroundStyle(.white.opacity(0.5))
-        } header: {
-            Text(lm.string("settings_language"))
+    private func section<Content: View>(_ title: String, @ViewBuilder content: () -> Content) -> some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text(title.uppercased())
+                .font(.system(size: 13, weight: .medium))
+                .tracking(0.5)
+                .foregroundStyle(.white.opacity(0.45))
+            content()
         }
-        .listRowBackground(Color.white.opacity(0.05))
     }
 
-    private var proSection: some View {
-        Section(lm.string("settings_pro")) {
-            if runtime.store.isPro {
-                Label("Stillway Pro", systemImage: "checkmark.seal.fill")
-                    .foregroundStyle(theme.gradient.accentColor)
-            } else {
-                VStack(alignment: .leading, spacing: 10) {
-                    ForEach(proFeatures, id: \.self) { key in
-                        Label(lm.string(key), systemImage: "sparkle")
-                            .font(.system(size: 15))
-                    }
-                }
-                Button {
-                    Task { await runtime.store.purchase() }
-                } label: {
-                    PillButtonLabel(title: "\(lm.string("pro_cta"))  \(lm.string("pro_price"))")
-                }
-                .listRowInsets(EdgeInsets(top: 12, leading: 16, bottom: 12, trailing: 16))
-                .hapticButton()
-                Button(lm.string("btn_restore")) {
-                    Task { await runtime.store.restore() }
-                }
-                .foregroundStyle(.white.opacity(0.7))
+    private func toggle(_ title: String, subtitle: String, keyPath: ReferenceWritableKeyPath<UserPreferences, Bool>) -> some View {
+        Toggle(isOn: bind(keyPath)) {
+            VStack(alignment: .leading, spacing: 4) {
+                Text(title)
+                Text(subtitle)
+                    .font(.system(size: 13))
+                    .foregroundStyle(.white.opacity(0.45))
             }
         }
-        .listRowBackground(Color.white.opacity(0.05))
-    }
-
-    private var aboutSection: some View {
-        Section(lm.string("settings_about")) {
-            HStack {
-                Text(lm.string("settings_version"))
-                Spacer()
-                Text("1.0.0")
-                    .foregroundStyle(.white.opacity(0.5))
-                    .font(.system(.body, design: .monospaced))
-            }
-            Text(lm.string("privacy_body"))
-                .font(.system(size: 13))
-                .foregroundStyle(.white.opacity(0.55))
-            Link(lm.string("settings_privacy"), destination: URL(string: "https://stillway.app/privacy")!)
-        }
-        .listRowBackground(Color.white.opacity(0.05))
-    }
-
-    private var proFeatures: [String] {
-        ["pro_feature_sounds", "pro_feature_mix", "pro_feature_autostart", "pro_feature_places", "pro_feature_journey", "pro_feature_haptics", "pro_feature_sleep"]
+        .tint(theme.gradient.accentColor)
     }
 
     private func ensurePreferences() {
-        if preferences.isEmpty {
-            modelContext.insert(UserPreferences())
-        }
+        if preferences.isEmpty { modelContext.insert(UserPreferences()) }
+        if store.isPro { prefs?.isPro = true }
     }
 
     private func bind(_ keyPath: ReferenceWritableKeyPath<UserPreferences, Bool>) -> Binding<Bool> {
         Binding(
             get: { prefs?[keyPath: keyPath] ?? false },
             set: { prefs?[keyPath: keyPath] = $0 }
-        )
-    }
-
-    private func bindHour() -> Binding<Int> {
-        Binding(
-            get: {
-                let hour = prefs?.sleepStartHour ?? 22
-                return hour == 24 ? 0 : hour
-            },
-            set: { prefs?.sleepStartHour = $0 == 0 ? 24 : $0 }
         )
     }
 }

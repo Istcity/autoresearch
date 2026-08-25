@@ -8,15 +8,15 @@ struct TimerRing: View {
     var body: some View {
         ZStack {
             Circle()
-                .stroke(.white.opacity(0.08), lineWidth: 2)
+                .stroke(.white.opacity(0.08), lineWidth: 2.5)
             Circle()
                 .trim(from: 0, to: min(1, max(0, progress)))
-                .stroke(theme.gradient.accentColor, style: StrokeStyle(lineWidth: 2, lineCap: .round))
+                .stroke(theme.gradient.accentColor, style: StrokeStyle(lineWidth: 2.5, lineCap: .round))
                 .rotationEffect(.degrees(-90))
                 .animation(.linear(duration: 1), value: progress)
             Text(Self.format(seconds))
-                .font(.system(size: 42, weight: .medium, design: .monospaced))
-                .tracking(-1)
+                .font(.system(size: 22, weight: .medium, design: .monospaced))
+                .contentTransition(.numericText())
                 .foregroundStyle(.white)
         }
         .frame(width: 160, height: 160)

@@ -22,7 +22,7 @@ struct WaveformView: View {
                     for layer in 0..<layers {
                         var path = Path()
                         let layerOffset = Double(layer) * 0.7
-                        let amp = config.amplitude * theme.waveAmplitudeScale * (1.0 - Double(layer) * 0.18)
+                        let amp = theme.effectiveAmplitude * (1.0 - Double(layer) * 0.18)
                         let yBase = size.height * 0.55 + CGFloat(layer) * 10
                         path.move(to: CGPoint(x: 0, y: yBase))
                         let steps = Int(size.width / 3)

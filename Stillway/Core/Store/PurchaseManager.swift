@@ -5,34 +5,46 @@ import Observation
 @Observable
 @MainActor
 final class PurchaseManager {
-    static let proProductID = "stillway.pro.lifetime.499"
+    static let proProductID = "com.stillway.app.pro"
 
     var isPro = false
-    var product: Product?
-    var lastError: String?
     var isLoading = false
+    var proProduct: Product?
+    var product: Product? { proProduct }
+    var errorMessage: String?
+    var lastError: String? { errorMessage }
 
-    func load() async {
+    init() {
+        Task { await loadProduct() }
+        Task { await listenForTransactions() }
+        Task { await refreshEntitlements() }
+    }
+
+    func load() async { await loadProduct() }
+
+    func loadProduct() async {
         isLoading = true
         defer { isLoading = false }
         do {
-            let products = try await Product.products(for: [Self.proProductID])
-            product = products.first
+            proProduct = try await Product.products(for: [Self.proProductID]).first
             await refreshEntitlements()
         } catch {
-            lastError = error.localizedDescription
+            errorMessage = error.localizedDescription
             isPro = UserDefaults.standard.bool(forKey: "stillway.isPro.debug")
         }
     }
 
     func purchase() async {
-        guard let product else { return }
+        guard let proProduct else { return }
+        isLoading = true
+        defer { isLoading = false }
         do {
-            let result = try await product.purchase()
+            let result = try await proProduct.purchase()
             switch result {
             case .success(let verification):
                 if case .verified = verification {
                     isPro = true
+                    errorMessage = nil
                 }
             case .userCancelled, .pending:
                 break
@@ -40,18 +52,32 @@ final class PurchaseManager {
                 break
             }
         } catch {
-            lastError = error.localizedDescription
+            errorMessage = error.localizedDescription
         }
     }
 
-    func restore() async {
+    func restorePurchases() async {
+        isLoading = true
+        defer { isLoading = false }
         try? await AppStore.sync()
         await refreshEntitlements()
+        if isPro { errorMessage = nil }
     }
+
+    func restore() async { await restorePurchases() }
 
     func unlockForPreview() {
         isPro = true
         UserDefaults.standard.set(true, forKey: "stillway.isPro.debug")
+    }
+
+    private func listenForTransactions() async {
+        for await update in Transaction.updates {
+            if case .verified(let transaction) = update, transaction.productID == Self.proProductID {
+                isPro = true
+                await transaction.finish()
+            }
+        }
     }
 
     private func refreshEntitlements() async {

@@ -1,55 +1,77 @@
 # Stillway
 
-Ambient life companion for iOS 17+. Dark-only, offline-first, no account.
+Stillway is an offline, dark-only ambient companion for iPhone. It watches where you are and what you are doing, then starts the right sound — commute, focus, reset, or sleep — without asking you to pick a track.
 
-Stillway watches where you are and what you are doing, then starts the right ambient sound — commute, focus, reset, sleep — without asking you to pick a track.
+> Sen sadece yaşa. Geri kalanı biz anlıyoruz.
 
-Open `Stillway.xcodeproj` in Xcode 16+ on a Mac.
+## Features
+
+- Context-aware themes (commute, focus, sleep, reset, walking, deep work)
+- AVAudioEngine playback with Journey Arc volume shaping
+- Transit geofencing from an on-device station database
+- CLVisit place learning and optional auto-start (Pro)
+- Sleep detection (home + hour + phone orientation)
+- Core Haptics box-breathing guide (Pro / Taptic Engine)
+- Dynamic Island Live Activity, Lock Screen and Home Screen widgets
+- Turkish, Japanese, English, French — language changes apply instantly
+- No account, no analytics, no ads, no backend
 
 ## Requirements
 
 - Xcode 16+
-- iOS 17.0 deployment target
-- Apple Developer team (set `DEVELOPMENT_TEAM` in the Stillway target)
-- Physical device for geofence, motion, and Dynamic Island testing
+- iOS 17.0+
+- macOS 14+
+- A Development Team for signing
+- Physical device for geofence, motion, and Dynamic Island
 
-## First run
+## Setup
 
 1. Open `Stillway.xcodeproj`.
-2. Select the **Stillway** scheme.
-3. Set your Development Team under Signing & Capabilities.
-4. Enable App Groups `group.com.stillway.app` on both the app and the widget if Xcode asks.
-5. Run on iPhone or Simulator.
+2. Select the **Stillway** scheme (iPhone).
+3. Set your team under Signing & Capabilities for **Stillway** and **StillwayWidgets**.
+4. Confirm App Group `group.com.stillway.app` on both targets.
+5. Run.
 
-The 12 field recordings are not checked in yet. `AudioEngine` generates looping ambient buffers so playback works immediately. Drop final `.m4a` files into `Stillway/Resources/Sounds/` using the IDs in `Sound.swift` (`tokyo_rain.m4a`, …).
-
-## Layout
-
-```
-Stillway.xcodeproj
-Stillway/                 App target (SwiftUI)
-StillwayWidgets/          Lock Screen, Home Screen, Live Activity
-scripts/                  GTFS download + station JSON builder
-BUILD_PLAN.md
-DESIGN_SYSTEM.md
-PRODUCT_SPEC.md
-```
-
-Bundle ID: `com.stillway.app`  
-Widget: `com.stillway.app.widgets`  
-Pro product ID: `stillway.pro.lifetime.499`
+Bundle IDs: `com.stillway.app` · `com.stillway.app.widgets`  
+Pro product: `com.stillway.app.pro` (StoreKit config: `Stillway/Stillway.storekit`)
 
 ## Station database
 
-Sample stops ship in `Stillway/Resources/stations.json`. Full ~56k-stop coverage:
+A sample set ships in `Stillway/Resources/stations.json`. To build the full ~56k-stop file:
 
 ```bash
 ./scripts/download_gtfs.sh
 python3 scripts/build_station_db.py
 ```
 
-Japan (ODPT) and France (IDFM) feeds need a free API registration. Set `ODPT_GTFS_URL`, `IDFM_GTFS_URL`, and `IBB_GTFS_URL`.
+Japan (ODPT) and France (IDFM) need a free API key. Set `ODPT_GTFS_URL`, `IDFM_GTFS_URL`, and `IBB_GTFS_URL`. Output schema:
 
-## Languages
+```json
+{"id":"...","name":"...","name_en":"...","lat":0.0,"lon":0.0,"country":"JP","city":"Tokyo","type":"METRO","lines":["..."]}
+```
 
-Turkish, Japanese, English, French. Change language in Settings — it applies immediately, no relaunch.
+## Sound files
+
+Drop seamless-loop `.m4a` files into `Stillway/Resources/Sounds/` using IDs from `Sound.swift`:
+
+`tokyo_metro.m4a`, `shinkansen.m4a`, `paris_metro.m4a`, `istanbul_ferry.m4a`, `tokyo_rain.m4a`, `deep_train.m4a`, `night_cafe.m4a`, `minka_library.m4a`, `kyoto_bamboo.m4a`, `temple_bell.m4a`, `rain_window.m4a`, `night_forest.m4a`
+
+Until those files exist, `AudioEngine` generates looping ambient buffers so the app is playable.
+
+## App Store checklist
+
+- [ ] 12 field recordings in the bundle
+- [ ] Full `stations.json` from GTFS
+- [ ] `TrainClassifier.mlmodel` (optional; motion automotive is the fallback)
+- [ ] StoreKit product `com.stillway.app.pro` live in App Store Connect
+- [ ] Privacy nutrition label: location and motion, on-device only
+- [ ] Screenshots and metadata in TR / JA / EN / FR
+- [ ] TestFlight on a real device (geofence + headphones auto-start)
+
+## Specs
+
+`PRODUCT_SPEC.md` · `DESIGN_SYSTEM.md` · `BUILD_PLAN.md` · `MISSING_AND_TODOS.md`
+
+## Contributing
+
+Keep the app offline-first. Do not add analytics, accounts, or network calls except StoreKit. Prefer simpler diffs that match the design system over extra abstraction.

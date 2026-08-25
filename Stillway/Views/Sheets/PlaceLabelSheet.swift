@@ -1,8 +1,8 @@
 import SwiftUI
 
 struct PlaceLabelSheet: View {
-    @Environment(StillwayRuntime.self) private var runtime
-    @Environment(LocalizationManager.self) private var lm
+    @Environment(ContextEngine.self) private var runtime
+    @Environment(\.lm) private var lm
     @Environment(\.dismiss) private var dismiss
     @State private var chosen: PlaceLabel?
 
@@ -14,10 +14,10 @@ struct PlaceLabelSheet: View {
                 .fill(Color.white.opacity(0.2))
                 .frame(width: 36, height: 4)
                 .padding(.top, 8)
-            Text(lm.string("place_label_title"))
-                .font(.system(size: 22, weight: .regular, design: .default))
+            Text(String(format: lm.string("label_title"), runtime.pendingLabelPlace?.visitCount ?? 3))
+                .font(.system(size: 22, weight: .regular))
                 .multilineTextAlignment(.center)
-            Text(lm.string("place_label_subtitle"))
+            Text(lm.string("label_body"))
                 .font(.system(size: 15))
                 .foregroundStyle(.white.opacity(0.6))
                 .multilineTextAlignment(.center)
@@ -30,7 +30,7 @@ struct PlaceLabelSheet: View {
                     } label: {
                         GlassCard {
                             VStack(spacing: 10) {
-                                Image(systemName: label.symbolName)
+                                Image(systemName: label.sfSymbol)
                                     .font(.system(size: 28))
                                 Text(lm.string(label.localizationKey))
                                     .font(.system(size: 15, weight: .medium))
@@ -57,10 +57,10 @@ struct PlaceLabelSheet: View {
     private func choose(_ label: PlaceLabel) {
         chosen = label
         HapticEngine.success()
-        if let place = runtime.visitTracker.pendingLabelPlace {
-            runtime.visitTracker.applyLabel(label, to: place)
+        if let place = runtime.pendingLabelPlace {
+            runtime.visitTracker?.applyLabel(label, to: place)
         }
-        runtime.toast = runtime.localization.string("place_configured")
+        runtime.toast = lm.string("label_done")
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
             dismiss()
         }

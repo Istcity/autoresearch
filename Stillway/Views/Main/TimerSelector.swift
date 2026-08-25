@@ -5,7 +5,7 @@ struct TimerSelector: View {
     var remainingSeconds: Int?
     var onSelect: (Int?) -> Void
     @Environment(ThemeEngine.self) private var theme
-    @Environment(LocalizationManager.self) private var lm
+    @Environment(\.lm) private var lm
     @Namespace private var pillNS
 
     private let options: [Int?] = [15, 30, 45, nil]
@@ -45,7 +45,7 @@ struct TimerSelector: View {
 
     private func label(for option: Int?) -> String {
         if let option { return "\(option)" }
-        return lm.string("timer_until")
+        return lm.string("timer_until_end")
     }
 
     private func ringProgress(_ remaining: Int) -> Double {
