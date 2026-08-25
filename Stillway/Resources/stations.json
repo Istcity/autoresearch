@@ -1,0 +1,173 @@
+[
+  {
+    "id": "jp-tokyo-ginza",
+    "name": "Ginza",
+    "city": "Tokyo",
+    "country": "JP",
+    "latitude": 35.6717,
+    "longitude": 139.7649,
+    "transitType": "metro"
+  },
+  {
+    "id": "jp-tokyo-shibuya",
+    "name": "Shibuya",
+    "city": "Tokyo",
+    "country": "JP",
+    "latitude": 35.658,
+    "longitude": 139.7016,
+    "transitType": "rail"
+  },
+  {
+    "id": "jp-tokyo-shinjuku",
+    "name": "Shinjuku",
+    "city": "Tokyo",
+    "country": "JP",
+    "latitude": 35.6909,
+    "longitude": 139.7003,
+    "transitType": "rail"
+  },
+  {
+    "id": "jp-osaka-umeda",
+    "name": "Umeda",
+    "city": "Osaka",
+    "country": "JP",
+    "latitude": 34.7055,
+    "longitude": 135.4983,
+    "transitType": "metro"
+  },
+  {
+    "id": "jp-kyoto-kyoto",
+    "name": "Kyoto",
+    "city": "Kyoto",
+    "country": "JP",
+    "latitude": 34.9858,
+    "longitude": 135.7588,
+    "transitType": "rail"
+  },
+  {
+    "id": "us-nyc-timesq",
+    "name": "Times Square-42 St",
+    "city": "New York",
+    "country": "US",
+    "latitude": 40.7559,
+    "longitude": -73.9871,
+    "transitType": "metro"
+  },
+  {
+    "id": "us-nyc-union",
+    "name": "Union Square",
+    "city": "New York",
+    "country": "US",
+    "latitude": 40.7359,
+    "longitude": -73.9906,
+    "transitType": "metro"
+  },
+  {
+    "id": "us-sf-montgomery",
+    "name": "Montgomery",
+    "city": "San Francisco",
+    "country": "US",
+    "latitude": 37.7894,
+    "longitude": -122.4011,
+    "transitType": "rail"
+  },
+  {
+    "id": "us-chi-state",
+    "name": "State/Lake",
+    "city": "Chicago",
+    "country": "US",
+    "latitude": 41.8857,
+    "longitude": -87.6278,
+    "transitType": "metro"
+  },
+  {
+    "id": "fr-paris-chatelet",
+    "name": "Châtelet",
+    "city": "Paris",
+    "country": "FR",
+    "latitude": 48.8583,
+    "longitude": 2.3475,
+    "transitType": "metro"
+  },
+  {
+    "id": "fr-paris-nation",
+    "name": "Nation",
+    "city": "Paris",
+    "country": "FR",
+    "latitude": 48.8483,
+    "longitude": 2.3958,
+    "transitType": "metro"
+  },
+  {
+    "id": "fr-lyon-bellecour",
+    "name": "Bellecour",
+    "city": "Lyon",
+    "country": "FR",
+    "latitude": 45.7578,
+    "longitude": 4.832,
+    "transitType": "metro"
+  },
+  {
+    "id": "gb-london-kingsx",
+    "name": "King's Cross St Pancras",
+    "city": "London",
+    "country": "GB",
+    "latitude": 51.5308,
+    "longitude": -0.1238,
+    "transitType": "metro"
+  },
+  {
+    "id": "gb-london-oxford",
+    "name": "Oxford Circus",
+    "city": "London",
+    "country": "GB",
+    "latitude": 51.5152,
+    "longitude": -0.1418,
+    "transitType": "metro"
+  },
+  {
+    "id": "tr-ist-taksim",
+    "name": "Taksim",
+    "city": "Istanbul",
+    "country": "TR",
+    "latitude": 41.0369,
+    "longitude": 28.985,
+    "transitType": "metro"
+  },
+  {
+    "id": "tr-ist-kadikoy",
+    "name": "Kadıköy",
+    "city": "Istanbul",
+    "country": "TR",
+    "latitude": 40.9909,
+    "longitude": 29.029,
+    "transitType": "ferry"
+  },
+  {
+    "id": "tr-ist-mecidiyekoy",
+    "name": "Mecidiyeköy",
+    "city": "Istanbul",
+    "country": "TR",
+    "latitude": 41.067,
+    "longitude": 28.987,
+    "transitType": "metro"
+  },
+  {
+    "id": "tr-ank-kizilay",
+    "name": "Kızılay",
+    "city": "Ankara",
+    "country": "TR",
+    "latitude": 39.9208,
+    "longitude": 32.8541,
+    "transitType": "metro"
+  },
+  {
+    "id": "tr-izm-konak",
+    "name": "Konak",
+    "city": "Izmir",
+    "country": "TR",
+    "latitude": 38.4192,
+    "longitude": 27.1287,
+    "transitType": "metro"
+  }
+]

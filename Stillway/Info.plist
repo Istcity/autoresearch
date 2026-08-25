@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDisplayName</key>
+	<string>Stillway</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.stillway.app</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>stillway</string>
+			</array>
+		</dict>
+	</array>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Stillway uses your location in the background to recognize stations and places you visit, so the right sound can start without opening the app.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Stillway uses your location to detect nearby transit stops and the places you return to.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Stillway needs always-on location so commute and sleep modes can start while the app is closed.</string>
+	<key>NSMotionUsageDescription</key>
+	<string>Stillway reads motion to tell walking, transit, and rest apart — never sent off the device.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+		<string>location</string>
+		<string>fetch</string>
+	</array>
+	<key>UIUserInterfaceStyle</key>
+	<string>Dark</string>
+	<key>NSSupportsLiveActivities</key>
+	<true/>
+	<key>UILaunchScreen</key>
+	<dict>
+		<key>UIColorName</key>
+		<string>LaunchBackground</string>
+	</dict>
+</dict>
+</plist>

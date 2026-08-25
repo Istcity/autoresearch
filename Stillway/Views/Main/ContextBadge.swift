@@ -1,0 +1,32 @@
+import SwiftUI
+
+struct ContextBadge: View {
+    let context: AppContext
+    var isAutomatic: Bool = false
+    @Environment(LocalizationManager.self) private var lm
+    @Environment(ThemeEngine.self) private var theme
+
+    var body: some View {
+        HStack(spacing: 8) {
+            Text(lm.string(context.localizationKey).uppercased())
+                .font(.system(size: 13, weight: .semibold, design: .rounded))
+                .tracking(2)
+            if isAutomatic {
+                PulsingDot()
+                Text(lm.string("auto_badge").uppercased())
+                    .font(.system(size: 11, weight: .medium))
+                    .tracking(0.5)
+                    .opacity(0.85)
+            }
+        }
+        .foregroundStyle(theme.gradient.accentColor)
+        .padding(.horizontal, 16)
+        .padding(.vertical, 8)
+        .background(theme.gradient.accentColor.opacity(0.2), in: Capsule())
+        .id(context)
+        .transition(.scale(scale: 0.8).combined(with: .opacity))
+        .animation(.spring(response: 0.3, dampingFraction: 0.8), value: context)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(lm.string(context.localizationKey)) \(isAutomatic ? lm.string("auto_badge") : "")")
+    }
+}
