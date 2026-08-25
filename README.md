@@ -26,40 +26,36 @@ Stillway is an offline, dark-only ambient companion for iPhone. It watches where
 
 ## Signing
 
-Matches your other App Store apps (`com.sinannergiz.lokus`, `com.sinannergiz.flow`):
+Same paid team as Lokus / FLOW. The App Store Connect app is already named **Stillway** — do not create a second one.
 
 | | |
 |---|---|
 | Team | `R9VURFRPRC` |
-| App bundle ID | `com.sinannergiz.stillway` |
-| Widget bundle ID | `com.sinannergiz.stillway.widget` |
-| App Group | `group.com.sinannergiz.stillway` |
-| Pro IAP | `com.sinannergiz.stillway.pro` |
+| App bundle ID | `com.stillway.app` |
+| Widget bundle ID | `com.stillway.app.widgets` |
+| App Group | `group.com.stillway.app` |
+| Pro IAP | `com.stillway.app.pro` |
 
-Automatic signing is on. Xcode creates the App IDs and the App Group on first device/archive build.
+Automatic signing is on. Home-screen name stays **Stillway**.
 
 ## Setup
 
 1. `git pull` then open `Stillway.xcodeproj`.
 2. Scheme **Stillway**, destination an iPhone simulator or your device.
 3. Signing & Capabilities → Team should already be **R9VURFRPRC** on **Stillway** and **StillwayWidgets**.
-4. Run (`⌘R`). Do not Archive until the App Store Connect record exists (next section).
+4. Run (`⌘R`).
 
 ## TestFlight / App Store
 
-`IDEDistribution.DistributionAppRecordProviderError error 0` means App Store Connect has no app for this bundle ID yet. Create it **before** Archive → Distribute:
+Do **not** click **My Apps → + → New App**. The name `Stillway` is already used in this account. Open the existing Stillway record and upload to it.
 
-1. [developer.apple.com](https://developer.apple.com/account) → **Identifiers** (Xcode usually registers these on first signed build):
-   - App ID `com.sinannergiz.stillway` — App Groups + Background Modes
-   - App ID `com.sinannergiz.stillway.widget` — App Groups
-   - App Group `group.com.sinannergiz.stillway`
-2. [App Store Connect](https://appstoreconnect.apple.com) → **My Apps → + → New App**
-   - Platform: iOS
-   - Name: **Stillway**
-   - Bundle ID: **`com.sinannergiz.stillway`** (must match exactly)
-   - SKU: `stillway`
-3. In-App Purchase: create non-consumable `com.sinannergiz.stillway.pro`
-4. Xcode → **Product → Archive** → Organizer → **Distribute App** → **App Store Connect** → **Upload**
+1. [App Store Connect](https://appstoreconnect.apple.com) → **Apps** → **Stillway**
+2. App Information → Bundle ID must be **`com.stillway.app`**
+3. If that Stillway row is empty / wrong and you do not need it: remove it, then you may create a new app. Otherwise leave it.
+4. In-App Purchase on that same app: non-consumable `com.stillway.app.pro`
+5. Xcode → **Product → Archive** → Organizer → **Distribute App** → **App Store Connect** → **Upload** (skip “Create app record”)
+
+If Xcode still tries to create a record: the existing Stillway already is the record. Upload the IPA with Transporter, or Distribute again after confirming the bundle ID matches.
 
 CLI (same pattern as Şantiye Asist):
 
@@ -100,7 +96,7 @@ Until those files exist, `AudioEngine` generates looping ambient buffers so the 
 - [ ] 12 field recordings in the bundle
 - [ ] Full `stations.json` from GTFS
 - [ ] `TrainClassifier.mlmodel` (optional; motion automotive is the fallback)
-- [ ] StoreKit product `com.sinannergiz.stillway.pro` live in App Store Connect
+- [ ] StoreKit product `com.stillway.app.pro` live in App Store Connect
 - [ ] Privacy nutrition label: location and motion, on-device only
 - [ ] Screenshots and metadata in TR / JA / EN / FR
 - [ ] TestFlight on a real device (geofence + headphones auto-start)

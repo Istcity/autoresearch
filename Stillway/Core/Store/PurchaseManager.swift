@@ -5,7 +5,7 @@ import Observation
 @Observable
 @MainActor
 final class PurchaseManager {
-    static let proProductID = "com.sinannergiz.stillway.pro"
+    static let proProductID = "com.stillway.app.pro"
 
     var isPro = false
     var isLoading = false

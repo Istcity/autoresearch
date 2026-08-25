@@ -65,7 +65,7 @@ struct StillwayTimelineProvider: TimelineProvider {
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<StillwayEntry>) -> Void) {
-        let defaults = UserDefaults(suiteName: "group.com.sinannergiz.stillway")
+        let defaults = UserDefaults(suiteName: "group.com.stillway.app")
         let entry = StillwayEntry(
             date: .now,
             contextName: defaults?.string(forKey: "contextName") ?? "Stillway",

@@ -29,7 +29,7 @@
           "locale" : "fr"
         }
       ],
-      "productID" : "com.sinannergiz.stillway.pro",
+      "productID" : "com.stillway.app.pro",
       "referenceName" : "Stillway Pro",
       "type" : "NonConsumable"
     }

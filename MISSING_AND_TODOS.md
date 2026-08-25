@@ -30,7 +30,7 @@ Repoda şu an yalnızca planlama dökümanları var:
    - Interface: SwiftUI
    - Language: Swift
    - iOS Deployment Target: 17.0
-   - Bundle ID: com.sinannergiz.stillway
+   - Bundle ID: com.stillway.app
 
 ✅ Yapılacak 2: Swift Package Manager bağımlılığı ekle
    - GRDB.swift → https://github.com/groue/GRDB.swift (versiyon ~> 6.29)
@@ -428,7 +428,7 @@ Stillway/Core/Haptics/HapticBreathingEngine.swift
 
 Stillway/Core/Store/PurchaseManager.swift
   @MainActor @ObservableObject final class PurchaseManager:
-    - static let proProductID = "com.sinannergiz.stillway.pro"
+    - static let proProductID = "com.stillway.app.pro"
     - isPro: Bool (Published)
     - isLoading: Bool (Published)
     - proProduct: Product? (Published)
