@@ -197,7 +197,7 @@ final class AudioEngine {
         let format = AVAudioFormat(standardFormatWithSampleRate: sampleRate, channels: 2)!
         let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: frames)!
         buffer.frameLength = frames
-        var rng = SplitMix64(seed: UInt64(sound.id.utf8.reduce(0) { $0 &+ UInt64($1) }))
+        var rng = SplitMix64(state: UInt64(sound.id.utf8.reduce(0) { $0 &+ UInt64($1) }))
         let left = buffer.floatChannelData![0]
         let right = buffer.floatChannelData![1]
         var pink = Array(repeating: 0.0, count: 7)

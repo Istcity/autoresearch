@@ -16,7 +16,6 @@ final class ContextEngine {
     let breathing = HapticBreathingEngine()
     let liveActivity = LiveActivityManager()
 
-    lazy var transition = ContextTransitionEngine(theme: themeEngine)
     var visitTracker: VisitTracker?
 
     var currentContext: AppContext = .unknown
@@ -216,7 +215,7 @@ final class ContextEngine {
         latestDecision = decision
         currentContext = decision.context
         triggerType = decision.triggerType
-        transition.sweep(to: decision.context)
+        themeEngine.apply(context: decision.context)
 
         if decision.shouldAutoStart, !audioEngine.isPlaying, let sound = Sound.find(decision.suggestedSoundID) {
             startManually(context: decision.context, sound: sound)
