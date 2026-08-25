@@ -31,10 +31,10 @@ Same paid team as Lokus / FLOW. The App Store Connect app is already named **Sti
 | | |
 |---|---|
 | Team | `R9VURFRPRC` |
-| App bundle ID | `com.stillway.app` |
-| Widget bundle ID | `com.stillway.app.widgets` |
-| App Group | `group.com.stillway.app` |
-| Pro IAP | `com.stillway.app.pro` |
+| App bundle ID | `com.sinannergiz.stillway` |
+| Widget bundle ID | `com.sinannergiz.stillway.widget` |
+| App Group | `group.com.sinannergiz.stillway` |
+| Pro IAP | `com.sinannergiz.stillway.pro` |
 
 Automatic signing is on. Home-screen name stays **Stillway**.
 
@@ -50,9 +50,9 @@ Automatic signing is on. Home-screen name stays **Stillway**.
 Do **not** click **My Apps → + → New App**. The name `Stillway` is already used in this account. Open the existing Stillway record and upload to it.
 
 1. [App Store Connect](https://appstoreconnect.apple.com) → **Apps** → **Stillway**
-2. App Information → Bundle ID must be **`com.stillway.app`**
+2. App Information → Bundle ID must be **`com.sinannergiz.stillway`**
 3. If that Stillway row is empty / wrong and you do not need it: remove it, then you may create a new app. Otherwise leave it.
-4. In-App Purchase on that same app: non-consumable `com.stillway.app.pro`
+4. In-App Purchase on that same app: non-consumable `com.sinannergiz.stillway.pro`
 5. Xcode → **Product → Archive** → Organizer → **Distribute App** → **App Store Connect** → **Upload** (skip “Create app record”)
 
 If Xcode still tries to create a record: the existing Stillway already is the record. Upload the IPA with Transporter, or Distribute again after confirming the bundle ID matches.
@@ -96,7 +96,7 @@ Until those files exist, `AudioEngine` generates looping ambient buffers so the 
 - [ ] 12 field recordings in the bundle
 - [ ] Full `stations.json` from GTFS
 - [ ] `TrainClassifier.mlmodel` (optional; motion automotive is the fallback)
-- [ ] StoreKit product `com.stillway.app.pro` live in App Store Connect
+- [ ] StoreKit product `com.sinannergiz.stillway.pro` live in App Store Connect
 - [ ] Privacy nutrition label: location and motion, on-device only
 - [ ] Screenshots and metadata in TR / JA / EN / FR
 - [ ] TestFlight on a real device (geofence + headphones auto-start)

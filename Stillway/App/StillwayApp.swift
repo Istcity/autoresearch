@@ -17,6 +17,7 @@ struct StillwayApp: App {
                 .environment(purchaseManager)
                 .environment(\.lm, lm)
                 .preferredColorScheme(.dark)
+                .supportedInterfaceOrientations(.portrait)
                 .onAppear {
                     contextEngine.localization = lm
                     contextEngine.configure(modelContext: sharedModelContainer.mainContext)
