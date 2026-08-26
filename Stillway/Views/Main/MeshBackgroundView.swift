@@ -6,9 +6,9 @@ struct MeshBackgroundView: View {
 
     var body: some View {
         let colors = theme.gradient.bgColors
-        TimelineView(.animation(minimumInterval: reduceMotion ? 1 : 1.0 / 30.0, paused: reduceMotion)) { timeline in
+        TimelineView(.animation(minimumInterval: reduceMotion ? 1 : 1.0 / 12.0, paused: reduceMotion)) { timeline in
             let t = timeline.date.timeIntervalSinceReferenceDate
-            let drift = reduceMotion ? 0.0 : sin(t / 12.0) * 0.06
+            let drift = reduceMotion ? 0.0 : sin(t / 28.0) * 0.035
             ZStack {
                 if #available(iOS 18.0, *) {
                     MeshGradient(
@@ -17,25 +17,28 @@ struct MeshBackgroundView: View {
                         points: meshPoints(drift: drift),
                         colors: meshColors(colors)
                     )
+                    .blur(radius: 18)
+                    .scaleEffect(1.08)
                 } else {
-                    RadialGradient(colors: colors, center: .center, startRadius: 0, endRadius: 420)
+                    RadialGradient(colors: colors, center: .center, startRadius: 0, endRadius: 460)
                         .overlay(
                             LinearGradient(colors: [colors[0], .clear], startPoint: .top, endPoint: .bottom)
                         )
-                        .scaleEffect(1.05 + drift * 0.15)
+                        .blur(radius: 12)
+                        .scaleEffect(1.08 + drift * 0.12)
                 }
-                theme.gradient.bgColors[0].opacity(0.25)
+                theme.gradient.bgColors[0].opacity(0.18)
             }
         }
-        .animation(.easeInOut(duration: 0.6), value: theme.displayedContext)
+        .animation(.easeInOut(duration: 1.4), value: theme.displayedContext)
     }
 
     private func meshPoints(drift: Double) -> [SIMD2<Float>] {
         let d = Float(drift)
         return [
-            .init(0, 0), .init(0.5, 0 + d * 0.2), .init(1, 0),
-            .init(0, 0.5), .init(0.5 + d, 0.5 - d), .init(1, 0.5),
-            .init(0, 1), .init(0.5, 1 - d * 0.15), .init(1, 1)
+            .init(0, 0), .init(0.5, 0 + d * 0.15), .init(1, 0),
+            .init(0, 0.5), .init(0.5 + d, 0.5 - d * 0.8), .init(1, 0.5),
+            .init(0, 1), .init(0.5, 1 - d * 0.12), .init(1, 1)
         ]
     }
 

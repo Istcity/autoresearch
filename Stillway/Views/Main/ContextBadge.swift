@@ -24,8 +24,8 @@ struct ContextBadge: View {
         .padding(.vertical, 8)
         .background(theme.gradient.accentColor.opacity(0.2), in: Capsule())
         .id(context)
-        .transition(.scale(scale: 0.8).combined(with: .opacity))
-        .animation(.spring(response: 0.3, dampingFraction: 0.8), value: context)
+        .transition(.opacity)
+        .animation(.easeInOut(duration: 0.9), value: context)
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(lm.string(context.localizationKey)) \(isAutomatic ? lm.string("ctx_auto") : "")")
     }

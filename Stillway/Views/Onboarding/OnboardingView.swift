@@ -19,7 +19,7 @@ struct OnboardingView: View {
                 .tag(2)
         }
         .tabViewStyle(.page(indexDisplayMode: .never))
-        .animation(.easeInOut(duration: 0.55), value: currentPage)
+        .animation(.easeInOut(duration: 0.95), value: currentPage)
         .onAppear { ensurePrefs() }
     }
 

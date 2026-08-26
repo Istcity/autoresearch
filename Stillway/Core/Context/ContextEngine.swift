@@ -89,6 +89,18 @@ final class ContextEngine {
         configure(modelContext: modelContext)
     }
 
+    func unlockAllFeaturesForTesting() {
+        guard let modelContext else { return }
+        let prefs = (try? modelContext.fetch(FetchDescriptor<UserPreferences>()))?.first
+            ?? {
+                let created = UserPreferences()
+                modelContext.insert(created)
+                return created
+            }()
+        prefs.isPro = true
+        try? modelContext.save()
+    }
+
     func startManually(context: AppContext, sound: Sound) {
         currentContext = context
         triggerType = .manual

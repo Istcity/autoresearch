@@ -28,6 +28,7 @@
 		000000000000000000A10026 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10025 /* LocationManager.swift */; };
 		000000000000000000A10028 /* StationDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10027 /* StationDatabase.swift */; };
 		000000000000000000A1002A /* PurchaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10029 /* PurchaseManager.swift */; };
+		000000000000000000A100C2 /* StillwayTesting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A100C1 /* StillwayTesting.swift */; };
 		000000000000000000A1002C /* ContextGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A1002B /* ContextGradient.swift */; };
 		000000000000000000A1002E /* ThemeEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A1002D /* ThemeEngine.swift */; };
 		000000000000000000A10030 /* WaveConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A1002F /* WaveConfig.swift */; };
@@ -119,6 +120,7 @@
 		000000000000000000A10025 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		000000000000000000A10027 /* StationDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationDatabase.swift; sourceTree = "<group>"; };
 		000000000000000000A10029 /* PurchaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseManager.swift; sourceTree = "<group>"; };
+		000000000000000000A100C1 /* StillwayTesting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StillwayTesting.swift; sourceTree = "<group>"; };
 		000000000000000000A1002B /* ContextGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextGradient.swift; sourceTree = "<group>"; };
 		000000000000000000A1002D /* ThemeEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeEngine.swift; sourceTree = "<group>"; };
 		000000000000000000A1002F /* WaveConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveConfig.swift; sourceTree = "<group>"; };
@@ -299,6 +301,7 @@
 			isa = PBXGroup;
 			children = (
 				000000000000000000A10029 /* PurchaseManager.swift */,
+				000000000000000000A100C1 /* StillwayTesting.swift */,
 			);
 			path = Store;
 			sourceTree = "<group>";
@@ -567,6 +570,7 @@
 				000000000000000000A10026 /* LocationManager.swift in Sources */,
 				000000000000000000A10028 /* StationDatabase.swift in Sources */,
 				000000000000000000A1002A /* PurchaseManager.swift in Sources */,
+				000000000000000000A100C2 /* StillwayTesting.swift in Sources */,
 				000000000000000000A1002C /* ContextGradient.swift in Sources */,
 				000000000000000000A1002E /* ThemeEngine.swift in Sources */,
 				000000000000000000A10030 /* WaveConfig.swift in Sources */,

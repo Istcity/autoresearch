@@ -193,15 +193,17 @@ final class AudioEngine {
 
     private static func makeProceduralBuffer(for sound: Sound) -> AVAudioPCMBuffer {
         let sampleRate: Double = 44_100
-        let frames = AVAudioFrameCount(sampleRate * 8)
+        let frames = AVAudioFrameCount(sampleRate * 10)
         let format = AVAudioFormat(standardFormatWithSampleRate: sampleRate, channels: 2)!
         let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: frames)!
         buffer.frameLength = frames
-        var rng = SplitMix64(state: UInt64(sound.id.utf8.reduce(0) { $0 &+ UInt64($1) }))
+        var rng = SplitMix64(state: UInt64(sound.id.utf8.reduce(0) { $0 &+ UInt64($1) }) &+ 0x9E37_79B9)
         let left = buffer.floatChannelData![0]
         let right = buffer.floatChannelData![1]
+        let character = proceduralCharacter(for: sound)
         var pink = Array(repeating: 0.0, count: 7)
         for i in 0..<Int(frames) {
+            let t = Double(i) / sampleRate
             let white = rng.nextNormalized()
             pink[0] = 0.99886 * pink[0] + white * 0.0555179
             pink[1] = 0.99332 * pink[1] + white * 0.0750759
@@ -209,13 +211,55 @@ final class AudioEngine {
             pink[3] = 0.86650 * pink[3] + white * 0.3104856
             pink[4] = 0.55000 * pink[4] + white * 0.5329522
             pink[5] = -0.7616 * pink[5] - white * 0.0168980
-            let sample = pink.reduce(0, +) + white * 0.5362
+            let noise = pink.reduce(0, +) + white * 0.5362
             pink[6] = white * 0.5362
-            let value = Float(max(-1, min(1, sample * 0.08)))
+            let tone =
+                sin(2 * .pi * character.toneHz * t) * character.toneMix
+                + sin(2 * .pi * character.toneHz * 0.5 * t) * character.toneMix * 0.35
+                + sin(2 * .pi * character.lfoHz * t) * character.lfoDepth
+            let shaped = noise * character.noiseMix + tone
+            let envelope = 0.85 + 0.15 * sin(2 * .pi * character.breathHz * t)
+            let value = Float(max(-1, min(1, shaped * character.gain * envelope)))
             left[i] = value
-            right[i] = value * 0.96
+            right[i] = value * Float(character.stereo)
         }
         return buffer
+    }
+
+    private struct ProceduralCharacter {
+        var toneHz: Double
+        var toneMix: Double
+        var noiseMix: Double
+        var lfoHz: Double
+        var lfoDepth: Double
+        var breathHz: Double
+        var gain: Double
+        var stereo: Double
+    }
+
+    private static func proceduralCharacter(for sound: Sound) -> ProceduralCharacter {
+        switch sound.id {
+        case "tokyo_metro", "paris_metro":
+            return ProceduralCharacter(toneHz: 92, toneMix: 0.08, noiseMix: 0.55, lfoHz: 0.35, lfoDepth: 0.04, breathHz: 0.08, gain: 0.07, stereo: 0.94)
+        case "shinkansen", "deep_train":
+            return ProceduralCharacter(toneHz: 68, toneMix: 0.12, noiseMix: 0.48, lfoHz: 0.18, lfoDepth: 0.05, breathHz: 0.05, gain: 0.075, stereo: 0.97)
+        case "istanbul_ferry":
+            return ProceduralCharacter(toneHz: 110, toneMix: 0.06, noiseMix: 0.42, lfoHz: 0.12, lfoDepth: 0.07, breathHz: 0.04, gain: 0.065, stereo: 0.9)
+        case "tokyo_rain", "rain_window":
+            return ProceduralCharacter(toneHz: 220, toneMix: 0.02, noiseMix: 0.72, lfoHz: 0.55, lfoDepth: 0.03, breathHz: 0.11, gain: 0.06, stereo: 0.88)
+        case "night_cafe":
+            return ProceduralCharacter(toneHz: 148, toneMix: 0.09, noiseMix: 0.4, lfoHz: 0.22, lfoDepth: 0.04, breathHz: 0.06, gain: 0.055, stereo: 0.93)
+        case "minka_library":
+            return ProceduralCharacter(toneHz: 180, toneMix: 0.05, noiseMix: 0.28, lfoHz: 0.09, lfoDepth: 0.02, breathHz: 0.03, gain: 0.045, stereo: 0.96)
+        case "kyoto_bamboo":
+            return ProceduralCharacter(toneHz: 260, toneMix: 0.07, noiseMix: 0.32, lfoHz: 0.28, lfoDepth: 0.05, breathHz: 0.07, gain: 0.05, stereo: 0.91)
+        case "temple_bell":
+            return ProceduralCharacter(toneHz: 196, toneMix: 0.16, noiseMix: 0.18, lfoHz: 0.07, lfoDepth: 0.08, breathHz: 0.02, gain: 0.05, stereo: 0.95)
+        case "night_forest":
+            return ProceduralCharacter(toneHz: 130, toneMix: 0.04, noiseMix: 0.38, lfoHz: 0.15, lfoDepth: 0.06, breathHz: 0.035, gain: 0.048, stereo: 0.87)
+        default:
+            return ProceduralCharacter(toneHz: 120, toneMix: 0.05, noiseMix: 0.45, lfoHz: 0.2, lfoDepth: 0.03, breathHz: 0.05, gain: 0.055, stereo: 0.94)
+        }
     }
 
     private func fadeAsync(to volume: Float, on node: AVAudioMixerNode, duration: TimeInterval) async {

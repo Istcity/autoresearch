@@ -39,7 +39,7 @@ struct TimerSelector: View {
                     .hapticButton()
                 }
             }
-            .animation(.spring(response: 0.35, dampingFraction: 0.8), value: selection)
+            .animation(.easeInOut(duration: 0.7), value: selection)
         }
     }
 

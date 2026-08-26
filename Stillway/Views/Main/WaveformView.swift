@@ -9,33 +9,36 @@ struct WaveformView: View {
         let colors = theme.gradient.waveColors
         if reduceMotion {
             LinearGradient(colors: colors, startPoint: .leading, endPoint: .trailing)
-                .opacity(config.opacity * 0.45)
+                .opacity(config.opacity * 0.4)
                 .mask(
-                    RoundedRectangle(cornerRadius: 28, style: .continuous)
+                    RoundedRectangle(cornerRadius: 36, style: .continuous)
                 )
+                .blur(radius: 6)
                 .padding(.horizontal, 24)
         } else {
-            TimelineView(.animation) { timeline in
+            TimelineView(.animation(minimumInterval: 1.0 / 20.0)) { timeline in
                 Canvas { context, size in
                     let t = timeline.date.timeIntervalSinceReferenceDate
                     let layers = max(1, config.layerCount)
                     for layer in 0..<layers {
                         var path = Path()
-                        let layerOffset = Double(layer) * 0.7
-                        let amp = theme.effectiveAmplitude * (1.0 - Double(layer) * 0.18)
-                        let yBase = size.height * 0.55 + CGFloat(layer) * 10
+                        let layerOffset = Double(layer) * 0.85
+                        let amp = theme.effectiveAmplitude * (1.0 - Double(layer) * 0.2)
+                        let yBase = size.height * 0.55 + CGFloat(layer) * 12
                         path.move(to: CGPoint(x: 0, y: yBase))
-                        let steps = Int(size.width / 3)
+                        let steps = Int(size.width / 5)
                         for i in 0...steps {
                             let x = size.width * CGFloat(i) / CGFloat(steps)
-                            let phase = t * config.phaseSpeed + layerOffset + Double(layer) * 0.9
-                            let y = yBase + CGFloat(sin(Double(x) / size.width * .pi * 2 * config.frequency + phase) * amp)
+                            let phase = t * config.phaseSpeed + layerOffset + Double(layer) * 1.1
+                            let slow = sin(Double(x) / size.width * .pi * 2 * config.frequency + phase)
+                            let softer = sin(Double(x) / size.width * .pi * config.frequency * 0.5 + phase * 0.6) * 0.35
+                            let y = yBase + CGFloat((slow + softer) * amp)
                             path.addLine(to: CGPoint(x: x, y: y))
                         }
                         path.addLine(to: CGPoint(x: size.width, y: size.height))
                         path.addLine(to: CGPoint(x: 0, y: size.height))
                         path.closeSubpath()
-                        let gradient = Gradient(colors: colors.map { $0.opacity(config.opacity * (0.55 - Double(layer) * 0.1)) })
+                        let gradient = Gradient(colors: colors.map { $0.opacity(config.opacity * (0.42 - Double(layer) * 0.08)) })
                         context.blendMode = .plusLighter
                         context.fill(
                             path,
@@ -44,6 +47,7 @@ struct WaveformView: View {
                     }
                 }
             }
+            .blur(radius: 4)
             .allowsHitTesting(false)
         }
     }

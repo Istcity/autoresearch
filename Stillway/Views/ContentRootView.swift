@@ -17,7 +17,7 @@ struct ContentRootView: View {
                     .transition(.opacity)
             }
         }
-        .animation(reduceMotion ? .none : .easeInOut(duration: 0.6), value: prefs.first?.onboardingCompleted)
+        .animation(reduceMotion ? .none : .easeInOut(duration: 1.0), value: prefs.first?.onboardingCompleted)
         .sheet(isPresented: Bindable(runtime).showSettings) {
             SettingsSheet()
                 .presentationDetents([.large])

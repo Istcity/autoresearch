@@ -15,6 +15,9 @@ final class PurchaseManager {
     var lastError: String? { errorMessage }
 
     init() {
+        if StillwayTesting.unlockAllFeatures {
+            unlockForPreview()
+        }
         Task { await loadProduct() }
         Task { await listenForTransactions() }
         Task { await refreshEntitlements() }
@@ -81,6 +84,10 @@ final class PurchaseManager {
     }
 
     private func refreshEntitlements() async {
+        if StillwayTesting.unlockAllFeatures || UserDefaults.standard.bool(forKey: "stillway.isPro.debug") {
+            isPro = true
+            return
+        }
         for await entitlement in Transaction.currentEntitlements {
             if case .verified(let transaction) = entitlement, transaction.productID == Self.proProductID {
                 isPro = true

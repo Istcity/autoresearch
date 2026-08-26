@@ -20,6 +20,10 @@ struct StillwayApp: App {
                 .onAppear {
                     contextEngine.localization = lm
                     contextEngine.configure(modelContext: sharedModelContainer.mainContext)
+                    if StillwayTesting.unlockAllFeatures {
+                        purchaseManager.unlockForPreview()
+                        contextEngine.unlockAllFeaturesForTesting()
+                    }
                 }
         }
         .modelContainer(sharedModelContainer)

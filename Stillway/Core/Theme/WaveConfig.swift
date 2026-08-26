@@ -10,19 +10,19 @@ struct WaveConfig: Equatable, Sendable {
     static func config(for context: AppContext) -> WaveConfig {
         switch context {
         case .commute:
-            return WaveConfig(layerCount: 4, frequency: 0.9, amplitude: 32, phaseSpeed: 1.8, opacity: 0.85)
+            return WaveConfig(layerCount: 3, frequency: 0.55, amplitude: 22, phaseSpeed: 0.55, opacity: 0.70)
         case .focus:
-            return WaveConfig(layerCount: 3, frequency: 0.5, amplitude: 24, phaseSpeed: 0.9, opacity: 0.75)
+            return WaveConfig(layerCount: 3, frequency: 0.35, amplitude: 18, phaseSpeed: 0.35, opacity: 0.62)
         case .sleep:
-            return WaveConfig(layerCount: 3, frequency: 0.25, amplitude: 18, phaseSpeed: 0.5, opacity: 0.65)
+            return WaveConfig(layerCount: 2, frequency: 0.18, amplitude: 14, phaseSpeed: 0.22, opacity: 0.55)
         case .reset:
-            return WaveConfig(layerCount: 4, frequency: 0.7, amplitude: 28, phaseSpeed: 1.2, opacity: 0.80)
+            return WaveConfig(layerCount: 3, frequency: 0.42, amplitude: 20, phaseSpeed: 0.42, opacity: 0.65)
         case .walking:
-            return WaveConfig(layerCount: 3, frequency: 1.1, amplitude: 22, phaseSpeed: 2.0, opacity: 0.75)
+            return WaveConfig(layerCount: 3, frequency: 0.48, amplitude: 17, phaseSpeed: 0.48, opacity: 0.62)
         case .deepWork:
-            return WaveConfig(layerCount: 4, frequency: 1.3, amplitude: 36, phaseSpeed: 2.2, opacity: 0.90)
+            return WaveConfig(layerCount: 3, frequency: 0.50, amplitude: 24, phaseSpeed: 0.50, opacity: 0.72)
         case .unknown:
-            return WaveConfig(layerCount: 2, frequency: 0.4, amplitude: 16, phaseSpeed: 0.6, opacity: 0.50)
+            return WaveConfig(layerCount: 2, frequency: 0.28, amplitude: 12, phaseSpeed: 0.28, opacity: 0.45)
         }
     }
 
@@ -30,5 +30,5 @@ struct WaveConfig: Equatable, Sendable {
         config(for: context)
     }
 
-    static let collapsed = WaveConfig(layerCount: 2, frequency: 0.3, amplitude: 0, phaseSpeed: 0.2, opacity: 0)
+    static let collapsed = WaveConfig(layerCount: 2, frequency: 0.2, amplitude: 0, phaseSpeed: 0.12, opacity: 0)
 }

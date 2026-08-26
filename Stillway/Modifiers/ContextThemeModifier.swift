@@ -6,7 +6,7 @@ struct ContextThemeModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .tint(theme.gradient.accentColor)
-            .animation(.easeInOut(duration: 0.6), value: theme.displayedContext)
+            .animation(.easeInOut(duration: 1.2), value: theme.displayedContext)
     }
 }
 

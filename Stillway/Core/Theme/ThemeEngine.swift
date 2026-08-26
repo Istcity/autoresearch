@@ -27,15 +27,15 @@ final class ThemeEngine {
     func transition(to context: AppContext) async {
         guard context != currentContext else { return }
         isTransitioning = true
-        withAnimation(.easeIn(duration: 0.4)) {
-            transitionAmplitude = 0
+        withAnimation(.easeInOut(duration: 1.1)) {
+            transitionAmplitude = 0.15
         }
-        try? await Task.sleep(for: .milliseconds(400))
+        try? await Task.sleep(for: .milliseconds(1100))
         currentContext = context
-        withAnimation(.spring(response: 0.8, dampingFraction: 0.82)) {
+        withAnimation(.easeInOut(duration: 1.6)) {
             transitionAmplitude = 1
         }
-        try? await Task.sleep(for: .milliseconds(800))
+        try? await Task.sleep(for: .milliseconds(1600))
         isTransitioning = false
     }
 }

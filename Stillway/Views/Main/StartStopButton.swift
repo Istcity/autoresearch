@@ -20,8 +20,8 @@ struct StartStopButton: View {
             Circle()
                 .fill(glow.opacity(isPlaying ? 0.14 : 0.08))
                 .frame(width: 160)
-                .blur(radius: 40)
-                .scaleEffect(burst ? 1.12 : 1)
+                .blur(radius: 48)
+                .scaleEffect(burst ? 1.08 : 1)
 
             Circle()
                 .fill(accent.opacity(0.18))
@@ -40,15 +40,17 @@ struct StartStopButton: View {
                 .symbolEffect(.variableColor, isActive: isPlaying)
                 .offset(x: isPlaying ? 0 : 2)
         }
-        .scaleEffect(isPressed ? 0.92 : 1.0)
-        .animation(.spring(response: 0.25, dampingFraction: 0.65), value: isPressed)
+        .scaleEffect(isPressed ? 0.96 : 1.0)
+        .animation(.spring(response: 0.55, dampingFraction: 0.82), value: isPressed)
         .gesture(
             DragGesture(minimumDistance: 0)
                 .onChanged { _ in isPressed = true }
                 .onEnded { _ in
                     isPressed = false
-                    withAnimation(.spring(response: 0.35, dampingFraction: 0.6)) { burst = true }
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { burst = false }
+                    withAnimation(.easeOut(duration: 0.9)) { burst = true }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
+                        withAnimation(.easeInOut(duration: 1.2)) { burst = false }
+                    }
                     action()
                 }
         )

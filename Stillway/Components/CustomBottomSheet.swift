@@ -31,7 +31,7 @@ struct CustomBottomSheet<Content: View>: View {
                             if value.translation.height > 120 {
                                 dismiss()
                             } else {
-                                withAnimation(.spring(response: 0.4, dampingFraction: 0.82)) {
+                                withAnimation(.easeInOut(duration: 0.7)) {
                                     dragOffset = 0
                                 }
                             }
@@ -40,11 +40,11 @@ struct CustomBottomSheet<Content: View>: View {
                 .transition(.move(edge: .bottom).combined(with: .opacity))
             }
         }
-        .animation(.spring(response: 0.4, dampingFraction: 0.82), value: isPresented)
+        .animation(.easeInOut(duration: 0.7), value: isPresented)
     }
 
     private func dismiss() {
-        withAnimation(.spring(response: 0.4, dampingFraction: 0.82)) {
+        withAnimation(.easeInOut(duration: 0.7)) {
             isPresented = false
             dragOffset = 0
         }

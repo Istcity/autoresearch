@@ -14,7 +14,7 @@ struct PulsingDot: View {
                         .scaleEffect(pulse ? 1.35 : 0.85)
                         .opacity(pulse ? 0.15 : 0.7)
                         .animation(
-                            .easeInOut(duration: 1.4).repeatForever(autoreverses: true).delay(Double(i) * 0.18),
+                            .easeInOut(duration: 2.8).repeatForever(autoreverses: true).delay(Double(i) * 0.35),
                             value: pulse
                         )
                 }
