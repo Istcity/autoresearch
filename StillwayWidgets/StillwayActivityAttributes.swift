@@ -8,6 +8,7 @@ struct StillwayActivityAttributes: ActivityAttributes {
         var remainingSeconds: Int
         var accentColorHex: String
         var isPlaying: Bool
+        var atmosphereKind: String
     }
 
     var sessionName: String

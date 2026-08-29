@@ -44,6 +44,8 @@
 		000000000000000000A10044 /* ContextBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10043 /* ContextBadge.swift */; };
 		000000000000000000A10046 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10045 /* MainView.swift */; };
 		000000000000000000A10048 /* MeshBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10047 /* MeshBackgroundView.swift */; };
+		000000000000000000A100D2 /* AtmosphereView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A100D1 /* AtmosphereView.swift */; };
+		000000000000000000A100D4 /* AtmosphereKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A100D3 /* AtmosphereKind.swift */; };
 		000000000000000000A1004A /* SoundMixerRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10049 /* SoundMixerRow.swift */; };
 		000000000000000000A1004C /* StartStopButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A1004B /* StartStopButton.swift */; };
 		000000000000000000A1004E /* TimerRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A1004D /* TimerRing.swift */; };
@@ -136,6 +138,8 @@
 		000000000000000000A10043 /* ContextBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextBadge.swift; sourceTree = "<group>"; };
 		000000000000000000A10045 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		000000000000000000A10047 /* MeshBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeshBackgroundView.swift; sourceTree = "<group>"; };
+		000000000000000000A100D1 /* AtmosphereView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtmosphereView.swift; sourceTree = "<group>"; };
+		000000000000000000A100D3 /* AtmosphereKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtmosphereKind.swift; sourceTree = "<group>"; };
 		000000000000000000A10049 /* SoundMixerRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundMixerRow.swift; sourceTree = "<group>"; };
 		000000000000000000A1004B /* StartStopButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartStopButton.swift; sourceTree = "<group>"; };
 		000000000000000000A1004D /* TimerRing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerRing.swift; sourceTree = "<group>"; };
@@ -354,6 +358,8 @@
 			children = (
 				000000000000000000A10043 /* ContextBadge.swift */,
 				000000000000000000A10045 /* MainView.swift */,
+				000000000000000000A100D3 /* AtmosphereKind.swift */,
+				000000000000000000A100D1 /* AtmosphereView.swift */,
 				000000000000000000A10047 /* MeshBackgroundView.swift */,
 				000000000000000000A10049 /* SoundMixerRow.swift */,
 				000000000000000000A1004B /* StartStopButton.swift */,
@@ -585,6 +591,8 @@
 				000000000000000000A10042 /* ContentRootView.swift in Sources */,
 				000000000000000000A10044 /* ContextBadge.swift in Sources */,
 				000000000000000000A10046 /* MainView.swift in Sources */,
+				000000000000000000A100D4 /* AtmosphereKind.swift in Sources */,
+				000000000000000000A100D2 /* AtmosphereView.swift in Sources */,
 				000000000000000000A10048 /* MeshBackgroundView.swift in Sources */,
 				000000000000000000A1004A /* SoundMixerRow.swift in Sources */,
 				000000000000000000A1004C /* StartStopButton.swift in Sources */,
@@ -666,7 +674,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Stillway/Stillway.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = R9VURFRPRC;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -700,7 +708,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Stillway/Stillway.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = R9VURFRPRC;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -732,7 +740,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = StillwayWidgets/StillwayWidgets.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = R9VURFRPRC;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = StillwayWidgets/Info.plist;
@@ -755,7 +763,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = StillwayWidgets/StillwayWidgets.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = R9VURFRPRC;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = StillwayWidgets/Info.plist;

@@ -115,7 +115,8 @@ final class ContextEngine {
             contextName: localization.string(context.localizationKey),
             soundName: localization.string(sound.localizationKey),
             totalMinutes: selectedTimerMinutes ?? 30,
-            accentHex: "4169E1"
+            accentHex: Self.accentHex(for: context),
+            atmosphereKind: AtmosphereKind.resolve(soundID: sound.id, context: context).rawValue
         )
         if let modelContext {
             modelContext.insert(CommutSession(context: context, soundID: sound.id, triggeredAutomatically: false))
@@ -151,7 +152,15 @@ final class ContextEngine {
         preferences?.lastSoundID = sound.id
         themeEngine.apply(context: sound.context)
         if audioEngine.isPlaying {
-            audioEngine.play(sound: sound)
+            audioEngine.play(sound: sound, fadeDuration: 2.4)
+            liveActivity.update(
+                contextName: localization.string(sound.context.localizationKey),
+                soundName: localization.string(sound.localizationKey),
+                remainingSeconds: audioEngine.remainingSeconds,
+                accentHex: Self.accentHex(for: sound.context),
+                isPlaying: true,
+                atmosphereKind: AtmosphereKind.resolve(soundID: sound.id, context: sound.context).rawValue
+            )
         }
         HapticEngine.select()
     }
@@ -298,6 +307,18 @@ final class ContextEngine {
         guard let current = locationManager.currentLocation else { return nil }
         return places.min { $0.distance(to: current) < $1.distance(to: current) }.flatMap { place in
             place.distance(to: current) < 150 ? place : nil
+        }
+    }
+
+    private static func accentHex(for context: AppContext) -> String {
+        switch context {
+        case .commute: return "4169E1"
+        case .focus: return "0A84FF"
+        case .sleep: return "5E5CE6"
+        case .reset: return "FF9F0A"
+        case .walking: return "30D158"
+        case .deepWork: return "FF453A"
+        case .unknown: return "8A8A8E"
         }
     }
 }

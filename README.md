@@ -89,7 +89,7 @@ Drop seamless-loop `.m4a` files into `Stillway/Resources/Sounds/` using IDs from
 
 `tokyo_metro.m4a`, `shinkansen.m4a`, `paris_metro.m4a`, `istanbul_ferry.m4a`, `tokyo_rain.m4a`, `deep_train.m4a`, `night_cafe.m4a`, `minka_library.m4a`, `kyoto_bamboo.m4a`, `temple_bell.m4a`, `rain_window.m4a`, `night_forest.m4a`
 
-Until those files exist, `AudioEngine` generates looping ambient buffers so the app is playable.
+Until those files exist, `AudioEngine` generates distinct procedural beds. For production loops, use prompts in `SUNO_SOUND_PROMPTS.md`.
 
 ## App Store checklist
 
