@@ -93,6 +93,12 @@
 "privacy_body" = "Stillway tamamen cihaz üzerindedir. Hesap yok, analitik yok, reklam yok.";
 "sounds_title" = "Sesler";
 "mixer_locked" = "Pro ile açılır";
+"binaural_title" = "Binaural ton";
+"binaural_off" = "Kapalı";
+"binaural_delta" = "Delta";
+"binaural_theta" = "Theta";
+"binaural_alpha" = "Alpha";
+"binaural_beta" = "Beta";
 "toast_started" = "Başladı";
 "toast_stopped" = "Durdu";
 "toast_demo_noise" = "Ses dosyası bulunamadı — geçici cızırtı çalıyor. Sounds klasörünü kontrol et.";

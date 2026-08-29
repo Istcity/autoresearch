@@ -93,6 +93,12 @@
 "privacy_body" = "Stillway fonctionne entièrement sur l'appareil. Pas de compte, pas d'analyse, pas de pub.";
 "sounds_title" = "Sons";
 "mixer_locked" = "Débloquer avec Pro";
+"binaural_title" = "Tonalité binaurale";
+"binaural_off" = "Off";
+"binaural_delta" = "Delta";
+"binaural_theta" = "Thêta";
+"binaural_alpha" = "Alpha";
+"binaural_beta" = "Bêta";
 "toast_started" = "Démarré";
 "toast_stopped" = "Arrêté";
 "toast_demo_noise" = "Fichier audio manquant — bruit de démo. Vérifiez le dossier Sounds.";

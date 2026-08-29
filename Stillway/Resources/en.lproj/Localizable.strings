@@ -93,6 +93,12 @@
 "privacy_body" = "Stillway is fully on-device. No accounts, no analytics, no ads.";
 "sounds_title" = "Sounds";
 "mixer_locked" = "Unlock with Pro";
+"binaural_title" = "Binaural tone";
+"binaural_off" = "Off";
+"binaural_delta" = "Delta";
+"binaural_theta" = "Theta";
+"binaural_alpha" = "Alpha";
+"binaural_beta" = "Beta";
 "toast_started" = "Started";
 "toast_stopped" = "Stopped";
 "toast_demo_noise" = "Sound file missing — playing demo noise. Check the Sounds folder.";
