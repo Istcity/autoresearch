@@ -33,6 +33,8 @@ final class AudioEngine {
     var secondaryVolume: Float = 0.5 {
         didSet { secondaryMixer.outputVolume = secondaryVolume }
     }
+    /// Optional binaural layer level (0...1). Kept for mixer/picker UI compatibility.
+    var binauralTone: Float = 0
 
     var isHeadphonesConnected: Bool { headphonesConnected }
     private(set) var headphonesConnected = false
