@@ -35,7 +35,6 @@
 		000000000000000000A10032 /* AppContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10031 /* AppContext.swift */; };
 		000000000000000000A10034 /* LanguageCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10033 /* LanguageCode.swift */; };
 		000000000000000000A10036 /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10035 /* Sound.swift */; };
-		000000000000000000A100F2 /* BinauralTone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A100F1 /* BinauralTone.swift */; };
 		000000000000000000A10038 /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10037 /* Station.swift */; };
 		000000000000000000A1003A /* SwiftDataModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10039 /* SwiftDataModels.swift */; };
 		000000000000000000A1003C /* ContextThemeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A1003B /* ContextThemeModifier.swift */; };
@@ -131,7 +130,6 @@
 		000000000000000000A10031 /* AppContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContext.swift; sourceTree = "<group>"; };
 		000000000000000000A10033 /* LanguageCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageCode.swift; sourceTree = "<group>"; };
 		000000000000000000A10035 /* Sound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sound.swift; sourceTree = "<group>"; };
-		000000000000000000A100F1 /* BinauralTone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinauralTone.swift; sourceTree = "<group>"; };
 		000000000000000000A10037 /* Station.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Station.swift; sourceTree = "<group>"; };
 		000000000000000000A10039 /* SwiftDataModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataModels.swift; sourceTree = "<group>"; };
 		000000000000000000A1003B /* ContextThemeModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextThemeModifier.swift; sourceTree = "<group>"; };
@@ -330,7 +328,6 @@
 				000000000000000000A10031 /* AppContext.swift */,
 				000000000000000000A10033 /* LanguageCode.swift */,
 				000000000000000000A10035 /* Sound.swift */,
-				000000000000000000A100F1 /* BinauralTone.swift */,
 				000000000000000000A10037 /* Station.swift */,
 				000000000000000000A10039 /* SwiftDataModels.swift */,
 			);
@@ -590,7 +587,6 @@
 				000000000000000000A10032 /* AppContext.swift in Sources */,
 				000000000000000000A10034 /* LanguageCode.swift in Sources */,
 				000000000000000000A10036 /* Sound.swift in Sources */,
-				000000000000000000A100F2 /* BinauralTone.swift in Sources */,
 				000000000000000000A10038 /* Station.swift in Sources */,
 				000000000000000000A1003A /* SwiftDataModels.swift in Sources */,
 				000000000000000000A1003C /* ContextThemeModifier.swift in Sources */,
