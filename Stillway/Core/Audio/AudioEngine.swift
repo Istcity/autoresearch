@@ -183,7 +183,10 @@ final class AudioEngine {
     }
 
     private func loadBuffer(for sound: Sound) -> AVAudioPCMBuffer? {
-        guard let url = Bundle.main.url(forResource: sound.fileName, withExtension: "m4a"),
+        let url =
+            Bundle.main.url(forResource: sound.fileName, withExtension: "m4a", subdirectory: "Sounds")
+            ?? Bundle.main.url(forResource: sound.fileName, withExtension: "m4a")
+        guard let url,
               let file = try? AVAudioFile(forReading: url) else { return nil }
         let frames = AVAudioFrameCount(file.length)
         guard let buffer = AVAudioPCMBuffer(pcmFormat: file.processingFormat, frameCapacity: frames) else { return nil }

@@ -68,6 +68,7 @@
 		000000000000000000A10070 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A1006F /* Localizable.xcstrings */; };
 		000000000000000000A10072 /* stations.json in Resources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10071 /* stations.json */; };
 		000000000000000000A10074 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10073 /* PrivacyInfo.xcprivacy */; };
+		000000000000000000A100E1 /* Sounds in Resources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A100E0 /* Sounds */; };
 		000000000000000000A10076 /* tr.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10075 /* tr.lproj */; };
 		000000000000000000A10078 /* ja.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10077 /* ja.lproj */; };
 		000000000000000000A1007A /* en.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10079 /* en.lproj */; };
@@ -162,6 +163,7 @@
 		000000000000000000A1006F /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		000000000000000000A10071 /* stations.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = stations.json; sourceTree = "<group>"; };
 		000000000000000000A10073 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		000000000000000000A100E0 /* Sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Sounds; sourceTree = "<group>"; };
 		000000000000000000A10075 /* tr.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = tr.lproj; sourceTree = "<group>"; };
 		000000000000000000A10077 /* ja.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ja.lproj; sourceTree = "<group>"; };
 		000000000000000000A10079 /* en.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = en.lproj; sourceTree = "<group>"; };
@@ -398,6 +400,7 @@
 				000000000000000000A1006D /* Assets.xcassets */,
 				000000000000000000A1006F /* Localizable.xcstrings */,
 				000000000000000000A10071 /* stations.json */,
+				000000000000000000A100E0 /* Sounds */,
 				000000000000000000A10075 /* tr.lproj */,
 				000000000000000000A10077 /* ja.lproj */,
 				000000000000000000A10079 /* en.lproj */,
@@ -533,6 +536,7 @@
 				000000000000000000A1006E /* Assets.xcassets in Resources */,
 				000000000000000000A10070 /* Localizable.xcstrings in Resources */,
 				000000000000000000A10072 /* stations.json in Resources */,
+				000000000000000000A100E1 /* Sounds in Resources */,
 				000000000000000000A10074 /* PrivacyInfo.xcprivacy in Resources */,
 				000000000000000000A10076 /* tr.lproj in Resources */,
 				000000000000000000A10078 /* ja.lproj in Resources */,
