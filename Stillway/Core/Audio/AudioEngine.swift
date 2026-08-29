@@ -1,4 +1,4 @@
-import AVFoundation
+@preconcurrency import AVFoundation
 import Foundation
 import Observation
 
@@ -251,18 +251,24 @@ final class AudioEngine {
         let ratio = format.sampleRate / max(buffer.format.sampleRate, 1)
         let capacity = AVAudioFrameCount(Double(buffer.frameLength) * ratio) + 64
         guard let out = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: capacity) else { return nil }
+
+        // AVAudioConverterInputBlock is @Sendable; keep mutable state off the stack capture list.
+        final class FeedState: @unchecked Sendable {
+            var didFeed = false
+            let source: AVAudioPCMBuffer
+            init(_ source: AVAudioPCMBuffer) { self.source = source }
+        }
+        let state = FeedState(buffer)
         var error: NSError?
-        var consumed = false
-        let inputBlock: AVAudioConverterInputBlock = { _, outStatus in
-            if consumed {
+        let status = converter.convert(to: out, error: &error) { _, outStatus in
+            if state.didFeed {
                 outStatus.pointee = .noDataNow
                 return nil
             }
-            consumed = true
+            state.didFeed = true
             outStatus.pointee = .haveData
-            return buffer
+            return state.source
         }
-        let status = converter.convert(to: out, error: &error, withInputFrom: inputBlock)
         guard error == nil, status != .error, out.frameLength > 0 else { return nil }
         return out
     }
