@@ -93,6 +93,12 @@
 "privacy_body" = "Stillwayは完全に端末内で動作します。アカウント、分析、広告はありません。";
 "sounds_title" = "サウンド";
 "mixer_locked" = "Proで解除";
+"binaural_title" = "バイノーラル";
+"binaural_off" = "オフ";
+"binaural_delta" = "デルタ";
+"binaural_theta" = "シータ";
+"binaural_alpha" = "アルファ";
+"binaural_beta" = "ベータ";
 "toast_started" = "開始しました";
 "toast_stopped" = "停止しました";
 "toast_demo_noise" = "音声ファイルがありません — デモノイズを再生中。Soundsフォルダを確認してください。";
