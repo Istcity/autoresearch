@@ -95,4 +95,5 @@
 "mixer_locked" = "Pro ile açılır";
 "toast_started" = "Başladı";
 "toast_stopped" = "Durdu";
+"toast_demo_noise" = "Ses dosyası bulunamadı — geçici cızırtı çalıyor. Sounds klasörünü kontrol et.";
 "auto_banner" = "Otomatik oturum başladı";

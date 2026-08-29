@@ -101,15 +101,27 @@ final class ContextEngine {
         try? modelContext.save()
     }
 
+    func prepareDefaultAtmosphereIfNeeded() {
+        if audioEngine.primarySound == nil {
+            let sound = Sound.find("tokyo_rain") ?? Sound.library[4]
+            audioEngine.primarySound = sound
+            currentContext = sound.context
+            themeEngine.currentContext = sound.context
+        }
+    }
+
     func startManually(context: AppContext, sound: Sound) {
         currentContext = context
         triggerType = .manual
         themeEngine.apply(context: context)
         audioEngine.primarySound = sound
         audioEngine.setTimer(minutes: selectedTimerMinutes)
-        audioEngine.play(sound: sound)
+        audioEngine.play(sound: sound, fadeDuration: 2.0)
         if let minutes = selectedTimerMinutes {
             audioEngine.startJourneyArc(minutes: Double(minutes))
+        }
+        if !audioEngine.isUsingFileBed {
+            toast = localization.string("toast_demo_noise")
         }
         liveActivity.start(
             contextName: localization.string(context.localizationKey),
@@ -153,6 +165,9 @@ final class ContextEngine {
         themeEngine.apply(context: sound.context)
         if audioEngine.isPlaying {
             audioEngine.play(sound: sound, fadeDuration: 2.4)
+            if !audioEngine.isUsingFileBed {
+                toast = localization.string("toast_demo_noise")
+            }
             liveActivity.update(
                 contextName: localization.string(sound.context.localizationKey),
                 soundName: localization.string(sound.localizationKey),

@@ -95,4 +95,5 @@
 "mixer_locked" = "Unlock with Pro";
 "toast_started" = "Started";
 "toast_stopped" = "Stopped";
+"toast_demo_noise" = "Sound file missing — playing demo noise. Check the Sounds folder.";
 "auto_banner" = "Auto session started";

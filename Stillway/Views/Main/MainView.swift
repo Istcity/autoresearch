@@ -8,106 +8,60 @@ struct MainView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(PurchaseManager.self) private var store
     @Query private var preferences: [UserPreferences]
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
     var body: some View {
         ZStack {
             AtmosphereView()
                 .ignoresSafeArea()
 
-            // Soft vignette for premium depth
             RadialGradient(
-                colors: [.clear, .black.opacity(0.45)],
+                colors: [.clear, .black.opacity(0.42)],
                 center: .center,
-                startRadius: 80,
-                endRadius: 520
+                startRadius: 60,
+                endRadius: 480
             )
             .ignoresSafeArea()
             .allowsHitTesting(false)
 
             VStack(spacing: 0) {
-                HStack {
-                    Button {
-                        HapticEngine.tap()
-                        runtime.showPlaces = true
-                    } label: {
-                        Image(systemName: "location.north.fill")
-                            .font(.system(size: 20, weight: .medium))
-                            .foregroundStyle(.white.opacity(0.55))
-                            .frame(width: 40, height: 40)
-                            .background(.ultraThinMaterial.opacity(0.35), in: Circle())
-                    }
-                    .accessibilityLabel(lm.string("places_title"))
-                    Spacer()
-                    atmosphereChip
-                    Spacer()
-                    Button {
-                        HapticEngine.tap()
-                        runtime.showSettings = true
-                    } label: {
-                        Image(systemName: "gearshape.fill")
-                            .font(.system(size: 20, weight: .medium))
-                            .foregroundStyle(.white.opacity(0.55))
-                            .frame(width: 40, height: 40)
-                            .background(.ultraThinMaterial.opacity(0.35), in: Circle())
-                    }
-                    .accessibilityLabel(lm.string("settings_title"))
-                }
-                .padding(.top, 56)
-                .padding(.horizontal, 22)
+                topBar
+                    .padding(.horizontal, 20)
+                    .padding(.top, 8)
 
-                Spacer(minLength: 24)
+                Spacer(minLength: 12)
 
                 ContextBadge(
                     context: theme.currentContext,
                     isAutomatic: runtime.triggerType == .automatic
                 )
 
-                Spacer(minLength: 16)
+                if !runtime.audio.isUsingFileBed, runtime.audio.isPlaying {
+                    Text(lm.string("toast_demo_noise"))
+                        .font(.system(size: 11, weight: .medium, design: .rounded))
+                        .foregroundStyle(.orange.opacity(0.9))
+                        .padding(.top, 8)
+                }
+
+                Spacer(minLength: 8)
 
                 WaveformView()
-                    .frame(height: 150)
+                    .frame(height: horizontalSizeClass == .compact ? 110 : 150)
                     .padding(.horizontal, 8)
 
-                Spacer(minLength: 16)
+                Spacer(minLength: 8)
 
-                if runtime.audio.isPlaying {
-                    TimerRing(
-                        progress: ringProgress,
-                        seconds: runtime.audio.remainingSeconds
-                    )
-                    .padding(.bottom, 12)
-                }
-
-                StartStopButton(isPlaying: runtime.audio.isPlaying) {
-                    runtime.handleStartStop(preferences: preferences.first)
-                }
-                .padding(.bottom, 20)
-
-                TimerSelector(
-                    selection: runtime.selectedTimerMinutes,
-                    remainingSeconds: nil
-                ) { minutes in
-                    runtime.selectTimer(minutes)
-                }
-                .padding(.bottom, 16)
-
-                SoundMixerRow(
-                    sound: runtime.audio.primarySound ?? Sound.find("tokyo_rain")!,
-                    volume: Bindable(runtime.audio).primaryVolume,
-                    secondaryVolume: Bindable(runtime.audio).secondaryVolume,
-                    isPro: store.isPro || preferences.first?.isPro == true
-                ) {
-                    runtime.showSounds = true
-                }
-                .padding(.horizontal, 24)
-                .padding(.bottom, 44)
+                bottomControls
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            .safeAreaPadding(.bottom, 8)
 
             if runtime.showAutoBanner {
                 AutoStartBanner(text: lm.string("auto_banner"))
                     .transition(.move(edge: .top).combined(with: .opacity))
-                    .padding(.top, 96)
+                    .padding(.top, 8)
                     .frame(maxHeight: .infinity, alignment: .top)
+                    .safeAreaPadding(.top, 8)
             }
 
             if let toast = runtime.toast {
@@ -115,13 +69,15 @@ struct MainView: View {
                     Spacer()
                     Text(toast)
                         .font(.system(size: 13, weight: .medium, design: .rounded))
+                        .multilineTextAlignment(.center)
                         .padding(.horizontal, 16)
                         .padding(.vertical, 10)
                         .background(.ultraThinMaterial, in: Capsule())
                         .padding(.bottom, 12)
                 }
+                .safeAreaPadding(.bottom, 8)
                 .onAppear {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.6) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.2) {
                         runtime.toast = nil
                     }
                 }
@@ -129,6 +85,74 @@ struct MainView: View {
         }
         .contextThemed()
         .onAppear { ensurePreferences() }
+    }
+
+    private var topBar: some View {
+        HStack(spacing: 10) {
+            Button {
+                HapticEngine.tap()
+                runtime.showPlaces = true
+            } label: {
+                Image(systemName: "location.north.fill")
+                    .font(.system(size: 18, weight: .medium))
+                    .foregroundStyle(.white.opacity(0.55))
+                    .frame(width: 40, height: 40)
+                    .background(.ultraThinMaterial.opacity(0.35), in: Circle())
+            }
+            .accessibilityLabel(lm.string("places_title"))
+
+            Spacer(minLength: 4)
+
+            atmosphereChip
+                .layoutPriority(1)
+
+            Spacer(minLength: 4)
+
+            Button {
+                HapticEngine.tap()
+                runtime.showSettings = true
+            } label: {
+                Image(systemName: "gearshape.fill")
+                    .font(.system(size: 18, weight: .medium))
+                    .foregroundStyle(.white.opacity(0.55))
+                    .frame(width: 40, height: 40)
+                    .background(.ultraThinMaterial.opacity(0.35), in: Circle())
+            }
+            .accessibilityLabel(lm.string("settings_title"))
+        }
+    }
+
+    private var bottomControls: some View {
+        VStack(spacing: 12) {
+            if runtime.audio.isPlaying {
+                TimerRing(
+                    progress: ringProgress,
+                    seconds: runtime.audio.remainingSeconds
+                )
+            }
+
+            StartStopButton(isPlaying: runtime.audio.isPlaying) {
+                runtime.handleStartStop(preferences: preferences.first)
+            }
+
+            TimerSelector(
+                selection: runtime.selectedTimerMinutes,
+                remainingSeconds: nil
+            ) { minutes in
+                runtime.selectTimer(minutes)
+            }
+
+            SoundMixerRow(
+                sound: runtime.audio.primarySound ?? Sound.find("tokyo_rain")!,
+                volume: Bindable(runtime.audio).primaryVolume,
+                secondaryVolume: Bindable(runtime.audio).secondaryVolume,
+                isPro: store.isPro || preferences.first?.isPro == true
+            ) {
+                runtime.showSounds = true
+            }
+            .padding(.horizontal, 20)
+        }
+        .padding(.bottom, 8)
     }
 
     private var atmosphereChip: some View {
@@ -141,13 +165,15 @@ struct MainView: View {
                 .font(.system(size: 11, weight: .semibold))
             Text("STILLWAY")
                 .font(.system(size: 11, weight: .bold, design: .rounded))
-                .tracking(1.4)
+                .tracking(1.2)
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
         }
-        .foregroundStyle(theme.gradient.accentColor.opacity(0.9))
+        .foregroundStyle(theme.gradient.accentColor.opacity(0.95))
         .padding(.horizontal, 12)
         .padding(.vertical, 7)
-        .background(theme.gradient.accentColor.opacity(0.12), in: Capsule())
-        .overlay(Capsule().stroke(theme.gradient.accentColor.opacity(0.2), lineWidth: 0.8))
+        .background(theme.gradient.accentColor.opacity(0.14), in: Capsule())
+        .overlay(Capsule().stroke(theme.gradient.accentColor.opacity(0.25), lineWidth: 0.8))
     }
 
     private var ringProgress: Double {
@@ -160,6 +186,7 @@ struct MainView: View {
         if preferences.isEmpty {
             modelContext.insert(UserPreferences())
         }
+        runtime.prepareDefaultAtmosphereIfNeeded()
     }
 }
 

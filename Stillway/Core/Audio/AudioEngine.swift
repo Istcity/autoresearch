@@ -20,9 +20,12 @@ final class AudioEngine {
     private let secondaryPlayer = AVAudioPlayerNode()
 
     private(set) var isPlaying = false
+    /// True when the last scheduled bed came from a bundled audio file (not procedural noise).
+    private(set) var isUsingFileBed = false
     var primarySound: Sound?
     var secondarySound: Sound?
     var journeyPhase: JourneyPhase = .idle
+    var lastLoadNote: String?
 
     var primaryVolume: Float = 0.8 {
         didSet { primaryMixer.outputVolume = primaryVolume }
@@ -159,7 +162,8 @@ final class AudioEngine {
         engine.attach(primaryMixer)
         engine.attach(secondaryMixer)
         engine.attach(masterMixer)
-        let format = engine.mainMixerNode.outputFormat(forBus: 0)
+        // Fixed graph format — every bed is converted into this before scheduling.
+        let format = Self.playbackFormat
         engine.connect(primaryPlayer, to: primaryMixer, format: format)
         engine.connect(secondaryPlayer, to: secondaryMixer, format: format)
         engine.connect(primaryMixer, to: masterMixer, format: format)
@@ -170,6 +174,8 @@ final class AudioEngine {
         masterMixer.outputVolume = 1
     }
 
+    private static let playbackFormat = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 2)!
+
     private func startEngineIfNeeded() {
         guard !engine.isRunning else { return }
         try? engine.start()
@@ -178,26 +184,93 @@ final class AudioEngine {
     private func schedule(player: AVAudioPlayerNode, sound: Sound) {
         player.stop()
         player.reset()
-        let buffer = loadBuffer(for: sound) ?? Self.makeProceduralBuffer(for: sound)
-        player.scheduleBuffer(buffer, at: nil, options: .loops)
+        if let fileBuffer = loadBuffer(for: sound) {
+            isUsingFileBed = true
+            lastLoadNote = nil
+            player.scheduleBuffer(fileBuffer, at: nil, options: .loops)
+        } else {
+            isUsingFileBed = false
+            lastLoadNote = "missing:\(sound.fileName)"
+            player.scheduleBuffer(Self.makeProceduralBuffer(for: sound), at: nil, options: .loops)
+        }
     }
 
     private func loadBuffer(for sound: Sound) -> AVAudioPCMBuffer? {
-        let url =
-            Bundle.main.url(forResource: sound.fileName, withExtension: "m4a", subdirectory: "Sounds")
-            ?? Bundle.main.url(forResource: sound.fileName, withExtension: "m4a")
-        guard let url,
-              let file = try? AVAudioFile(forReading: url) else { return nil }
-        let frames = AVAudioFrameCount(file.length)
-        guard let buffer = AVAudioPCMBuffer(pcmFormat: file.processingFormat, frameCapacity: frames) else { return nil }
-        try? file.read(into: buffer)
-        return buffer
+        guard let url = findSoundURL(for: sound) else { return nil }
+        guard let file = try? AVAudioFile(forReading: url) else { return nil }
+        let frameCount = AVAudioFrameCount(file.length)
+        guard frameCount > 0 else { return nil }
+        guard let source = AVAudioPCMBuffer(pcmFormat: file.processingFormat, frameCapacity: frameCount) else { return nil }
+        do {
+            try file.read(into: source)
+        } catch {
+            return nil
+        }
+        return convert(buffer: source, to: Self.playbackFormat)
+    }
+
+    private func findSoundURL(for sound: Sound) -> URL? {
+        let extensions = ["m4a", "mp3", "wav", "caf", "aac", "M4A", "MP3", "WAV"]
+        for ext in extensions {
+            if let url = Bundle.main.url(forResource: sound.fileName, withExtension: ext, subdirectory: "Sounds") {
+                return url
+            }
+            if let url = Bundle.main.url(forResource: sound.fileName, withExtension: ext, subdirectory: "Resources/Sounds") {
+                return url
+            }
+            if let url = Bundle.main.url(forResource: sound.fileName, withExtension: ext) {
+                return url
+            }
+        }
+        // Last resort: scan the whole resource bundle (case-insensitive stem match).
+        guard let root = Bundle.main.resourceURL else { return nil }
+        let allowed = Set(extensions.map { $0.lowercased() })
+        if let enumerator = FileManager.default.enumerator(
+            at: root,
+            includingPropertiesForKeys: [.isRegularFileKey],
+            options: [.skipsHiddenFiles]
+        ) {
+            for case let url as URL in enumerator {
+                let ext = url.pathExtension.lowercased()
+                guard allowed.contains(ext) else { continue }
+                if url.deletingPathExtension().lastPathComponent.caseInsensitiveCompare(sound.fileName) == .orderedSame {
+                    return url
+                }
+            }
+        }
+        return nil
+    }
+
+    private func convert(buffer: AVAudioPCMBuffer, to format: AVAudioFormat) -> AVAudioPCMBuffer? {
+        let same =
+            abs(buffer.format.sampleRate - format.sampleRate) < 0.5
+            && buffer.format.channelCount == format.channelCount
+            && buffer.format.commonFormat == format.commonFormat
+        if same { return buffer }
+        guard let converter = AVAudioConverter(from: buffer.format, to: format) else { return nil }
+        let ratio = format.sampleRate / max(buffer.format.sampleRate, 1)
+        let capacity = AVAudioFrameCount(Double(buffer.frameLength) * ratio) + 64
+        guard let out = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: capacity) else { return nil }
+        var error: NSError?
+        var consumed = false
+        let inputBlock: AVAudioConverterInputBlock = { _, outStatus in
+            if consumed {
+                outStatus.pointee = .noDataNow
+                return nil
+            }
+            consumed = true
+            outStatus.pointee = .haveData
+            return buffer
+        }
+        let status = converter.convert(to: out, error: &error, withInputFrom: inputBlock)
+        guard error == nil, status != .error, out.frameLength > 0 else { return nil }
+        return out
     }
 
     private static func makeProceduralBuffer(for sound: Sound) -> AVAudioPCMBuffer {
-        let sampleRate: Double = 44_100
+        let sampleRate = Self.playbackFormat.sampleRate
         let frames = AVAudioFrameCount(sampleRate * 10)
-        let format = AVAudioFormat(standardFormatWithSampleRate: sampleRate, channels: 2)!
+        let format = Self.playbackFormat
         let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: frames)!
         buffer.frameLength = frames
         var rng = SplitMix64(state: UInt64(sound.id.utf8.reduce(0) { $0 &+ UInt64($1) }) &+ 0x9E37_79B9)

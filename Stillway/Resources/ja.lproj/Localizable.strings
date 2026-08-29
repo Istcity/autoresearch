@@ -95,4 +95,5 @@
 "mixer_locked" = "Proで解除";
 "toast_started" = "開始しました";
 "toast_stopped" = "停止しました";
+"toast_demo_noise" = "音声ファイルがありません — デモノイズを再生中。Soundsフォルダを確認してください。";
 "auto_banner" = "自動セッション開始";

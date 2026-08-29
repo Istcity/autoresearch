@@ -95,4 +95,5 @@
 "mixer_locked" = "Débloquer avec Pro";
 "toast_started" = "Démarré";
 "toast_stopped" = "Arrêté";
+"toast_demo_noise" = "Fichier audio manquant — bruit de démo. Vérifiez le dossier Sounds.";
 "auto_banner" = "Session auto démarrée";
