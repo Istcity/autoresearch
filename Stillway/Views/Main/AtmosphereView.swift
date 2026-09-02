@@ -5,39 +5,84 @@ struct AtmosphereView: View {
     @Environment(ThemeEngine.self) private var theme
     @Environment(AudioEngine.self) private var audio
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var fromKind: AtmosphereKind = .mist
+    @State private var toKind: AtmosphereKind = .mist
+    @State private var kindBlend: Double = 1
+
+    private var targetKind: AtmosphereKind {
+        AtmosphereKind.resolve(soundID: audio.primarySound?.id, context: theme.currentContext)
+    }
 
     var body: some View {
-        let kind = AtmosphereKind.resolve(soundID: audio.primarySound?.id, context: theme.currentContext)
         let colors = theme.gradient
         let playing = audio.isPlaying
+        let blend = kindBlend
 
         TimelineView(.animation(minimumInterval: reduceMotion ? 1.0 : 1.0 / 18.0, paused: reduceMotion)) { timeline in
             let t = timeline.date.timeIntervalSinceReferenceDate
             let energy = playing ? 1.0 : 0.82
             Canvas { context, size in
                 drawBackdrop(context: context, size: size, colors: colors)
-                switch kind {
-                case .aurora:
-                    drawAurora(context: context, size: size, t: t, colors: colors, energy: energy)
-                case .rain:
-                    drawRain(context: context, size: size, t: t, colors: colors, energy: energy)
-                case .lava:
-                    drawLava(context: context, size: size, t: t, colors: colors, energy: energy)
-                case .stream:
-                    drawStream(context: context, size: size, t: t, colors: colors, energy: energy)
-                case .mist:
-                    drawMist(context: context, size: size, t: t, colors: colors, energy: energy)
-                case .ember:
-                    drawEmber(context: context, size: size, t: t, colors: colors, energy: energy)
+                if fromKind != toKind, blend < 0.999 {
+                    var outgoing = context
+                    outgoing.opacity = 1 - blend
+                    drawKind(fromKind, context: &outgoing, size: size, t: t, colors: colors, energy: energy)
+                    var incoming = context
+                    incoming.opacity = blend
+                    drawKind(toKind, context: &incoming, size: size, t: t, colors: colors, energy: energy)
+                } else {
+                    var layer = context
+                    drawKind(toKind, context: &layer, size: size, t: t, colors: colors, energy: energy)
                 }
                 drawDepthOrbs(context: context, size: size, t: t, colors: colors, energy: energy)
                 drawSoftHorizon(context: context, size: size, t: t, colors: colors, energy: energy)
             }
         }
         .blur(radius: reduceMotion ? 0 : 1.5)
-        .animation(.easeInOut(duration: 1.6), value: theme.currentContext)
-        .animation(.easeInOut(duration: 1.2), value: audio.primarySound?.id)
+        .onAppear {
+            fromKind = targetKind
+            toKind = targetKind
+            kindBlend = 1
+        }
+        .onChange(of: targetKind) { _, newKind in
+            guard newKind != toKind else { return }
+            fromKind = toKind
+            toKind = newKind
+            if reduceMotion {
+                kindBlend = 1
+                return
+            }
+            kindBlend = 0
+            withAnimation(.easeInOut(duration: ThemeEngine.morphDuration)) {
+                kindBlend = 1
+            }
+        }
+        .animation(.easeInOut(duration: ThemeEngine.morphDuration), value: theme.blendProgress)
         .allowsHitTesting(false)
+    }
+
+    private func drawKind(
+        _ kind: AtmosphereKind,
+        context: inout GraphicsContext,
+        size: CGSize,
+        t: Double,
+        colors: ContextGradient,
+        energy: Double
+    ) {
+        switch kind {
+        case .aurora:
+            drawAurora(context: context, size: size, t: t, colors: colors, energy: energy)
+        case .rain:
+            drawRain(context: context, size: size, t: t, colors: colors, energy: energy)
+        case .lava:
+            drawLava(context: context, size: size, t: t, colors: colors, energy: energy)
+        case .stream:
+            drawStream(context: context, size: size, t: t, colors: colors, energy: energy)
+        case .mist:
+            drawMist(context: context, size: size, t: t, colors: colors, energy: energy)
+        case .ember:
+            drawEmber(context: context, size: size, t: t, colors: colors, energy: energy)
+        }
     }
 
     // MARK: - Layers

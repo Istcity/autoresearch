@@ -106,7 +106,7 @@ final class ContextEngine {
             let sound = Sound.find("tokyo_rain") ?? Sound.library[4]
             audioEngine.primarySound = sound
             currentContext = sound.context
-            themeEngine.currentContext = sound.context
+            themeEngine.setImmediate(sound.context)
         }
     }
 
