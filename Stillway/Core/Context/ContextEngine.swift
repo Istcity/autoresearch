@@ -187,7 +187,21 @@ final class ContextEngine {
     }
 
     func completeOnboarding() {
-        locationManager.requestAlwaysAuthorization()
+        Task {
+            await requestStartupPermissions()
+        }
+    }
+
+    /// Ask for location + motion + notifications once, persist that we asked.
+    func requestStartupPermissions() async {
+        let prefs = fetchPreferences()
+        await PermissionBootstrap.requestAll(
+            location: locationManager,
+            motion: motionClassifier,
+            preferences: prefs
+        ) { [weak self] in
+            try? self?.modelContext?.save()
+        }
     }
 
     private func startTicker() {

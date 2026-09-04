@@ -34,13 +34,19 @@ struct PlacesSheet: View {
                                         VStack(alignment: .leading, spacing: 4) {
                                             Text(place.customName ?? lm.string(place.label.localizationKey))
                                                 .font(.system(size: 17))
+                                                .lineLimit(1)
+                                                .minimumScaleFactor(0.8)
                                             Text("\(place.visitCount) \(lm.string("places_visits"))")
                                                 .font(.system(size: 13))
                                                 .foregroundStyle(.white.opacity(0.45))
+                                                .lineLimit(1)
                                             Text(lm.string("places_last_seen") + " " + place.lastSeen.formatted(date: .abbreviated, time: .shortened))
                                                 .font(.system(size: 11))
                                                 .foregroundStyle(.white.opacity(0.35))
+                                                .lineLimit(1)
+                                                .minimumScaleFactor(0.75)
                                         }
+                                        .frame(maxWidth: .infinity, alignment: .leading)
                                         Spacer()
                                         Toggle("", isOn: Binding(
                                             get: { place.autoStartEnabled },

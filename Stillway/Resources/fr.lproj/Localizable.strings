@@ -35,7 +35,7 @@
 "btn_done" = "OK";
 "btn_begin" = "Commencer";
 "timer_min" = "min";
-"timer_until_end" = "Jusqu'à l'arrivée";
+"timer_until_end" = "Arrivée";
 "volume" = "Volume";
 "mix_layer" = "Couche secondaire";
 "pro_badge" = "Pro";

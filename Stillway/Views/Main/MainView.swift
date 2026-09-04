@@ -40,6 +40,10 @@ struct MainView: View {
                     Text(lm.string("toast_demo_noise"))
                         .font(.system(size: 11, weight: .medium, design: .rounded))
                         .foregroundStyle(.orange.opacity(0.9))
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 24)
                         .padding(.top, 8)
                 }
 
@@ -167,11 +171,12 @@ struct MainView: View {
                 .font(.system(size: 11, weight: .bold, design: .rounded))
                 .tracking(1.2)
                 .lineLimit(1)
-                .minimumScaleFactor(0.8)
+                .minimumScaleFactor(0.75)
         }
         .foregroundStyle(theme.gradient.accentColor.opacity(0.95))
         .padding(.horizontal, 12)
         .padding(.vertical, 7)
+        .fixedSize(horizontal: true, vertical: true)
         .background(theme.gradient.accentColor.opacity(0.14), in: Capsule())
         .overlay(Capsule().stroke(theme.gradient.accentColor.opacity(0.25), lineWidth: 0.8))
     }
@@ -197,9 +202,12 @@ private struct AutoStartBanner: View {
             PulsingDot()
             Text(text)
                 .font(.system(size: 13, weight: .semibold, design: .rounded))
+                .lineLimit(1)
+                .minimumScaleFactor(0.75)
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 10)
+        .fixedSize(horizontal: false, vertical: true)
         .background(.ultraThinMaterial, in: Capsule())
     }
 }

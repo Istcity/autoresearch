@@ -35,7 +35,7 @@
 "btn_done" = "完了";
 "btn_begin" = "始める";
 "timer_min" = "分";
-"timer_until_end" = "到着まで";
+"timer_until_end" = "到着";
 "volume" = "音量";
 "mix_layer" = "セカンダリ";
 "pro_badge" = "Pro";

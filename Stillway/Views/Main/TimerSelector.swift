@@ -15,16 +15,19 @@ struct TimerSelector: View {
             if let remainingSeconds {
                 TimerRing(progress: ringProgress(remainingSeconds), seconds: remainingSeconds)
             }
-            HStack(spacing: 8) {
+            HStack(spacing: 6) {
                 ForEach(Array(options.enumerated()), id: \.offset) { _, option in
                     let selected = selection == option
                     Button {
                         onSelect(option)
                     } label: {
                         Text(label(for: option))
-                            .font(.system(size: 13, weight: .medium))
+                            .font(.system(size: 12, weight: .medium))
                             .foregroundStyle(selected ? Color.white : Color.white.opacity(0.5))
-                            .padding(.horizontal, 20)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.65)
+                            .frame(maxWidth: .infinity)
+                            .padding(.horizontal, 8)
                             .padding(.vertical, 8)
                             .background {
                                 if selected {
@@ -39,6 +42,8 @@ struct TimerSelector: View {
                     .hapticButton()
                 }
             }
+            .frame(maxWidth: .infinity)
+            .padding(.horizontal, 16)
             .animation(.easeInOut(duration: 0.7), value: selection)
         }
     }
