@@ -1,0 +1,46 @@
+{
+  "identifier" : "StillwayStore",
+  "nonRenewingSubscriptions" : [],
+
+  "products" : [
+    {
+      "displayPrice" : "4.99",
+      "familyShareable" : false,
+      "internalID" : "A100000000000001",
+      "localizations" : [
+        {
+          "description" : "Unlock all 12 sounds, auto-start, mixing, and sleep automation.",
+          "displayName" : "Stillway Pro",
+          "locale" : "en_US"
+        },
+        {
+          "description" : "12 ses, otomatik başlatma, miksleme ve uyku otomasyonu.",
+          "displayName" : "Stillway Pro",
+          "locale" : "tr"
+        },
+        {
+          "description" : "全12サウンド、自動スタート、ミックス、睡眠オートメーション。",
+          "displayName" : "Stillway Pro",
+          "locale" : "ja"
+        },
+        {
+          "description" : "Les 12 sons, démarrage auto, mixage et sommeil automatique.",
+          "displayName" : "Stillway Pro",
+          "locale" : "fr"
+        }
+      ],
+      "productID" : "com.sinannergiz.stillway.pro",
+      "referenceName" : "Stillway Pro",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+    "_applicationInternalID" : "0",
+    "_developerTeamID" : "R9VURFRPRC"
+  },
+  "subscriptionGroups" : [],
+  "version" : {
+    "major" : 3,
+    "minor" : 0
+  }
+}

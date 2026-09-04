@@ -1,0 +1,854 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		000000000000000000A10002 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10001 /* AppDelegate.swift */; };
+		000000000000000000A10004 /* StillwayApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10003 /* StillwayApp.swift */; };
+		000000000000000000A10006 /* CustomBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10005 /* CustomBottomSheet.swift */; };
+		000000000000000000A10008 /* GlassCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10007 /* GlassCard.swift */; };
+		000000000000000000A1000A /* GradientText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10009 /* GradientText.swift */; };
+		000000000000000000A1000C /* PillButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A1000B /* PillButton.swift */; };
+		000000000000000000A1000E /* PulsingDot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A1000D /* PulsingDot.swift */; };
+		000000000000000000A10010 /* AudioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A1000F /* AudioEngine.swift */; };
+		000000000000000000A10012 /* ContextEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10011 /* ContextEngine.swift */; };
+		000000000000000000A100F4 /* PermissionBootstrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A100F3 /* PermissionBootstrap.swift */; };
+		000000000000000000A100F6 /* NotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A100F5 /* NotificationScheduler.swift */; };
+		000000000000000000A100F8 /* TrainHeuristicClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A100F7 /* TrainHeuristicClassifier.swift */; };
+		000000000000000000A10014 /* ContextTransitionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10013 /* ContextTransitionEngine.swift */; };
+		000000000000000000A10016 /* MotionClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10015 /* MotionClassifier.swift */; };
+		000000000000000000A10018 /* SleepDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10017 /* SleepDetector.swift */; };
+		000000000000000000A1001A /* VisitTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10019 /* VisitTracker.swift */; };
+		000000000000000000A1001C /* LiveActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A1001B /* LiveActivityManager.swift */; };
+		000000000000000000A1001E /* HapticBreathingEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A1001D /* HapticBreathingEngine.swift */; };
+		000000000000000000A10020 /* HapticEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A1001F /* HapticEngine.swift */; };
+		000000000000000000A10022 /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10021 /* LocalizationManager.swift */; };
+		000000000000000000A10024 /* GeofenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10023 /* GeofenceManager.swift */; };
+		000000000000000000A10026 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10025 /* LocationManager.swift */; };
+		000000000000000000A10028 /* StationDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10027 /* StationDatabase.swift */; };
+		000000000000000000A1002A /* PurchaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10029 /* PurchaseManager.swift */; };
+		000000000000000000A100C2 /* StillwayTesting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A100C1 /* StillwayTesting.swift */; };
+		000000000000000000A1002C /* ContextGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A1002B /* ContextGradient.swift */; };
+		000000000000000000A1002E /* ThemeEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A1002D /* ThemeEngine.swift */; };
+		000000000000000000A10030 /* WaveConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A1002F /* WaveConfig.swift */; };
+		000000000000000000A10032 /* AppContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10031 /* AppContext.swift */; };
+		000000000000000000A10034 /* LanguageCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10033 /* LanguageCode.swift */; };
+		000000000000000000A10036 /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10035 /* Sound.swift */; };
+		000000000000000000A10038 /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10037 /* Station.swift */; };
+		000000000000000000A1003A /* SwiftDataModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10039 /* SwiftDataModels.swift */; };
+		000000000000000000A1003C /* ContextThemeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A1003B /* ContextThemeModifier.swift */; };
+		000000000000000000A1003E /* HapticButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A1003D /* HapticButtonStyle.swift */; };
+		000000000000000000A10040 /* ReduceMotionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A1003F /* ReduceMotionModifier.swift */; };
+		000000000000000000A10042 /* ContentRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10041 /* ContentRootView.swift */; };
+		000000000000000000A10044 /* ContextBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10043 /* ContextBadge.swift */; };
+		000000000000000000A10046 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10045 /* MainView.swift */; };
+		000000000000000000A10048 /* MeshBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10047 /* MeshBackgroundView.swift */; };
+		000000000000000000A100D2 /* AtmosphereView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A100D1 /* AtmosphereView.swift */; };
+		000000000000000000A100D4 /* AtmosphereKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A100D3 /* AtmosphereKind.swift */; };
+		000000000000000000A1004A /* SoundMixerRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10049 /* SoundMixerRow.swift */; };
+		000000000000000000A1004C /* StartStopButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A1004B /* StartStopButton.swift */; };
+		000000000000000000A1004E /* TimerRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A1004D /* TimerRing.swift */; };
+		000000000000000000A10050 /* TimerSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A1004F /* TimerSelector.swift */; };
+		000000000000000000A10052 /* WaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10051 /* WaveformView.swift */; };
+		000000000000000000A10054 /* OnboardPage1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10053 /* OnboardPage1.swift */; };
+		000000000000000000A10056 /* OnboardPage2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10055 /* OnboardPage2.swift */; };
+		000000000000000000A10058 /* OnboardPage3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10057 /* OnboardPage3.swift */; };
+		000000000000000000A1005A /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10059 /* OnboardingView.swift */; };
+		000000000000000000A1005C /* PlaceLabelSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A1005B /* PlaceLabelSheet.swift */; };
+		000000000000000000A1005E /* PlacesSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A1005D /* PlacesSheet.swift */; };
+		000000000000000000A10060 /* SettingsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A1005F /* SettingsSheet.swift */; };
+		000000000000000000A10062 /* SoundPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10061 /* SoundPickerSheet.swift */; };
+		000000000000000000A10064 /* HomeScreenWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10063 /* HomeScreenWidget.swift */; };
+		000000000000000000A10066 /* LockScreenWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10065 /* LockScreenWidget.swift */; };
+		000000000000000000A10068 /* StillwayActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10067 /* StillwayActivityAttributes.swift */; };
+		000000000000000000A1006A /* StillwayLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10069 /* StillwayLiveActivity.swift */; };
+		000000000000000000A1006C /* StillwayWidgetsBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A1006B /* StillwayWidgetsBundle.swift */; };
+		000000000000000000A1006E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A1006D /* Assets.xcassets */; };
+		000000000000000000A10070 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A1006F /* Localizable.xcstrings */; };
+		000000000000000000A10072 /* stations.json in Resources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10071 /* stations.json */; };
+		000000000000000000A10074 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10073 /* PrivacyInfo.xcprivacy */; };
+		000000000000000000A100E1 /* Sounds in Resources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A100E0 /* Sounds */; };
+		000000000000000000A10076 /* tr.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10075 /* tr.lproj */; };
+		000000000000000000A10078 /* ja.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10077 /* ja.lproj */; };
+		000000000000000000A1007A /* en.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10079 /* en.lproj */; };
+		000000000000000000A1007C /* fr.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A1007B /* fr.lproj */; };
+		000000000000000000A10085 /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 000000000000000000A10083 /* GRDB */; };
+		000000000000000000A10086 /* StillwayWidgets.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10082 /* StillwayWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		000000000000000000A100A8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 000000000000000000A1009F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 000000000000000000A1009E;
+			remoteInfo = StillwayWidgets;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		000000000000000000A100A6 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				000000000000000000A10086 /* StillwayWidgets.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		000000000000000000A10001 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		000000000000000000A10003 /* StillwayApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StillwayApp.swift; sourceTree = "<group>"; };
+		000000000000000000A10005 /* CustomBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBottomSheet.swift; sourceTree = "<group>"; };
+		000000000000000000A10007 /* GlassCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassCard.swift; sourceTree = "<group>"; };
+		000000000000000000A10009 /* GradientText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientText.swift; sourceTree = "<group>"; };
+		000000000000000000A1000B /* PillButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillButton.swift; sourceTree = "<group>"; };
+		000000000000000000A1000D /* PulsingDot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulsingDot.swift; sourceTree = "<group>"; };
+		000000000000000000A1000F /* AudioEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioEngine.swift; sourceTree = "<group>"; };
+		000000000000000000A10011 /* ContextEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextEngine.swift; sourceTree = "<group>"; };
+		000000000000000000A100F3 /* PermissionBootstrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionBootstrap.swift; sourceTree = "<group>"; };
+		000000000000000000A100F5 /* NotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationScheduler.swift; sourceTree = "<group>"; };
+		000000000000000000A100F7 /* TrainHeuristicClassifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainHeuristicClassifier.swift; sourceTree = "<group>"; };
+		000000000000000000A10013 /* ContextTransitionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextTransitionEngine.swift; sourceTree = "<group>"; };
+		000000000000000000A10015 /* MotionClassifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionClassifier.swift; sourceTree = "<group>"; };
+		000000000000000000A10017 /* SleepDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepDetector.swift; sourceTree = "<group>"; };
+		000000000000000000A10019 /* VisitTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisitTracker.swift; sourceTree = "<group>"; };
+		000000000000000000A1001B /* LiveActivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivityManager.swift; sourceTree = "<group>"; };
+		000000000000000000A1001D /* HapticBreathingEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticBreathingEngine.swift; sourceTree = "<group>"; };
+		000000000000000000A1001F /* HapticEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticEngine.swift; sourceTree = "<group>"; };
+		000000000000000000A10021 /* LocalizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationManager.swift; sourceTree = "<group>"; };
+		000000000000000000A10023 /* GeofenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeofenceManager.swift; sourceTree = "<group>"; };
+		000000000000000000A10025 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		000000000000000000A10027 /* StationDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationDatabase.swift; sourceTree = "<group>"; };
+		000000000000000000A10029 /* PurchaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseManager.swift; sourceTree = "<group>"; };
+		000000000000000000A100C1 /* StillwayTesting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StillwayTesting.swift; sourceTree = "<group>"; };
+		000000000000000000A1002B /* ContextGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextGradient.swift; sourceTree = "<group>"; };
+		000000000000000000A1002D /* ThemeEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeEngine.swift; sourceTree = "<group>"; };
+		000000000000000000A1002F /* WaveConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveConfig.swift; sourceTree = "<group>"; };
+		000000000000000000A10031 /* AppContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContext.swift; sourceTree = "<group>"; };
+		000000000000000000A10033 /* LanguageCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageCode.swift; sourceTree = "<group>"; };
+		000000000000000000A10035 /* Sound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sound.swift; sourceTree = "<group>"; };
+		000000000000000000A10037 /* Station.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Station.swift; sourceTree = "<group>"; };
+		000000000000000000A10039 /* SwiftDataModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataModels.swift; sourceTree = "<group>"; };
+		000000000000000000A1003B /* ContextThemeModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextThemeModifier.swift; sourceTree = "<group>"; };
+		000000000000000000A1003D /* HapticButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticButtonStyle.swift; sourceTree = "<group>"; };
+		000000000000000000A1003F /* ReduceMotionModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReduceMotionModifier.swift; sourceTree = "<group>"; };
+		000000000000000000A10041 /* ContentRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentRootView.swift; sourceTree = "<group>"; };
+		000000000000000000A10043 /* ContextBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextBadge.swift; sourceTree = "<group>"; };
+		000000000000000000A10045 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		000000000000000000A10047 /* MeshBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeshBackgroundView.swift; sourceTree = "<group>"; };
+		000000000000000000A100D1 /* AtmosphereView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtmosphereView.swift; sourceTree = "<group>"; };
+		000000000000000000A100D3 /* AtmosphereKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtmosphereKind.swift; sourceTree = "<group>"; };
+		000000000000000000A10049 /* SoundMixerRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundMixerRow.swift; sourceTree = "<group>"; };
+		000000000000000000A1004B /* StartStopButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartStopButton.swift; sourceTree = "<group>"; };
+		000000000000000000A1004D /* TimerRing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerRing.swift; sourceTree = "<group>"; };
+		000000000000000000A1004F /* TimerSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerSelector.swift; sourceTree = "<group>"; };
+		000000000000000000A10051 /* WaveformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformView.swift; sourceTree = "<group>"; };
+		000000000000000000A10053 /* OnboardPage1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardPage1.swift; sourceTree = "<group>"; };
+		000000000000000000A10055 /* OnboardPage2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardPage2.swift; sourceTree = "<group>"; };
+		000000000000000000A10057 /* OnboardPage3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardPage3.swift; sourceTree = "<group>"; };
+		000000000000000000A10059 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		000000000000000000A1005B /* PlaceLabelSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceLabelSheet.swift; sourceTree = "<group>"; };
+		000000000000000000A1005D /* PlacesSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesSheet.swift; sourceTree = "<group>"; };
+		000000000000000000A1005F /* SettingsSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSheet.swift; sourceTree = "<group>"; };
+		000000000000000000A10061 /* SoundPickerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundPickerSheet.swift; sourceTree = "<group>"; };
+		000000000000000000A10063 /* HomeScreenWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenWidget.swift; sourceTree = "<group>"; };
+		000000000000000000A10065 /* LockScreenWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockScreenWidget.swift; sourceTree = "<group>"; };
+		000000000000000000A10067 /* StillwayActivityAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StillwayActivityAttributes.swift; sourceTree = "<group>"; };
+		000000000000000000A10069 /* StillwayLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StillwayLiveActivity.swift; sourceTree = "<group>"; };
+		000000000000000000A1006B /* StillwayWidgetsBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StillwayWidgetsBundle.swift; sourceTree = "<group>"; };
+		000000000000000000A1006D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		000000000000000000A1006F /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		000000000000000000A10071 /* stations.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = stations.json; sourceTree = "<group>"; };
+		000000000000000000A10073 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		000000000000000000A100E0 /* Sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Sounds; sourceTree = "<group>"; };
+		000000000000000000A10075 /* tr.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = tr.lproj; sourceTree = "<group>"; };
+		000000000000000000A10077 /* ja.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ja.lproj; sourceTree = "<group>"; };
+		000000000000000000A10079 /* en.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = en.lproj; sourceTree = "<group>"; };
+		000000000000000000A1007B /* fr.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fr.lproj; sourceTree = "<group>"; };
+		000000000000000000A1007D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		000000000000000000A1007E /* Stillway.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Stillway.entitlements; sourceTree = "<group>"; };
+		000000000000000000A1007F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		000000000000000000A10080 /* StillwayWidgets.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = StillwayWidgets.entitlements; sourceTree = "<group>"; };
+		000000000000000000A10081 /* Stillway.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stillway.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		000000000000000000A10082 /* StillwayWidgets.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = StillwayWidgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		000000000000000000A100A2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				000000000000000000A10085 /* GRDB in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		000000000000000000A100A5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		000000000000000000A10087 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000A10001 /* AppDelegate.swift */,
+				000000000000000000A10003 /* StillwayApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		000000000000000000A10099 /* Stillway */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000A10087 /* App */,
+				000000000000000000A10088 /* Components */,
+				000000000000000000A10089 /* Core */,
+				000000000000000000A10092 /* Models */,
+				000000000000000000A10093 /* Modifiers */,
+				000000000000000000A10094 /* Views */,
+				000000000000000000A1007D /* Info.plist */,
+				000000000000000000A1007E /* Stillway.entitlements */,
+				000000000000000000A10098 /* Resources */,
+				000000000000000000A10073 /* PrivacyInfo.xcprivacy */,
+			);
+			path = Stillway;
+			sourceTree = "<group>";
+		};
+		000000000000000000A10088 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000A10005 /* CustomBottomSheet.swift */,
+				000000000000000000A10007 /* GlassCard.swift */,
+				000000000000000000A10009 /* GradientText.swift */,
+				000000000000000000A1000B /* PillButton.swift */,
+				000000000000000000A1000D /* PulsingDot.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		000000000000000000A1008A /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000A1000F /* AudioEngine.swift */,
+			);
+			path = Audio;
+			sourceTree = "<group>";
+		};
+		000000000000000000A10089 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000A1008A /* Audio */,
+				000000000000000000A1008B /* Context */,
+				000000000000000000A1008C /* DynamicIsland */,
+				000000000000000000A1008D /* Haptics */,
+				000000000000000000A1008E /* Localization */,
+				000000000000000000A1008F /* Location */,
+				000000000000000000A10090 /* Store */,
+				000000000000000000A10091 /* Theme */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		000000000000000000A1008B /* Context */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000A10011 /* ContextEngine.swift */,
+				000000000000000000A100F3 /* PermissionBootstrap.swift */,
+				000000000000000000A100F5 /* NotificationScheduler.swift */,
+				000000000000000000A100F7 /* TrainHeuristicClassifier.swift */,
+				000000000000000000A10013 /* ContextTransitionEngine.swift */,
+				000000000000000000A10015 /* MotionClassifier.swift */,
+				000000000000000000A10017 /* SleepDetector.swift */,
+				000000000000000000A10019 /* VisitTracker.swift */,
+			);
+			path = Context;
+			sourceTree = "<group>";
+		};
+		000000000000000000A1008C /* DynamicIsland */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000A1001B /* LiveActivityManager.swift */,
+			);
+			path = DynamicIsland;
+			sourceTree = "<group>";
+		};
+		000000000000000000A1008D /* Haptics */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000A1001D /* HapticBreathingEngine.swift */,
+				000000000000000000A1001F /* HapticEngine.swift */,
+			);
+			path = Haptics;
+			sourceTree = "<group>";
+		};
+		000000000000000000A1008E /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000A10021 /* LocalizationManager.swift */,
+			);
+			path = Localization;
+			sourceTree = "<group>";
+		};
+		000000000000000000A1008F /* Location */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000A10023 /* GeofenceManager.swift */,
+				000000000000000000A10025 /* LocationManager.swift */,
+				000000000000000000A10027 /* StationDatabase.swift */,
+			);
+			path = Location;
+			sourceTree = "<group>";
+		};
+		000000000000000000A10090 /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000A10029 /* PurchaseManager.swift */,
+				000000000000000000A100C1 /* StillwayTesting.swift */,
+			);
+			path = Store;
+			sourceTree = "<group>";
+		};
+		000000000000000000A10091 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000A1002B /* ContextGradient.swift */,
+				000000000000000000A1002D /* ThemeEngine.swift */,
+				000000000000000000A1002F /* WaveConfig.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		000000000000000000A10092 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000A10031 /* AppContext.swift */,
+				000000000000000000A10033 /* LanguageCode.swift */,
+				000000000000000000A10035 /* Sound.swift */,
+				000000000000000000A10037 /* Station.swift */,
+				000000000000000000A10039 /* SwiftDataModels.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		000000000000000000A10093 /* Modifiers */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000A1003B /* ContextThemeModifier.swift */,
+				000000000000000000A1003D /* HapticButtonStyle.swift */,
+				000000000000000000A1003F /* ReduceMotionModifier.swift */,
+			);
+			path = Modifiers;
+			sourceTree = "<group>";
+		};
+		000000000000000000A10094 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000A10041 /* ContentRootView.swift */,
+				000000000000000000A10095 /* Main */,
+				000000000000000000A10096 /* Onboarding */,
+				000000000000000000A10097 /* Sheets */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		000000000000000000A10095 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000A10043 /* ContextBadge.swift */,
+				000000000000000000A10045 /* MainView.swift */,
+				000000000000000000A100D3 /* AtmosphereKind.swift */,
+				000000000000000000A100D1 /* AtmosphereView.swift */,
+				000000000000000000A10047 /* MeshBackgroundView.swift */,
+				000000000000000000A10049 /* SoundMixerRow.swift */,
+				000000000000000000A1004B /* StartStopButton.swift */,
+				000000000000000000A1004D /* TimerRing.swift */,
+				000000000000000000A1004F /* TimerSelector.swift */,
+				000000000000000000A10051 /* WaveformView.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		000000000000000000A10096 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000A10053 /* OnboardPage1.swift */,
+				000000000000000000A10055 /* OnboardPage2.swift */,
+				000000000000000000A10057 /* OnboardPage3.swift */,
+				000000000000000000A10059 /* OnboardingView.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		000000000000000000A10097 /* Sheets */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000A1005B /* PlaceLabelSheet.swift */,
+				000000000000000000A1005D /* PlacesSheet.swift */,
+				000000000000000000A1005F /* SettingsSheet.swift */,
+				000000000000000000A10061 /* SoundPickerSheet.swift */,
+			);
+			path = Sheets;
+			sourceTree = "<group>";
+		};
+		000000000000000000A10098 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000A1006D /* Assets.xcassets */,
+				000000000000000000A1006F /* Localizable.xcstrings */,
+				000000000000000000A10071 /* stations.json */,
+				000000000000000000A100E0 /* Sounds */,
+				000000000000000000A10075 /* tr.lproj */,
+				000000000000000000A10077 /* ja.lproj */,
+				000000000000000000A10079 /* en.lproj */,
+				000000000000000000A1007B /* fr.lproj */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		000000000000000000A1009A /* StillwayWidgets */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000A10063 /* HomeScreenWidget.swift */,
+				000000000000000000A10065 /* LockScreenWidget.swift */,
+				000000000000000000A10067 /* StillwayActivityAttributes.swift */,
+				000000000000000000A10069 /* StillwayLiveActivity.swift */,
+				000000000000000000A1006B /* StillwayWidgetsBundle.swift */,
+				000000000000000000A1007F /* Info.plist */,
+				000000000000000000A10080 /* StillwayWidgets.entitlements */,
+			);
+			path = StillwayWidgets;
+			sourceTree = "<group>";
+		};
+		000000000000000000A1009C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000A10081 /* Stillway.app */,
+				000000000000000000A10082 /* StillwayWidgets.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		000000000000000000A1009B = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000A10099 /* Stillway */,
+				000000000000000000A1009A /* StillwayWidgets */,
+				000000000000000000A1009C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		000000000000000000A1009D /* Stillway */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 000000000000000000A100A9 /* Build configuration list for PBXNativeTarget "Stillway" */;
+			buildPhases = (
+				000000000000000000A100A0 /* Sources */,
+				000000000000000000A100A2 /* Frameworks */,
+				000000000000000000A100A1 /* Resources */,
+				000000000000000000A100A6 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				000000000000000000A100A7 /* PBXTargetDependency */,
+			);
+			name = Stillway;
+			packageProductDependencies = (
+				000000000000000000A10083 /* GRDB */,
+			);
+			productName = Stillway;
+			productReference = 000000000000000000A10081 /* Stillway.app */;
+			productType = "com.apple.product-type.application";
+		};
+		000000000000000000A1009E /* StillwayWidgets */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 000000000000000000A100AA /* Build configuration list for PBXNativeTarget "StillwayWidgets" */;
+			buildPhases = (
+				000000000000000000A100A3 /* Sources */,
+				000000000000000000A100A5 /* Frameworks */,
+				000000000000000000A100A4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = StillwayWidgets;
+			productName = StillwayWidgets;
+			productReference = 000000000000000000A10082 /* StillwayWidgets.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		000000000000000000A1009F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					000000000000000000A1009D = {
+						DevelopmentTeam = R9VURFRPRC;
+						ProvisioningStyle = Automatic;
+					};
+					000000000000000000A1009E = {
+						DevelopmentTeam = R9VURFRPRC;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 000000000000000000A100AB /* Build configuration list for PBXProject "Stillway" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				tr,
+				ja,
+				fr,
+			);
+			mainGroup = 000000000000000000A1009B;
+			packageReferences = (
+				000000000000000000A10084 /* XCRemoteSwiftPackageReference "GRDB.swift" */,
+			);
+			productRefGroup = 000000000000000000A1009C;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				000000000000000000A1009D /* Stillway */,
+				000000000000000000A1009E /* StillwayWidgets */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		000000000000000000A100A1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				000000000000000000A1006E /* Assets.xcassets in Resources */,
+				000000000000000000A10070 /* Localizable.xcstrings in Resources */,
+				000000000000000000A10072 /* stations.json in Resources */,
+				000000000000000000A100E1 /* Sounds in Resources */,
+				000000000000000000A10074 /* PrivacyInfo.xcprivacy in Resources */,
+				000000000000000000A10076 /* tr.lproj in Resources */,
+				000000000000000000A10078 /* ja.lproj in Resources */,
+				000000000000000000A1007A /* en.lproj in Resources */,
+				000000000000000000A1007C /* fr.lproj in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		000000000000000000A100A4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		000000000000000000A100A0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				000000000000000000A10002 /* AppDelegate.swift in Sources */,
+				000000000000000000A10004 /* StillwayApp.swift in Sources */,
+				000000000000000000A10006 /* CustomBottomSheet.swift in Sources */,
+				000000000000000000A10008 /* GlassCard.swift in Sources */,
+				000000000000000000A1000A /* GradientText.swift in Sources */,
+				000000000000000000A1000C /* PillButton.swift in Sources */,
+				000000000000000000A1000E /* PulsingDot.swift in Sources */,
+				000000000000000000A10010 /* AudioEngine.swift in Sources */,
+				000000000000000000A10012 /* ContextEngine.swift in Sources */,
+				000000000000000000A100F4 /* PermissionBootstrap.swift in Sources */,
+				000000000000000000A100F6 /* NotificationScheduler.swift in Sources */,
+				000000000000000000A100F8 /* TrainHeuristicClassifier.swift in Sources */,
+				000000000000000000A10014 /* ContextTransitionEngine.swift in Sources */,
+				000000000000000000A10016 /* MotionClassifier.swift in Sources */,
+				000000000000000000A10018 /* SleepDetector.swift in Sources */,
+				000000000000000000A1001A /* VisitTracker.swift in Sources */,
+				000000000000000000A1001C /* LiveActivityManager.swift in Sources */,
+				000000000000000000A1001E /* HapticBreathingEngine.swift in Sources */,
+				000000000000000000A10020 /* HapticEngine.swift in Sources */,
+				000000000000000000A10022 /* LocalizationManager.swift in Sources */,
+				000000000000000000A10024 /* GeofenceManager.swift in Sources */,
+				000000000000000000A10026 /* LocationManager.swift in Sources */,
+				000000000000000000A10028 /* StationDatabase.swift in Sources */,
+				000000000000000000A1002A /* PurchaseManager.swift in Sources */,
+				000000000000000000A100C2 /* StillwayTesting.swift in Sources */,
+				000000000000000000A1002C /* ContextGradient.swift in Sources */,
+				000000000000000000A1002E /* ThemeEngine.swift in Sources */,
+				000000000000000000A10030 /* WaveConfig.swift in Sources */,
+				000000000000000000A10032 /* AppContext.swift in Sources */,
+				000000000000000000A10034 /* LanguageCode.swift in Sources */,
+				000000000000000000A10036 /* Sound.swift in Sources */,
+				000000000000000000A10038 /* Station.swift in Sources */,
+				000000000000000000A1003A /* SwiftDataModels.swift in Sources */,
+				000000000000000000A1003C /* ContextThemeModifier.swift in Sources */,
+				000000000000000000A1003E /* HapticButtonStyle.swift in Sources */,
+				000000000000000000A10040 /* ReduceMotionModifier.swift in Sources */,
+				000000000000000000A10042 /* ContentRootView.swift in Sources */,
+				000000000000000000A10044 /* ContextBadge.swift in Sources */,
+				000000000000000000A10046 /* MainView.swift in Sources */,
+				000000000000000000A100D4 /* AtmosphereKind.swift in Sources */,
+				000000000000000000A100D2 /* AtmosphereView.swift in Sources */,
+				000000000000000000A10048 /* MeshBackgroundView.swift in Sources */,
+				000000000000000000A1004A /* SoundMixerRow.swift in Sources */,
+				000000000000000000A1004C /* StartStopButton.swift in Sources */,
+				000000000000000000A1004E /* TimerRing.swift in Sources */,
+				000000000000000000A10050 /* TimerSelector.swift in Sources */,
+				000000000000000000A10052 /* WaveformView.swift in Sources */,
+				000000000000000000A10054 /* OnboardPage1.swift in Sources */,
+				000000000000000000A10056 /* OnboardPage2.swift in Sources */,
+				000000000000000000A10058 /* OnboardPage3.swift in Sources */,
+				000000000000000000A1005A /* OnboardingView.swift in Sources */,
+				000000000000000000A1005C /* PlaceLabelSheet.swift in Sources */,
+				000000000000000000A1005E /* PlacesSheet.swift in Sources */,
+				000000000000000000A10060 /* SettingsSheet.swift in Sources */,
+				000000000000000000A10062 /* SoundPickerSheet.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		000000000000000000A100A3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				000000000000000000A10064 /* HomeScreenWidget.swift in Sources */,
+				000000000000000000A10066 /* LockScreenWidget.swift in Sources */,
+				000000000000000000A10068 /* StillwayActivityAttributes.swift in Sources */,
+				000000000000000000A1006A /* StillwayLiveActivity.swift in Sources */,
+				000000000000000000A1006C /* StillwayWidgetsBundle.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		000000000000000000A100A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 000000000000000000A1009E /* StillwayWidgets */;
+			targetProxy = 000000000000000000A100A8 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		000000000000000000A100B0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = x86_64;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.10;
+			};
+			name = Debug;
+		};
+		000000000000000000A100B1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.10;
+			};
+			name = Release;
+		};
+		000000000000000000A100AC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Stillway/Stillway.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 5;
+				DEVELOPMENT_TEAM = R9VURFRPRC;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Stillway/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Stillway;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sinannergiz.stillway;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = targeted;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		000000000000000000A100AD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Stillway/Stillway.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 5;
+				DEVELOPMENT_TEAM = R9VURFRPRC;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Stillway/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Stillway;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sinannergiz.stillway;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = targeted;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		000000000000000000A100AE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = StillwayWidgets/StillwayWidgets.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 5;
+				DEVELOPMENT_TEAM = R9VURFRPRC;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = StillwayWidgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Stillway;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_NSExtension_NSExtensionPointIdentifier = "com.apple.widgetkit-extension";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sinannergiz.stillway.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		000000000000000000A100AF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = StillwayWidgets/StillwayWidgets.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 5;
+				DEVELOPMENT_TEAM = R9VURFRPRC;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = StillwayWidgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Stillway;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_NSExtension_NSExtensionPointIdentifier = "com.apple.widgetkit-extension";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sinannergiz.stillway.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		000000000000000000A100AB /* Build configuration list for PBXProject "Stillway" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				000000000000000000A100B0 /* Debug */,
+				000000000000000000A100B1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		000000000000000000A100A9 /* Build configuration list for PBXNativeTarget "Stillway" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				000000000000000000A100AC /* Debug */,
+				000000000000000000A100AD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		000000000000000000A100AA /* Build configuration list for PBXNativeTarget "StillwayWidgets" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				000000000000000000A100AE /* Debug */,
+				000000000000000000A100AF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		000000000000000000A10084 /* XCRemoteSwiftPackageReference "GRDB.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/groue/GRDB.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.29.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		000000000000000000A10083 /* GRDB */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 000000000000000000A10084 /* XCRemoteSwiftPackageReference "GRDB.swift" */;
+			productName = GRDB;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 000000000000000000A1009F /* Project object */;
+}
