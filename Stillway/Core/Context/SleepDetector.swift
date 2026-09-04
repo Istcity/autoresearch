@@ -10,6 +10,10 @@ final class SleepDetector {
     private var timer: Timer?
     private weak var motion: MotionClassifier?
     private weak var location: LocationManager?
+    private var lastPromptAt: Date?
+
+    /// Minimum gap between sleep prompts.
+    var promptCooldown: TimeInterval = 45 * 60
 
     var onSleepPrompt: (() -> Void)?
 
@@ -63,6 +67,10 @@ final class SleepDetector {
         guard hour >= preferences.sleepStartHour || hour < preferences.sleepEndHour else { return }
         guard let home = homePlace, let currentLocation, home.distance(to: currentLocation) < 200 else { return }
         guard isStationary, isPhoneHorizontal else { return }
+        if let lastPromptAt, Date().timeIntervalSince(lastPromptAt) < promptCooldown {
+            return
+        }
+        lastPromptAt = Date()
         NotificationCenter.default.post(name: .sleepPromptNeeded, object: nil)
         onSleepPrompt?()
     }

@@ -42,18 +42,31 @@ final class LiveActivityManager {
         let state = StillwayActivityAttributes.ContentState(
             contextName: contextName,
             soundName: soundName,
-            remainingSeconds: remainingSeconds,
+            remainingSeconds: max(0, remainingSeconds),
             accentColorHex: accentHex,
             isPlaying: true,
             atmosphereKind: atmosphereKind
         )
-        activity = try? Activity.request(attributes: attributes, content: .init(state: state, staleDate: nil))
+        let stale = Date().addingTimeInterval(TimeInterval(max(60, remainingSeconds + 120)))
+        Task {
+            for existing in Activity<StillwayActivityAttributes>.activities {
+                await existing.end(nil, dismissalPolicy: .immediate)
+            }
+            self.activity = try? Activity.request(
+                attributes: attributes,
+                content: .init(state: state, staleDate: stale)
+            )
+        }
     }
 
     func update(remainingSeconds: Int) {
         guard var state = activity?.content.state else { return }
-        state.remainingSeconds = remainingSeconds
-        Task { await activity?.update(.init(state: state, staleDate: nil)) }
+        state.remainingSeconds = max(0, remainingSeconds)
+        let stale = Date().addingTimeInterval(TimeInterval(max(60, remainingSeconds + 120)))
+        Task { await activity?.update(.init(state: state, staleDate: stale)) }
+        if remainingSeconds <= 0 {
+            end()
+        }
     }
 
     func update(
@@ -67,18 +80,27 @@ final class LiveActivityManager {
         let state = StillwayActivityAttributes.ContentState(
             contextName: contextName,
             soundName: soundName,
-            remainingSeconds: remainingSeconds,
+            remainingSeconds: max(0, remainingSeconds),
             accentColorHex: accentHex,
             isPlaying: isPlaying,
             atmosphereKind: atmosphereKind
         )
-        Task { await activity?.update(.init(state: state, staleDate: nil)) }
+        let stale = Date().addingTimeInterval(TimeInterval(max(60, remainingSeconds + 120)))
+        Task { await activity?.update(.init(state: state, staleDate: stale)) }
     }
 
     func end() {
         Task {
-            await activity?.end(nil, dismissalPolicy: .immediate)
+            await endAllStale()
             activity = nil
         }
+    }
+
+    /// Dismiss orphaned Live Activities left over after force-quit or crash.
+    func endAllStale() async {
+        for existing in Activity<StillwayActivityAttributes>.activities {
+            await existing.end(nil, dismissalPolicy: .immediate)
+        }
+        activity = nil
     }
 }

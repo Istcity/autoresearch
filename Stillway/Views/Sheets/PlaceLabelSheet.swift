@@ -23,6 +23,11 @@ struct PlaceLabelSheet: View {
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 24)
 
+            if let place = runtime.pendingLabelPlace, place.homeConfidence > 0.15 {
+                Text(String(format: lm.string("label_home_confidence"), Int(place.homeConfidence * 100)))
+                    .font(.system(size: 13, weight: .medium, design: .rounded))
+                    .foregroundStyle(.white.opacity(0.5))
+            }
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
                 ForEach(labels) { label in
                     Button {

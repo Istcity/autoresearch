@@ -66,9 +66,6 @@ final class ContextEngine {
         geofenceManager.onTransitEntry = { [weak self] station in
             self?.handleStationEnter(station)
         }
-        sleepDetector.onSleepPrompt = { [weak self] in
-            self?.toast = self?.localization.string("notif_sleep")
-        }
         placeObserver = NotificationCenter.default.addObserver(forName: .placeNeedsLabel, object: nil, queue: .main) { [weak self] _ in
             Task { @MainActor in
                 self?.showPlaceLabel = true
@@ -76,12 +73,33 @@ final class ContextEngine {
         }
         sleepObserver = NotificationCenter.default.addObserver(forName: .sleepPromptNeeded, object: nil, queue: .main) { [weak self] _ in
             Task { @MainActor in
-                self?.toast = self?.localization.string("notif_sleep")
+                guard let self else { return }
+                self.toast = self.localization.string("notif_sleep")
+                NotificationScheduler.shared.suggestSleep(body: self.localization.string("notif_sleep"))
             }
+        }
+        sleepDetector.onSleepPrompt = { [weak self] in
+            guard let self else { return }
+            self.toast = self.localization.string("notif_sleep")
+            NotificationScheduler.shared.suggestSleep(body: self.localization.string("notif_sleep"))
+        }
+        NotificationScheduler.shared.configure()
+        NotificationScheduler.shared.onStartSuggested = { [weak self] context in
+            guard let self else { return }
+            let soundID = self.latestDecision.context == context
+                ? self.latestDecision.suggestedSoundID
+                : context.defaultSoundID
+            if let sound = Sound.find(soundID) {
+                self.startManually(context: context, sound: sound)
+            }
+        }
+        NotificationScheduler.shared.onOpenPlaceLabel = { [weak self] in
+            self?.showPlaceLabel = true
         }
         motionClassifier.start()
         locationManager.startAllServices()
         sleepDetector.startMonitoring(motion: motionClassifier, location: locationManager)
+        Task { await liveActivity.endAllStale() }
         startTicker()
     }
 
@@ -257,6 +275,7 @@ final class ContextEngine {
             headphones: audioEngine.isHeadphonesConnected,
             stationID: activeStationID,
             activity: motionClassifier.currentActivity,
+            trainProbability: motionClassifier.trainProbability,
             nearest: nearest,
             preferences: preferences,
             isPro: preferences.isPro,
@@ -273,6 +292,17 @@ final class ContextEngine {
             NotificationCenter.default.post(name: .autoSessionTriggered, object: decision.context.rawValue)
             DispatchQueue.main.asyncAfter(deadline: .now() + 4) { [weak self] in
                 self?.showAutoBanner = false
+            }
+        } else if !decision.shouldAutoStart, decision.triggerType == .suggested, !audioEngine.isPlaying {
+            switch decision.context {
+            case .commute:
+                NotificationScheduler.shared.suggestCommute(body: localization.string("notif_commute"))
+            case .focus:
+                NotificationScheduler.shared.suggestFocus(body: localization.string("notif_focus"))
+            case .sleep:
+                NotificationScheduler.shared.suggestSleep(body: localization.string("notif_sleep"))
+            default:
+                break
             }
         }
 
@@ -291,6 +321,7 @@ final class ContextEngine {
         headphones: Bool,
         stationID: String?,
         activity: ActivityState,
+        trainProbability: Double,
         nearest: UserPlace?,
         preferences: UserPreferences,
         isPro: Bool,
@@ -299,6 +330,16 @@ final class ContextEngine {
         let hour = Calendar.current.component(.hour, from: Date())
         if stationID != nil, headphones {
             return ContextDecision(context: .commute, shouldAutoStart: isPro, triggerType: headphones ? .automatic : .suggested, suggestedSoundID: "tokyo_metro", confidence: 0.92)
+        }
+        // Heuristic rail/metro score (stand-in for TrainClassifier.mlmodel).
+        if trainProbability >= 0.62, headphones || activity == .automotive {
+            return ContextDecision(
+                context: .commute,
+                shouldAutoStart: isPro && headphones,
+                triggerType: headphones ? .automatic : .suggested,
+                suggestedSoundID: "deep_train",
+                confidence: min(0.9, 0.55 + trainProbability * 0.4)
+            )
         }
         if activity == .automotive {
             return ContextDecision(context: .commute, shouldAutoStart: isPro && headphones, triggerType: headphones ? .automatic : .suggested, suggestedSoundID: "shinkansen", confidence: 0.8)

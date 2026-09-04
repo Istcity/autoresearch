@@ -17,6 +17,8 @@
 		000000000000000000A10010 /* AudioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A1000F /* AudioEngine.swift */; };
 		000000000000000000A10012 /* ContextEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10011 /* ContextEngine.swift */; };
 		000000000000000000A100F4 /* PermissionBootstrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A100F3 /* PermissionBootstrap.swift */; };
+		000000000000000000A100F6 /* NotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A100F5 /* NotificationScheduler.swift */; };
+		000000000000000000A100F8 /* TrainHeuristicClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A100F7 /* TrainHeuristicClassifier.swift */; };
 		000000000000000000A10014 /* ContextTransitionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10013 /* ContextTransitionEngine.swift */; };
 		000000000000000000A10016 /* MotionClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10015 /* MotionClassifier.swift */; };
 		000000000000000000A10018 /* SleepDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10017 /* SleepDetector.swift */; };
@@ -113,6 +115,8 @@
 		000000000000000000A1000F /* AudioEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioEngine.swift; sourceTree = "<group>"; };
 		000000000000000000A10011 /* ContextEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextEngine.swift; sourceTree = "<group>"; };
 		000000000000000000A100F3 /* PermissionBootstrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionBootstrap.swift; sourceTree = "<group>"; };
+		000000000000000000A100F5 /* NotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationScheduler.swift; sourceTree = "<group>"; };
+		000000000000000000A100F7 /* TrainHeuristicClassifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainHeuristicClassifier.swift; sourceTree = "<group>"; };
 		000000000000000000A10013 /* ContextTransitionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextTransitionEngine.swift; sourceTree = "<group>"; };
 		000000000000000000A10015 /* MotionClassifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionClassifier.swift; sourceTree = "<group>"; };
 		000000000000000000A10017 /* SleepDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepDetector.swift; sourceTree = "<group>"; };
@@ -263,6 +267,8 @@
 			children = (
 				000000000000000000A10011 /* ContextEngine.swift */,
 				000000000000000000A100F3 /* PermissionBootstrap.swift */,
+				000000000000000000A100F5 /* NotificationScheduler.swift */,
+				000000000000000000A100F7 /* TrainHeuristicClassifier.swift */,
 				000000000000000000A10013 /* ContextTransitionEngine.swift */,
 				000000000000000000A10015 /* MotionClassifier.swift */,
 				000000000000000000A10017 /* SleepDetector.swift */,
@@ -572,6 +578,8 @@
 				000000000000000000A10010 /* AudioEngine.swift in Sources */,
 				000000000000000000A10012 /* ContextEngine.swift in Sources */,
 				000000000000000000A100F4 /* PermissionBootstrap.swift in Sources */,
+				000000000000000000A100F6 /* NotificationScheduler.swift in Sources */,
+				000000000000000000A100F8 /* TrainHeuristicClassifier.swift in Sources */,
 				000000000000000000A10014 /* ContextTransitionEngine.swift in Sources */,
 				000000000000000000A10016 /* MotionClassifier.swift in Sources */,
 				000000000000000000A10018 /* SleepDetector.swift in Sources */,

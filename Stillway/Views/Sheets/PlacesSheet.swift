@@ -36,6 +36,12 @@ struct PlacesSheet: View {
                                                 .font(.system(size: 17))
                                                 .lineLimit(1)
                                                 .minimumScaleFactor(0.8)
+                                            if place.homeConfidence > 0.2 {
+                                                Text(String(format: lm.string("places_confidence"), Int(place.homeConfidence * 100)))
+                                                    .font(.system(size: 12))
+                                                    .foregroundStyle(.white.opacity(0.4))
+                                                    .lineLimit(1)
+                                            }
                                             Text("\(place.visitCount) \(lm.string("places_visits"))")
                                                 .font(.system(size: 13))
                                                 .foregroundStyle(.white.opacity(0.45))

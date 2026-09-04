@@ -39,8 +39,32 @@ struct ContentRootView: View {
                 .presentationDragIndicator(.visible)
         }
         .onOpenURL { url in
-            guard url.host == "toggle" else { return }
-            runtime.handleStartStop(preferences: prefs.first)
+            handleDeepLink(url)
         }
+        .onAppear {
+            consumePendingToggle()
+        }
+    }
+
+    private func handleDeepLink(_ url: URL) {
+        switch url.host {
+        case "toggle":
+            runtime.handleStartStop(preferences: prefs.first)
+        case "sounds":
+            runtime.showSounds = true
+        case "places":
+            runtime.showPlaces = true
+        case "settings":
+            runtime.showSettings = true
+        default:
+            break
+        }
+    }
+
+    private func consumePendingToggle() {
+        let defaults = UserDefaults(suiteName: "group.com.sinannergiz.stillway")
+        guard defaults?.bool(forKey: "pendingToggle") == true else { return }
+        defaults?.set(false, forKey: "pendingToggle")
+        runtime.handleStartStop(preferences: prefs.first)
     }
 }

@@ -1,7 +1,11 @@
 import Foundation
 
-/// Test-phase switches. Flip `unlockAllFeatures` to `false` before App Store release.
+/// Test-phase switches.
+/// Debug builds unlock Pro for local QA; Release / App Store builds keep the real StoreKit gate.
 enum StillwayTesting {
-    /// Unlocks Pro sounds, mixer, and auto-start without StoreKit.
+#if DEBUG
     static let unlockAllFeatures = true
+#else
+    static let unlockAllFeatures = false
+#endif
 }

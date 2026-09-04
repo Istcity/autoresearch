@@ -88,7 +88,10 @@ struct MainView: View {
             }
         }
         .contextThemed()
-        .onAppear { ensurePreferences() }
+        .onAppear {
+            ensurePreferences()
+            Task { await runtime.requestStartupPermissions() }
+        }
     }
 
     private var topBar: some View {

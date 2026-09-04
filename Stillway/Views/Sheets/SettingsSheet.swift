@@ -1,5 +1,9 @@
 import SwiftUI
 import SwiftData
+import CoreLocation
+import CoreMotion
+import UserNotifications
+import UIKit
 
 struct SettingsSheet: View {
     @Environment(ContextEngine.self) private var runtime
@@ -9,6 +13,8 @@ struct SettingsSheet: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
     @Query private var preferences: [UserPreferences]
+    @State private var permissionSnapshot: PermissionBootstrap.Snapshot?
+    @State private var isRefreshingPermissions = false
 
     var body: some View {
         NavigationStack {
@@ -19,12 +25,56 @@ struct SettingsSheet: View {
                         toggle(lm.string("settings_sleep"), subtitle: lm.string("settings_sleep_desc"), keyPath: \.sleepModeEnabled)
                         DatePicker(
                             lm.string("settings_sleep_start"),
-                            selection: sleepDate,
+                            selection: sleepStartDate,
+                            displayedComponents: .hourAndMinute
+                        )
+                        .tint(theme.gradient.accentColor)
+                        DatePicker(
+                            lm.string("settings_sleep_end"),
+                            selection: sleepEndDate,
                             displayedComponents: .hourAndMinute
                         )
                         .tint(theme.gradient.accentColor)
                         toggle(lm.string("settings_haptic"), subtitle: lm.string("settings_haptic_desc"), keyPath: \.hapticBreathingEnabled)
                             .disabled(!runtime.breathing.isSupported)
+                    }
+
+                    section(lm.string("settings_permissions")) {
+                        permissionRow(
+                            title: lm.string("settings_perm_location"),
+                            status: locationStatusText,
+                            needsSettings: locationNeedsSettings
+                        )
+                        permissionRow(
+                            title: lm.string("settings_perm_motion"),
+                            status: motionStatusText,
+                            needsSettings: motionNeedsSettings
+                        )
+                        permissionRow(
+                            title: lm.string("settings_perm_notifications"),
+                            status: notificationStatusText,
+                            needsSettings: notificationNeedsSettings
+                        )
+                        Button(lm.string("settings_open_settings")) {
+                            if let url = URL(string: UIApplication.openSettingsURLString) {
+                                UIApplication.shared.open(url)
+                            }
+                        }
+                        .font(.system(size: 15, weight: .semibold))
+                        .foregroundStyle(theme.gradient.accentColor)
+                        Button(lm.string("settings_request_permissions")) {
+                            Task {
+                                isRefreshingPermissions = true
+                                await runtime.requestStartupPermissions()
+                                await refreshPermissions()
+                                isRefreshingPermissions = false
+                            }
+                        }
+                        .font(.system(size: 14, weight: .medium))
+                        .foregroundStyle(.white.opacity(0.75))
+                        if isRefreshingPermissions {
+                            ProgressView()
+                        }
                     }
 
                     section(lm.string("settings_language")) {
@@ -93,7 +143,10 @@ struct SettingsSheet: View {
             }
         }
         .presentationBackground(.regularMaterial)
-        .onAppear { ensurePreferences() }
+        .onAppear {
+            ensurePreferences()
+            Task { await refreshPermissions() }
+        }
         .onChange(of: store.isPro) { _, isPro in
             prefs?.isPro = isPro
         }
@@ -108,7 +161,7 @@ struct SettingsSheet: View {
 
     private var prefs: UserPreferences? { preferences.first }
 
-    private var sleepDate: Binding<Date> {
+    private var sleepStartDate: Binding<Date> {
         Binding(
             get: {
                 Calendar.current.date(bySettingHour: prefs?.sleepStartHour ?? 22, minute: 0, second: 0, of: Date()) ?? Date()
@@ -117,6 +170,76 @@ struct SettingsSheet: View {
                 prefs?.sleepStartHour = Calendar.current.component(.hour, from: date)
             }
         )
+    }
+
+    private var sleepEndDate: Binding<Date> {
+        Binding(
+            get: {
+                Calendar.current.date(bySettingHour: prefs?.sleepEndHour ?? 7, minute: 0, second: 0, of: Date()) ?? Date()
+            },
+            set: { date in
+                prefs?.sleepEndHour = Calendar.current.component(.hour, from: date)
+            }
+        )
+    }
+
+    private var locationStatusText: String {
+        switch permissionSnapshot?.locationStatus ?? runtime.location.authStatus {
+        case .authorizedAlways: return lm.string("perm_status_always")
+        case .authorizedWhenInUse: return lm.string("perm_status_when_in_use")
+        case .denied, .restricted: return lm.string("perm_status_denied")
+        case .notDetermined: return lm.string("perm_status_not_determined")
+        @unknown default: return lm.string("perm_status_unknown")
+        }
+    }
+
+    private var motionStatusText: String {
+        switch permissionSnapshot?.motionStatus ?? CMMotionActivityManager.authorizationStatus() {
+        case .authorized: return lm.string("perm_status_allowed")
+        case .denied, .restricted: return lm.string("perm_status_denied")
+        case .notDetermined: return lm.string("perm_status_not_determined")
+        @unknown default: return lm.string("perm_status_unknown")
+        }
+    }
+
+    private var notificationStatusText: String {
+        if permissionSnapshot?.notificationsAuthorized == true {
+            return lm.string("perm_status_allowed")
+        }
+        if prefs?.didRequestNotificationPermission == true {
+            return lm.string("perm_status_denied")
+        }
+        return lm.string("perm_status_not_determined")
+    }
+
+    private var locationNeedsSettings: Bool {
+        let status = permissionSnapshot?.locationStatus ?? runtime.location.authStatus
+        return status == .denied || status == .restricted || status == .authorizedWhenInUse
+    }
+
+    private var motionNeedsSettings: Bool {
+        let status = permissionSnapshot?.motionStatus ?? CMMotionActivityManager.authorizationStatus()
+        return status == .denied || status == .restricted
+    }
+
+    private var notificationNeedsSettings: Bool {
+        prefs?.didRequestNotificationPermission == true && permissionSnapshot?.notificationsAuthorized != true
+    }
+
+    private func permissionRow(title: String, status: String, needsSettings: Bool) -> some View {
+        HStack(alignment: .top, spacing: 12) {
+            VStack(alignment: .leading, spacing: 4) {
+                Text(title)
+                    .font(.system(size: 16))
+                Text(status)
+                    .font(.system(size: 13))
+                    .foregroundStyle(needsSettings ? Color.orange.opacity(0.9) : Color.white.opacity(0.45))
+                    .lineLimit(2)
+            }
+            Spacer()
+            Image(systemName: needsSettings ? "exclamationmark.circle" : "checkmark.circle.fill")
+                .foregroundStyle(needsSettings ? Color.orange : Color.green.opacity(0.85))
+        }
     }
 
     private func section<Content: View>(_ title: String, @ViewBuilder content: () -> Content) -> some View {
@@ -144,6 +267,15 @@ struct SettingsSheet: View {
     private func ensurePreferences() {
         if preferences.isEmpty { modelContext.insert(UserPreferences()) }
         if store.isPro { prefs?.isPro = true }
+    }
+
+    private func refreshPermissions() async {
+        let snap = await PermissionBootstrap.currentSnapshot()
+        permissionSnapshot = snap
+        prefs?.lastKnownLocationAuthRaw = Int(snap.locationStatus.rawValue)
+        prefs?.lastKnownMotionAuthRaw = Int(snap.motionStatus.rawValue)
+        prefs?.lastKnownNotificationAuthorized = snap.notificationsAuthorized
+        try? modelContext.save()
     }
 
     private func bind(_ keyPath: ReferenceWritableKeyPath<UserPreferences, Bool>) -> Binding<Bool> {

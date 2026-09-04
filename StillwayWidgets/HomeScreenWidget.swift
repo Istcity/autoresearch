@@ -14,6 +14,7 @@ struct HomeScreenWidget: Widget {
                         endPoint: .bottomTrailing
                     )
                 }
+                .widgetURL(URL(string: "stillway://toggle"))
         }
         .configurationDisplayName("Stillway Session")
         .description("See the active sound and remaining time.")
