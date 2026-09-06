@@ -15,16 +15,13 @@ struct TimerSelector: View {
             if let remainingSeconds {
                 TimerRing(progress: ringProgress(remainingSeconds), seconds: remainingSeconds)
             }
-            HStack(spacing: 6) {
+            HStack(spacing: 8) {
                 ForEach(Array(options.enumerated()), id: \.offset) { _, option in
                     timerPill(option)
                 }
             }
-            .frame(maxWidth: .infinity)
-            .padding(.horizontal, 16)
             .animation(.easeInOut(duration: 0.7), value: selection)
         }
-        .environment(\.layoutDirection, .leftToRight)
     }
 
     private func timerPill(_ option: Int?) -> some View {
@@ -33,13 +30,10 @@ struct TimerSelector: View {
             onSelect(option)
         } label: {
             Text(label(for: option))
-                .font(.system(size: 12, weight: .medium))
+                .font(.system(size: 13, weight: .medium))
                 .foregroundStyle(selected ? Color.white : Color.white.opacity(0.5))
-                .lineLimit(1)
-                .minimumScaleFactor(0.6)
-                .truncationMode(.tail)
-                .frame(maxWidth: .infinity)
-                .frame(height: 34)
+                .padding(.horizontal, 20)
+                .padding(.vertical, 8)
                 .background(pillBackground(selected: selected))
         }
         .buttonStyle(.plain)

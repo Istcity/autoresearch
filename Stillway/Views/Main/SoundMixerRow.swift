@@ -15,32 +15,27 @@ struct SoundMixerRow: View {
         GlassCard {
             VStack(alignment: .leading, spacing: 12) {
                 Button(action: onTap) {
-                    HStack(spacing: 10) {
+                    HStack {
                         VStack(alignment: .leading, spacing: 4) {
                             HStack(spacing: 6) {
                                 Text(lm.string(sound.localizationKey))
-                                    .font(.system(size: 16, weight: .regular))
+                                    .font(.system(size: 17, weight: .regular))
                                     .foregroundStyle(.white)
-                                    .lineLimit(1)
-                                    .minimumScaleFactor(0.75)
                                 Text(sound.region.flag)
                                     .font(.system(size: 13))
                                 if !sound.isFree {
                                     Text(lm.string("pro_badge"))
-                                        .font(.system(size: 10, weight: .semibold))
-                                        .lineLimit(1)
+                                        .font(.system(size: 11, weight: .semibold))
                                         .padding(.horizontal, 6)
                                         .padding(.vertical, 2)
                                         .background(theme.gradient.accentColor.opacity(0.25), in: Capsule())
                                 }
                             }
                             Text(lm.string(sound.localizationKey))
-                                .font(.system(size: 12))
+                                .font(.system(size: 13))
                                 .foregroundStyle(.white.opacity(0.4))
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.8)
                         }
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                        Spacer()
                         Image(systemName: "chevron.right")
                             .font(.system(size: 13, weight: .semibold))
                             .foregroundStyle(.white.opacity(0.35))

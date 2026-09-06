@@ -7,34 +7,26 @@ struct ContextBadge: View {
     @Environment(ThemeEngine.self) private var theme
 
     var body: some View {
-        HStack(spacing: 6) {
+        HStack(spacing: 8) {
             Text(lm.string(context.localizationKey).uppercased())
-                .font(.system(size: 12, weight: .semibold, design: .rounded))
-                .tracking(1.4)
-                .lineLimit(1)
-                .minimumScaleFactor(0.7)
-                .contentTransition(.opacity)
+                .font(.system(size: 13, weight: .semibold, design: .rounded))
+                .tracking(2)
             if isAutomatic {
                 PulsingDot()
                 Text(lm.string("ctx_auto").uppercased())
-                    .font(.system(size: 10, weight: .medium))
-                    .tracking(0.4)
+                    .font(.system(size: 11, weight: .medium))
+                    .tracking(0.5)
                     .opacity(0.85)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.7)
-                    .contentTransition(.opacity)
             }
         }
         .foregroundStyle(theme.gradient.accentColor)
-        .padding(.horizontal, 14)
-        .padding(.vertical, 7)
-        .fixedSize(horizontal: true, vertical: true)
-        .frame(height: 32)
-        .environment(\.layoutDirection, .leftToRight)
+        .padding(.horizontal, 16)
+        .padding(.vertical, 8)
         .background(theme.gradient.accentColor.opacity(0.2), in: Capsule())
+        .id(context)
+        .transition(.opacity)
         .animation(.easeInOut(duration: ThemeEngine.morphDuration), value: context)
         .animation(.easeInOut(duration: ThemeEngine.morphDuration), value: theme.blendProgress)
-        .id("context-badge-\(context.rawValue)")
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(lm.string(context.localizationKey)) \(isAutomatic ? lm.string("ctx_auto") : "")")
     }
