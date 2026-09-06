@@ -1,5 +1,6 @@
 import Foundation
 import CoreLocation
+import GRDB
 
 final class StationDatabase: @unchecked Sendable {
     static let shared = StationDatabase.load()
@@ -17,6 +18,7 @@ final class StationDatabase: @unchecked Sendable {
             grid[GridKey(lat: station.lat, lon: station.lon, cellSize: 0.01), default: []].append(index)
         }
         self.grid = grid
+        warmSQLiteCache()
     }
 
     static func loadFromBundle() -> StationDatabase { shared }
@@ -57,6 +59,32 @@ final class StationDatabase: @unchecked Sendable {
             .sorted { $0.1 < $1.1 }
             .prefix(limit)
             .map(\.0)
+    }
+
+    func warmSQLiteCache() {
+        guard let directory = try? FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true),
+              let queue = try? DatabaseQueue(path: directory.appendingPathComponent("stillway-stations.sqlite").path) else {
+            return
+        }
+        try? queue.write { db in
+            try db.create(table: "station", ifNotExists: true) { table in
+                table.column("id", .text).primaryKey()
+                table.column("name", .text).notNull()
+                table.column("name_en", .text).notNull()
+                table.column("lat", .double).notNull()
+                table.column("lon", .double).notNull()
+                table.column("country", .text).notNull()
+                table.column("city", .text).notNull()
+                table.column("type", .text).notNull()
+            }
+            try db.execute(sql: "DELETE FROM station")
+            for station in stations {
+                try db.execute(
+                    sql: "INSERT INTO station (id, name, name_en, lat, lon, country, city, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                    arguments: [station.id, station.name, station.nameEn, station.lat, station.lon, station.country, station.city, station.type.rawValue]
+                )
+            }
+        }
     }
 }
 
