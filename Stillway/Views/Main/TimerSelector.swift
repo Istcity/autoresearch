@@ -25,9 +25,13 @@ struct TimerSelector: View {
                             .font(.system(size: 12, weight: .medium))
                             .foregroundStyle(selected ? Color.white : Color.white.opacity(0.5))
                             .lineLimit(1)
-                            .minimumScaleFactor(0.65)
+                            .minimumScaleFactor(0.6)
+                            .truncationMode(.tail)
+                            .allowsTightening(true)
+                            .layoutDirection(.leftToRight)
                             .frame(maxWidth: .infinity)
-                            .padding(.horizontal, 8)
+                            .frame(height: 18)
+                            .padding(.horizontal, 6)
                             .padding(.vertical, 8)
                             .background {
                                 if selected {
@@ -38,6 +42,7 @@ struct TimerSelector: View {
                                     Capsule().fill(Color.white.opacity(0.08))
                                 }
                             }
+                            .frame(height: 34)
                     }
                     .hapticButton()
                 }

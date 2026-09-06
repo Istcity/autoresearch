@@ -50,8 +50,8 @@
 "onboard_2_body" = "AirPodsをつけて駅に近づくと、Stillwayが自動で始まります。";
 "onboard_2_btn" = "ショートカットを設定";
 "onboard_2_skip" = "今はしない →";
-"onboard_3_title" = "よい旅を。";
-"onboard_3_body" = "ただ生きてください。あとは私たちが理解します。";
+"onboard_3_title" = "必要なときに、静けさを。";
+"onboard_3_body" = "Stillwayはそばにいます。やさしい音と光で、急がせずに。";
 "onboard_3_btn" = "始める";
 "settings_title" = "設定";
 "settings_general" = "一般";

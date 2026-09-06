@@ -9,6 +9,7 @@ struct MainView: View {
     @Environment(PurchaseManager.self) private var store
     @Query private var preferences: [UserPreferences]
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    @Environment(\.verticalSizeClass) private var verticalSizeClass
 
     var body: some View {
         ZStack {
@@ -28,6 +29,8 @@ struct MainView: View {
                 topBar
                     .padding(.horizontal, 20)
                     .padding(.top, 8)
+                    // Rebuild after orientation changes (iPhone stays .compact horizontally).
+                    .id("topbar-\(verticalSizeClass == .compact ? "landscape" : "portrait")-\(horizontalSizeClass == .compact ? "c" : "r")")
 
                 Spacer(minLength: 12)
 
@@ -90,7 +93,10 @@ struct MainView: View {
         .contextThemed()
         .onAppear {
             ensurePreferences()
-            Task { await runtime.requestStartupPermissions() }
+            // Only prompt if we haven't recorded a prior ask — avoids re-showing system dialogs.
+            if preferences.first?.didRequestLocationPermission != true {
+                Task { await runtime.requestStartupPermissions() }
+            }
         }
     }
 
@@ -175,13 +181,17 @@ struct MainView: View {
                 .tracking(1.2)
                 .lineLimit(1)
                 .minimumScaleFactor(0.75)
+                .truncationMode(.clip)
+                .layoutDirection(.leftToRight)
         }
         .foregroundStyle(theme.gradient.accentColor.opacity(0.95))
         .padding(.horizontal, 12)
         .padding(.vertical, 7)
         .fixedSize(horizontal: true, vertical: true)
+        .frame(height: 32)
         .background(theme.gradient.accentColor.opacity(0.14), in: Capsule())
         .overlay(Capsule().stroke(theme.gradient.accentColor.opacity(0.25), lineWidth: 0.8))
+        .id("atmosphere-chip")
     }
 
     private var ringProgress: Double {
