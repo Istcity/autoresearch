@@ -187,7 +187,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				000000000000000000A10085 /* GRDB in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -469,7 +468,6 @@
 			);
 			name = Stillway;
 			packageProductDependencies = (
-				000000000000000000A10083 /* GRDB */,
 			);
 			productName = Stillway;
 			productReference = 000000000000000000A10081 /* Stillway.app */;
@@ -525,7 +523,6 @@
 			);
 			mainGroup = 000000000000000000A1009B;
 			packageReferences = (
-				000000000000000000A10084 /* XCRemoteSwiftPackageReference "GRDB.swift" */,
 			);
 			productRefGroup = 000000000000000000A1009C;
 			projectDirPath = "";
@@ -830,25 +827,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		000000000000000000A10084 /* XCRemoteSwiftPackageReference "GRDB.swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/groue/GRDB.swift";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 6.29.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		000000000000000000A10083 /* GRDB */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 000000000000000000A10084 /* XCRemoteSwiftPackageReference "GRDB.swift" */;
-			productName = GRDB;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 000000000000000000A1009F /* Project object */;
 }
