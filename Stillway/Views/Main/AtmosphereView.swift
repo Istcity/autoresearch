@@ -18,8 +18,7 @@ struct AtmosphereView: View {
         let playing = audio.isPlaying
         let blend = kindBlend
 
-        // Use periodic schedule — `.animation` pauses while the user interacts with the UI.
-        TimelineView(.periodic(from: .now, by: reduceMotion ? 1.0 : 1.0 / 18.0)) { timeline in
+        TimelineView(.animation(minimumInterval: reduceMotion ? 1.0 : 1.0 / 18.0, paused: reduceMotion)) { timeline in
             let t = timeline.date.timeIntervalSinceReferenceDate
             let energy = playing ? 1.0 : 0.82
             Canvas { context, size in

@@ -23,10 +23,6 @@ struct OnboardingView: View {
         .animation(.easeInOut(duration: 0.95), value: currentPage)
         .onAppear {
             ensurePrefs()
-            if StillwayMemory.onboardingCompleted {
-                finish()
-                return
-            }
             primePermissionsIfNeeded()
         }
     }
@@ -48,13 +44,7 @@ struct OnboardingView: View {
 
     private func finish() {
         HapticEngine.success()
-        ensurePrefs()
         prefs.first?.onboardingCompleted = true
-        if let prefs = prefs.first {
-            StillwayMemory.sync(from: prefs)
-        }
-        StillwayMemory.markOnboardingCompleted()
-        try? modelContext.save()
         runtime.completeOnboarding()
     }
 

@@ -5,16 +5,11 @@ struct ContentRootView: View {
     @Environment(ContextEngine.self) private var runtime
     @Environment(\.lm) private var lm
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.modelContext) private var modelContext
     @Query private var prefs: [UserPreferences]
-
-    private var hasCompletedOnboarding: Bool {
-        StillwayMemory.onboardingCompleted || prefs.first?.onboardingCompleted == true
-    }
 
     var body: some View {
         ZStack {
-            if hasCompletedOnboarding {
+            if prefs.first?.onboardingCompleted == true {
                 MainView()
                     .transition(.opacity)
             } else {
@@ -22,7 +17,7 @@ struct ContentRootView: View {
                     .transition(.opacity)
             }
         }
-        .animation(reduceMotion ? .none : .easeInOut(duration: 1.0), value: hasCompletedOnboarding)
+        .animation(reduceMotion ? .none : .easeInOut(duration: 1.0), value: prefs.first?.onboardingCompleted)
         .sheet(isPresented: Bindable(runtime).showSettings) {
             SettingsSheet()
                 .presentationDetents([.large])
@@ -47,19 +42,7 @@ struct ContentRootView: View {
             handleDeepLink(url)
         }
         .onAppear {
-            reconcileOnboardingFlag()
             consumePendingToggle()
-        }
-    }
-
-    private func reconcileOnboardingFlag() {
-        if StillwayMemory.onboardingCompleted, let prefs = prefs.first, !prefs.onboardingCompleted {
-            prefs.onboardingCompleted = true
-            try? modelContext.save()
-        }
-        if let prefs = prefs.first, prefs.onboardingCompleted {
-            StillwayMemory.markOnboardingCompleted()
-            StillwayMemory.sync(from: prefs)
         }
     }
 

@@ -29,12 +29,9 @@ struct ContextBadge: View {
         .padding(.horizontal, 14)
         .padding(.vertical, 7)
         .fixedSize(horizontal: true, vertical: true)
-        .frame(height: 32)
-        .environment(\.layoutDirection, .leftToRight)
         .background(theme.gradient.accentColor.opacity(0.2), in: Capsule())
         .animation(.easeInOut(duration: ThemeEngine.morphDuration), value: context)
         .animation(.easeInOut(duration: ThemeEngine.morphDuration), value: theme.blendProgress)
-        .id("context-badge-\(context.rawValue)")
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(lm.string(context.localizationKey)) \(isAutomatic ? lm.string("ctx_auto") : "")")
     }

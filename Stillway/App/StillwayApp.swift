@@ -20,7 +20,6 @@ struct StillwayApp: App {
                 .onAppear {
                     contextEngine.localization = lm
                     contextEngine.configure(modelContext: sharedModelContainer.mainContext)
-                    restorePreferences(into: sharedModelContainer.mainContext)
                     if StillwayTesting.unlockAllFeatures {
                         purchaseManager.unlockForPreview()
                         contextEngine.unlockAllFeaturesForTesting()
@@ -29,51 +28,14 @@ struct StillwayApp: App {
         }
         .modelContainer(sharedModelContainer)
     }
-
-    private func restorePreferences(into context: ModelContext) {
-        let existing = (try? context.fetch(FetchDescriptor<UserPreferences>())) ?? []
-        let prefs: UserPreferences
-        if let first = existing.first {
-            prefs = first
-        } else {
-            prefs = UserPreferences()
-            context.insert(prefs)
-        }
-        StillwayMemory.apply(to: prefs)
-        if let language = StillwayMemory.selectedLanguage {
-            lm.currentLanguage = LanguageCode(rawValue: language) ?? .en
-        }
-        try? context.save()
-    }
 }
 
 private let sharedModelContainer: ModelContainer = {
-    let schema = Schema([UserPlace.self, CommuteSession.self, UserPreferences.self])
-    let url = URL.applicationSupportDirectory.appending(path: "Stillway.store")
-
+    let schema = Schema([UserPlace.self, CommutSession.self, UserPreferences.self])
+    let configuration = ModelConfiguration(isStoredInMemoryOnly: false)
     do {
-        return try ModelContainer(
-            for: schema,
-            configurations: ModelConfiguration(url: url)
-        )
+        return try ModelContainer(for: schema, configurations: configuration)
     } catch {
-        // Schema changed — wipe incompatible store and recreate on disk (never prefer memory-only).
-        try? FileManager.default.removeItem(at: url)
-        for ext in ["store-shm", "store-wal"] {
-            let side = url.deletingPathExtension().appendingPathExtension(ext)
-            try? FileManager.default.removeItem(at: side)
-        }
-        do {
-            return try ModelContainer(
-                for: schema,
-                configurations: ModelConfiguration(url: url)
-            )
-        } catch {
-            assertionFailure("Stillway SwiftData failed twice: \(error)")
-            return try! ModelContainer(
-                for: schema,
-                configurations: ModelConfiguration(isStoredInMemoryOnly: true)
-            )
-        }
+        return try! ModelContainer(for: schema, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
     }
 }()
