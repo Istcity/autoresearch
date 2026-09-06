@@ -35,10 +35,12 @@ final class MotionClassifier {
     var currentActivity: ActivityState = .unknown
     var isPhoneHorizontal = false
     var latestActivity: CMMotionActivity?
+    /// 0...1 likelihood the user is on rail/metro transit (heuristic until Core ML ships).
     var trainProbability: Double = 0
 
     private let activityManager = CMMotionActivityManager()
     private let motion = CMMotionManager()
+    private let trainClassifier = TrainHeuristicClassifier()
 
     func start() {
         guard CMMotionActivityManager.isActivityAvailable() else { return }
@@ -46,14 +48,19 @@ final class MotionClassifier {
             guard let self else { return }
             self.latestActivity = activity
             self.currentActivity = ActivityState(from: activity)
+            self.trainClassifier.ingest(activity: activity, accelerationZ: nil)
+            self.trainProbability = max(self.trainProbability, self.trainClassifier.probability)
             if activity?.automotive == true {
-                self.trainProbability = max(self.trainProbability, 0.4)
+                self.trainProbability = max(self.trainProbability, 0.45)
             }
         }
         motion.accelerometerUpdateInterval = 2
         motion.startAccelerometerUpdates(to: .main) { [weak self] data, _ in
-            guard let z = data?.acceleration.z else { return }
-            self?.isPhoneHorizontal = abs(z) > 0.85
+            guard let self, let data else { return }
+            let z = data.acceleration.z
+            self.isPhoneHorizontal = abs(z) > 0.85
+            self.trainClassifier.ingest(activity: self.latestActivity, accelerationZ: z)
+            self.trainProbability = self.trainClassifier.probability
         }
     }
 
@@ -63,6 +70,6 @@ final class MotionClassifier {
     }
 
     func ingestCoreMLProbability(_ value: Double) {
-        trainProbability = value
+        trainProbability = min(1, max(trainProbability, value))
     }
 }

@@ -31,4 +31,18 @@ struct WaveConfig: Equatable, Sendable {
     }
 
     static let collapsed = WaveConfig(layerCount: 2, frequency: 0.2, amplitude: 0, phaseSpeed: 0.12, opacity: 0)
+
+    static func blended(from: WaveConfig, to: WaveConfig, t: Double) -> WaveConfig {
+        let t = min(1, max(0, t))
+        if t <= 0.001 { return from }
+        if t >= 0.999 { return to }
+        let lerp = { (a: Double, b: Double) in a + (b - a) * t }
+        return WaveConfig(
+            layerCount: t < 0.5 ? from.layerCount : to.layerCount,
+            frequency: lerp(from.frequency, to.frequency),
+            amplitude: lerp(from.amplitude, to.amplitude),
+            phaseSpeed: lerp(from.phaseSpeed, to.phaseSpeed),
+            opacity: lerp(from.opacity, to.opacity)
+        )
+    }
 }

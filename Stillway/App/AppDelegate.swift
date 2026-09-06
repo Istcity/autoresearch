@@ -1,5 +1,6 @@
 import AVFoundation
 import UIKit
+import UserNotifications
 
 final class AppDelegate: NSObject, UIApplicationDelegate {
     func application(
@@ -9,6 +10,7 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
         let session = AVAudioSession.sharedInstance()
         try? session.setCategory(.playback, mode: .default, options: [.mixWithOthers, .allowAirPlay, .allowBluetoothHFP, .allowBluetoothA2DP])
         try? session.setActive(true)
+        NotificationScheduler.shared.configure()
         return true
     }
 }

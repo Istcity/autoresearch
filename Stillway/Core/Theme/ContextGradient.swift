@@ -1,4 +1,7 @@
 import SwiftUI
+#if canImport(UIKit)
+import UIKit
+#endif
 
 struct ContextGradient: Equatable, Sendable {
     let bgColors: [Color]
@@ -73,6 +76,27 @@ struct ContextGradient: Equatable, Sendable {
     static func `for`(_ context: AppContext) -> ContextGradient {
         gradient(for: context)
     }
+
+    /// Soft crossfade between two theme palettes (t = 0...1).
+    static func blended(from: ContextGradient, to: ContextGradient, t: Double) -> ContextGradient {
+        let t = min(1, max(0, t))
+        if t <= 0.001 { return from }
+        if t >= 0.999 { return to }
+        return ContextGradient(
+            bgColors: zipPad(from.bgColors, to.bgColors).map { $0.mix(with: $1, t: t) },
+            waveColors: zipPad(from.waveColors, to.waveColors).map { $0.mix(with: $1, t: t) },
+            accentColor: from.accentColor.mix(with: to.accentColor, t: t),
+            glowColor: from.glowColor.mix(with: to.glowColor, t: t),
+            cardTint: from.cardTint.mix(with: to.cardTint, t: t)
+        )
+    }
+
+    private static func zipPad(_ a: [Color], _ b: [Color]) -> [(Color, Color)] {
+        let count = max(a.count, b.count)
+        return (0..<count).map { i in
+            (a[min(i, a.count - 1)], b[min(i, b.count - 1)])
+        }
+    }
 }
 
 extension Color {
@@ -93,5 +117,27 @@ extension Color {
         let g = Double((int >> 8) & 0xFF) / 255
         let b = Double(int & 0xFF) / 255
         self.init(.sRGB, red: r, green: g, blue: b, opacity: a)
+    }
+
+    func mix(with other: Color, t: Double) -> Color {
+        let t = min(1, max(0, t))
+        #if canImport(UIKit)
+        var r1: CGFloat = 0, g1: CGFloat = 0, b1: CGFloat = 0, a1: CGFloat = 0
+        var r2: CGFloat = 0, g2: CGFloat = 0, b2: CGFloat = 0, a2: CGFloat = 0
+        guard UIColor(self).getRed(&r1, green: &g1, blue: &b1, alpha: &a1),
+              UIColor(other).getRed(&r2, green: &g2, blue: &b2, alpha: &a2)
+        else {
+            return t < 0.5 ? self : other
+        }
+        return Color(
+            .sRGB,
+            red: Double(r1 + (r2 - r1) * t),
+            green: Double(g1 + (g2 - g1) * t),
+            blue: Double(b1 + (b2 - b1) * t),
+            opacity: Double(a1 + (a2 - a1) * t)
+        )
+        #else
+        return t < 0.5 ? self : other
+        #endif
     }
 }

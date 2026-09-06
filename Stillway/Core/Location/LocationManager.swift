@@ -76,6 +76,10 @@ final class LocationManager: NSObject, CLLocationManagerDelegate {
         if authStatus == .authorizedAlways || authStatus == .authorizedWhenInUse {
             startAllServices()
         }
+        // Persist upgrade path: when-in-use → ask Always once system allows.
+        if authStatus == .authorizedWhenInUse {
+            manager.requestAlwaysAuthorization()
+        }
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

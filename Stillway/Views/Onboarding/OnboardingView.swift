@@ -8,6 +8,7 @@ struct OnboardingView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var prefs: [UserPreferences]
     @State private var currentPage = 0
+    @State private var didPrimePermissions = false
 
     var body: some View {
         TabView(selection: $currentPage) {
@@ -20,12 +21,19 @@ struct OnboardingView: View {
         }
         .tabViewStyle(.page(indexDisplayMode: .never))
         .animation(.easeInOut(duration: 0.95), value: currentPage)
-        .onAppear { ensurePrefs() }
+        .onAppear {
+            ensurePrefs()
+            if StillwayMemory.onboardingCompleted {
+                finish()
+                return
+            }
+            primePermissionsIfNeeded()
+        }
     }
 
     private func advanceFromFirst() {
         HapticEngine.tap()
-        runtime.location.requestAlwaysAuthorization()
+        primePermissionsIfNeeded()
         currentPage = 1
     }
 
@@ -40,11 +48,25 @@ struct OnboardingView: View {
 
     private func finish() {
         HapticEngine.success()
+        ensurePrefs()
         prefs.first?.onboardingCompleted = true
+        if let prefs = prefs.first {
+            StillwayMemory.sync(from: prefs)
+        }
+        StillwayMemory.markOnboardingCompleted()
+        try? modelContext.save()
         runtime.completeOnboarding()
     }
 
     private func ensurePrefs() {
         if prefs.isEmpty { modelContext.insert(UserPreferences()) }
+    }
+
+    private func primePermissionsIfNeeded() {
+        guard !didPrimePermissions else { return }
+        didPrimePermissions = true
+        Task {
+            await runtime.requestStartupPermissions()
+        }
     }
 }

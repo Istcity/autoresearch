@@ -51,7 +51,8 @@
     "city": "Tokyo",
     "type": "RAIL",
     "lines": [
-      "JY"
+      "JY",
+      "M"
     ]
   },
   {
@@ -64,7 +65,8 @@
     "city": "Tokyo",
     "type": "RAIL",
     "lines": [
-      "JY"
+      "JY",
+      "H"
     ]
   },
   {
@@ -77,7 +79,8 @@
     "city": "Tokyo",
     "type": "RAIL",
     "lines": [
-      "JY"
+      "JY",
+      "H"
     ]
   },
   {
@@ -92,6 +95,117 @@
     "lines": [
       "M",
       "C"
+    ]
+  },
+  {
+    "id": "jp-tokyo-ginza",
+    "name": "銀座",
+    "name_en": "Ginza",
+    "lat": 35.6717,
+    "lon": 139.7649,
+    "country": "JP",
+    "city": "Tokyo",
+    "type": "METRO",
+    "lines": [
+      "G",
+      "H",
+      "M"
+    ]
+  },
+  {
+    "id": "jp-tokyo-roppongi",
+    "name": "六本木",
+    "name_en": "Roppongi",
+    "lat": 35.6628,
+    "lon": 139.7314,
+    "country": "JP",
+    "city": "Tokyo",
+    "type": "METRO",
+    "lines": [
+      "H",
+      "E"
+    ]
+  },
+  {
+    "id": "jp-tokyo-meguro",
+    "name": "目黒",
+    "name_en": "Meguro",
+    "lat": 35.6333,
+    "lon": 139.7158,
+    "country": "JP",
+    "city": "Tokyo",
+    "type": "RAIL",
+    "lines": [
+      "JY",
+      "N"
+    ]
+  },
+  {
+    "id": "jp-tokyo-ebisu",
+    "name": "恵比寿",
+    "name_en": "Ebisu",
+    "lat": 35.6467,
+    "lon": 139.7101,
+    "country": "JP",
+    "city": "Tokyo",
+    "type": "RAIL",
+    "lines": [
+      "JY"
+    ]
+  },
+  {
+    "id": "jp-tokyo-harajuku",
+    "name": "原宿",
+    "name_en": "Harajuku",
+    "lat": 35.6702,
+    "lon": 139.7027,
+    "country": "JP",
+    "city": "Tokyo",
+    "type": "RAIL",
+    "lines": [
+      "JY"
+    ]
+  },
+  {
+    "id": "jp-tokyo-yurakucho",
+    "name": "有楽町",
+    "name_en": "Yurakucho",
+    "lat": 35.6749,
+    "lon": 139.7635,
+    "country": "JP",
+    "city": "Tokyo",
+    "type": "RAIL",
+    "lines": [
+      "JY",
+      "Y"
+    ]
+  },
+  {
+    "id": "jp-tokyo-shinagawa",
+    "name": "品川",
+    "name_en": "Shinagawa",
+    "lat": 35.6284,
+    "lon": 139.7387,
+    "country": "JP",
+    "city": "Tokyo",
+    "type": "RAIL",
+    "lines": [
+      "JY",
+      "JK"
+    ]
+  },
+  {
+    "id": "jp-tokyo-nakameguro",
+    "name": "中目黒",
+    "name_en": "Nakameguro",
+    "lat": 35.6441,
+    "lon": 139.6988,
+    "country": "JP",
+    "city": "Tokyo",
+    "type": "METRO",
+    "lines": [
+      "H",
+      "TY"
     ]
   },
   {
@@ -121,6 +235,46 @@
     ]
   },
   {
+    "id": "jp-osaka-namba",
+    "name": "難波",
+    "name_en": "Namba",
+    "lat": 34.6653,
+    "lon": 135.5019,
+    "country": "JP",
+    "city": "Osaka",
+    "type": "METRO",
+    "lines": [
+      "M",
+      "S"
+    ]
+  },
+  {
+    "id": "jp-kyoto-kyoto",
+    "name": "京都",
+    "name_en": "Kyoto",
+    "lat": 34.9858,
+    "lon": 135.7588,
+    "country": "JP",
+    "city": "Kyoto",
+    "type": "RAIL",
+    "lines": [
+      "JR"
+    ]
+  },
+  {
+    "id": "jp-kyoto-gion",
+    "name": "祇園四条",
+    "name_en": "Gion-Shijo",
+    "lat": 35.0037,
+    "lon": 135.7714,
+    "country": "JP",
+    "city": "Kyoto",
+    "type": "RAIL",
+    "lines": [
+      "HK"
+    ]
+  },
+  {
     "id": "us-nyc-timesq",
     "name": "Times Sq-42 St",
     "name_en": "Times Square",
@@ -132,7 +286,8 @@
     "lines": [
       "1",
       "2",
-      "N"
+      "N",
+      "Q"
     ]
   },
   {
@@ -147,7 +302,8 @@
     "lines": [
       "4",
       "5",
-      "6"
+      "6",
+      "7"
     ]
   },
   {
@@ -161,7 +317,8 @@
     "type": "METRO",
     "lines": [
       "L",
-      "N"
+      "N",
+      "Q"
     ]
   },
   {
@@ -176,7 +333,8 @@
     "lines": [
       "1",
       "2",
-      "3"
+      "3",
+      "A"
     ]
   },
   {
@@ -190,7 +348,100 @@
     "type": "METRO",
     "lines": [
       "A",
-      "C"
+      "C",
+      "2",
+      "3"
+    ]
+  },
+  {
+    "id": "us-nyc-herald",
+    "name": "34 St-Herald Sq",
+    "name_en": "Herald Square",
+    "lat": 40.7497,
+    "lon": -73.9878,
+    "country": "US",
+    "city": "New York",
+    "type": "METRO",
+    "lines": [
+      "B",
+      "D",
+      "F",
+      "M",
+      "N",
+      "Q",
+      "R",
+      "W"
+    ]
+  },
+  {
+    "id": "us-nyc-columbus",
+    "name": "59 St-Columbus Circle",
+    "name_en": "Columbus Circle",
+    "lat": 40.7681,
+    "lon": -73.9819,
+    "country": "US",
+    "city": "New York",
+    "type": "METRO",
+    "lines": [
+      "1",
+      "A",
+      "B",
+      "C",
+      "D"
+    ]
+  },
+  {
+    "id": "us-nyc-brooklyn-bridge",
+    "name": "Brooklyn Bridge-City Hall",
+    "name_en": "Brooklyn Bridge",
+    "lat": 40.7131,
+    "lon": -74.0041,
+    "country": "US",
+    "city": "New York",
+    "type": "METRO",
+    "lines": [
+      "4",
+      "5",
+      "6",
+      "J",
+      "Z"
+    ]
+  },
+  {
+    "id": "us-nyc-atlantic",
+    "name": "Atlantic Av-Barclays Ctr",
+    "name_en": "Atlantic Avenue",
+    "lat": 40.684,
+    "lon": -73.9778,
+    "country": "US",
+    "city": "New York",
+    "type": "METRO",
+    "lines": [
+      "2",
+      "3",
+      "4",
+      "5",
+      "B",
+      "D",
+      "N",
+      "Q",
+      "R"
+    ]
+  },
+  {
+    "id": "us-nyc-jay",
+    "name": "Jay St-MetroTech",
+    "name_en": "Jay Street",
+    "lat": 40.6922,
+    "lon": -73.9871,
+    "country": "US",
+    "city": "New York",
+    "type": "METRO",
+    "lines": [
+      "A",
+      "C",
+      "F",
+      "R"
     ]
   },
   {
@@ -205,6 +456,8 @@
     "lines": [
       "1",
       "4",
+      "7",
+      "11",
       "14"
     ]
   },
@@ -218,6 +471,8 @@
     "city": "Paris",
     "type": "RAIL",
     "lines": [
+      "4",
+      "5",
       "B",
       "D"
     ]
@@ -247,7 +502,101 @@
     "lines": [
       "4",
       "6",
-      "12"
+      "12",
+      "13"
+    ]
+  },
+  {
+    "id": "fr-paris-bastille",
+    "name": "Bastille",
+    "name_en": "Bastille",
+    "lat": 48.853,
+    "lon": 2.369,
+    "country": "FR",
+    "city": "Paris",
+    "type": "METRO",
+    "lines": [
+      "1",
+      "5",
+      "8"
+    ]
+  },
+  {
+    "id": "fr-paris-republic",
+    "name": "République",
+    "name_en": "Republique",
+    "lat": 48.8676,
+    "lon": 2.3631,
+    "country": "FR",
+    "city": "Paris",
+    "type": "METRO",
+    "lines": [
+      "3",
+      "5",
+      "8",
+      "9",
+      "11"
+    ]
+  },
+  {
+    "id": "fr-paris-nation",
+    "name": "Nation",
+    "name_en": "Nation",
+    "lat": 48.8484,
+    "lon": 2.3959,
+    "country": "FR",
+    "city": "Paris",
+    "type": "METRO",
+    "lines": [
+      "1",
+      "2",
+      "6",
+      "9",
+      "A"
+    ]
+  },
+  {
+    "id": "fr-paris-defense",
+    "name": "La Défense",
+    "name_en": "La Defense",
+    "lat": 48.8919,
+    "lon": 2.238,
+    "country": "FR",
+    "city": "Paris",
+    "type": "METRO",
+    "lines": [
+      "1",
+      "A",
+      "E"
+    ]
+  },
+  {
+    "id": "fr-paris-opera",
+    "name": "Opéra",
+    "name_en": "Opera",
+    "lat": 48.8706,
+    "lon": 2.3322,
+    "country": "FR",
+    "city": "Paris",
+    "type": "METRO",
+    "lines": [
+      "3",
+      "7",
+      "8"
+    ]
+  },
+  {
+    "id": "fr-paris-louvre",
+    "name": "Palais Royal-Musée du Louvre",
+    "name_en": "Louvre",
+    "lat": 48.862,
+    "lon": 2.3364,
+    "country": "FR",
+    "city": "Paris",
+    "type": "METRO",
+    "lines": [
+      "1",
+      "7"
     ]
   },
   {
@@ -261,7 +610,8 @@
     "type": "METRO",
     "lines": [
       "Northern",
-      "Victoria"
+      "Victoria",
+      "Piccadilly"
     ]
   },
   {
@@ -275,6 +625,7 @@
     "type": "METRO",
     "lines": [
       "Bakerloo",
+      "Northern",
       "Jubilee"
     ]
   },
@@ -289,6 +640,7 @@
     "type": "METRO",
     "lines": [
       "Central",
+      "Bakerloo",
       "Victoria"
     ]
   },
@@ -302,7 +654,99 @@
     "city": "London",
     "type": "METRO",
     "lines": [
+      "Jubilee",
+      "Elizabeth"
+    ]
+  },
+  {
+    "id": "gb-london-victoria",
+    "name": "Victoria",
+    "name_en": "Victoria",
+    "lat": 51.4952,
+    "lon": -0.1441,
+    "country": "GB",
+    "city": "London",
+    "type": "METRO",
+    "lines": [
+      "Victoria",
+      "District",
+      "Circle"
+    ]
+  },
+  {
+    "id": "gb-london-londonbridge",
+    "name": "London Bridge",
+    "name_en": "London Bridge",
+    "lat": 51.5055,
+    "lon": -0.0865,
+    "country": "GB",
+    "city": "London",
+    "type": "METRO",
+    "lines": [
+      "Northern",
       "Jubilee"
+    ]
+  },
+  {
+    "id": "gb-london-liverpool",
+    "name": "Liverpool Street",
+    "name_en": "Liverpool Street",
+    "lat": 51.5178,
+    "lon": -0.0817,
+    "country": "GB",
+    "city": "London",
+    "type": "METRO",
+    "lines": [
+      "Central",
+      "Circle",
+      "Hammersmith",
+      "Metropolitan"
+    ]
+  },
+  {
+    "id": "gb-london-paddington",
+    "name": "Paddington",
+    "name_en": "Paddington",
+    "lat": 51.5154,
+    "lon": -0.1755,
+    "country": "GB",
+    "city": "London",
+    "type": "METRO",
+    "lines": [
+      "Bakerloo",
+      "Circle",
+      "District",
+      "Hammersmith"
+    ]
+  },
+  {
+    "id": "gb-london-bank",
+    "name": "Bank",
+    "name_en": "Bank",
+    "lat": 51.5133,
+    "lon": -0.0886,
+    "country": "GB",
+    "city": "London",
+    "type": "METRO",
+    "lines": [
+      "Central",
+      "Northern",
+      "Waterloo"
+    ]
+  },
+  {
+    "id": "gb-london-greenpark",
+    "name": "Green Park",
+    "name_en": "Green Park",
+    "lat": 51.5067,
+    "lon": -0.1428,
+    "country": "GB",
+    "city": "London",
+    "type": "METRO",
+    "lines": [
+      "Jubilee",
+      "Piccadilly",
+      "Victoria"
     ]
   },
   {
@@ -369,6 +813,361 @@
     "lines": [
       "M1",
       "M2"
+    ]
+  },
+  {
+    "id": "tr-ist-sisli",
+    "name": "Şişli-Mecidiyeköy",
+    "name_en": "Sisli Mecidiyekoy",
+    "lat": 41.0633,
+    "lon": 28.992,
+    "country": "TR",
+    "city": "Istanbul",
+    "type": "METRO",
+    "lines": [
+      "M2",
+      "M7"
+    ]
+  },
+  {
+    "id": "tr-ist-besiktas",
+    "name": "Beşiktaş",
+    "name_en": "Besiktas",
+    "lat": 41.0422,
+    "lon": 29.0067,
+    "country": "TR",
+    "city": "Istanbul",
+    "type": "FERRY",
+    "lines": [
+      "Sehir Hatlari"
+    ]
+  },
+  {
+    "id": "tr-ist-uskudar",
+    "name": "Üsküdar",
+    "name_en": "Uskudar",
+    "lat": 41.0255,
+    "lon": 29.0154,
+    "country": "TR",
+    "city": "Istanbul",
+    "type": "METRO",
+    "lines": [
+      "M5"
+    ]
+  },
+  {
+    "id": "tr-ist-bakirkoy",
+    "name": "Bakırköy",
+    "name_en": "Bakirkoy",
+    "lat": 40.98,
+    "lon": 28.873,
+    "country": "TR",
+    "city": "Istanbul",
+    "type": "METRO",
+    "lines": [
+      "M1"
+    ]
+  },
+  {
+    "id": "tr-ist-maslak",
+    "name": "Maslak",
+    "name_en": "Maslak",
+    "lat": 41.112,
+    "lon": 29.02,
+    "country": "TR",
+    "city": "Istanbul",
+    "type": "METRO",
+    "lines": [
+      "M2"
+    ]
+  },
+  {
+    "id": "kr-seoul-gangnam",
+    "name": "강남",
+    "name_en": "Gangnam",
+    "lat": 37.4979,
+    "lon": 127.0276,
+    "country": "KR",
+    "city": "Seoul",
+    "type": "METRO",
+    "lines": [
+      "2",
+      "Shinbundang"
+    ]
+  },
+  {
+    "id": "kr-seoul-seoul",
+    "name": "서울역",
+    "name_en": "Seoul Station",
+    "lat": 37.5547,
+    "lon": 126.9707,
+    "country": "KR",
+    "city": "Seoul",
+    "type": "METRO",
+    "lines": [
+      "1",
+      "4"
+    ]
+  },
+  {
+    "id": "kr-seoul-hongdae",
+    "name": "홍대입구",
+    "name_en": "Hongdae",
+    "lat": 37.5572,
+    "lon": 126.9245,
+    "country": "KR",
+    "city": "Seoul",
+    "type": "METRO",
+    "lines": [
+      "2",
+      "Gyeongui"
+    ]
+  },
+  {
+    "id": "kr-seoul-jamsil",
+    "name": "잠실",
+    "name_en": "Jamsil",
+    "lat": 37.5133,
+    "lon": 127.1001,
+    "country": "KR",
+    "city": "Seoul",
+    "type": "METRO",
+    "lines": [
+      "2",
+      "8"
+    ]
+  },
+  {
+    "id": "kr-seoul-cityhall",
+    "name": "시청",
+    "name_en": "City Hall",
+    "lat": 37.5656,
+    "lon": 126.9769,
+    "country": "KR",
+    "city": "Seoul",
+    "type": "METRO",
+    "lines": [
+      "1",
+      "2"
+    ]
+  },
+  {
+    "id": "de-berlin-hbf",
+    "name": "Berlin Hauptbahnhof",
+    "name_en": "Berlin Hbf",
+    "lat": 52.5251,
+    "lon": 13.3694,
+    "country": "DE",
+    "city": "Berlin",
+    "type": "RAIL",
+    "lines": [
+      "S",
+      "U"
+    ]
+  },
+  {
+    "id": "de-berlin-alexander",
+    "name": "Alexanderplatz",
+    "name_en": "Alexanderplatz",
+    "lat": 52.5219,
+    "lon": 13.4132,
+    "country": "DE",
+    "city": "Berlin",
+    "type": "METRO",
+    "lines": [
+      "U2",
+      "U5",
+      "U8"
+    ]
+  },
+  {
+    "id": "de-berlin-friedrich",
+    "name": "Friedrichstraße",
+    "name_en": "Friedrichstrasse",
+    "lat": 52.5203,
+    "lon": 13.3871,
+    "country": "DE",
+    "city": "Berlin",
+    "type": "RAIL",
+    "lines": [
+      "S",
+      "U6"
+    ]
+  },
+  {
+    "id": "de-berlin-potsdamer",
+    "name": "Potsdamer Platz",
+    "name_en": "Potsdamer Platz",
+    "lat": 52.5096,
+    "lon": 13.376,
+    "country": "DE",
+    "city": "Berlin",
+    "type": "METRO",
+    "lines": [
+      "U2",
+      "S"
+    ]
+  },
+  {
+    "id": "de-berlin-zoologischer",
+    "name": "Zoologischer Garten",
+    "name_en": "Zoo",
+    "lat": 52.507,
+    "lon": 13.3325,
+    "country": "DE",
+    "city": "Berlin",
+    "type": "RAIL",
+    "lines": [
+      "S",
+      "U2",
+      "U9"
+    ]
+  },
+  {
+    "id": "sg-singapore-raffles",
+    "name": "Raffles Place",
+    "name_en": "Raffles Place",
+    "lat": 1.284,
+    "lon": 103.8515,
+    "country": "SG",
+    "city": "Singapore",
+    "type": "METRO",
+    "lines": [
+      "EW",
+      "NS"
+    ]
+  },
+  {
+    "id": "sg-singapore-orchard",
+    "name": "Orchard",
+    "name_en": "Orchard",
+    "lat": 1.304,
+    "lon": 103.8319,
+    "country": "SG",
+    "city": "Singapore",
+    "type": "METRO",
+    "lines": [
+      "NS",
+      "TE"
+    ]
+  },
+  {
+    "id": "sg-singapore-harbourfront",
+    "name": "HarbourFront",
+    "name_en": "HarbourFront",
+    "lat": 1.2654,
+    "lon": 103.8205,
+    "country": "SG",
+    "city": "Singapore",
+    "type": "METRO",
+    "lines": [
+      "NE",
+      "CC"
+    ]
+  },
+  {
+    "id": "sg-singapore-marina",
+    "name": "Marina Bay",
+    "name_en": "Marina Bay",
+    "lat": 1.2762,
+    "lon": 103.8545,
+    "country": "SG",
+    "city": "Singapore",
+    "type": "METRO",
+    "lines": [
+      "NS",
+      "CE",
+      "TE"
+    ]
+  },
+  {
+    "id": "us-sf-montgomery",
+    "name": "Montgomery St",
+    "name_en": "Montgomery",
+    "lat": 37.7894,
+    "lon": -122.4011,
+    "country": "US",
+    "city": "San Francisco",
+    "type": "METRO",
+    "lines": [
+      "BART"
+    ]
+  },
+  {
+    "id": "us-sf-embarcadero",
+    "name": "Embarcadero",
+    "name_en": "Embarcadero",
+    "lat": 37.793,
+    "lon": -122.3969,
+    "country": "US",
+    "city": "San Francisco",
+    "type": "METRO",
+    "lines": [
+      "BART"
+    ]
+  },
+  {
+    "id": "us-chi-clark",
+    "name": "Clark/Lake",
+    "name_en": "Clark Lake",
+    "lat": 41.8857,
+    "lon": -87.6309,
+    "country": "US",
+    "city": "Chicago",
+    "type": "METRO",
+    "lines": [
+      "Blue",
+      "Green",
+      "Orange",
+      "Pink",
+      "Purple",
+      "Brown"
+    ]
+  },
+  {
+    "id": "us-chi-state",
+    "name": "State/Lake",
+    "name_en": "State Lake",
+    "lat": 41.8857,
+    "lon": -87.6278,
+    "country": "US",
+    "city": "Chicago",
+    "type": "METRO",
+    "lines": [
+      "Red",
+      "Brown",
+      "Green",
+      "Orange",
+      "Pink",
+      "Purple"
+    ]
+  },
+  {
+    "id": "us-bos-park",
+    "name": "Park Street",
+    "name_en": "Park Street",
+    "lat": 42.3564,
+    "lon": -71.0624,
+    "country": "US",
+    "city": "Boston",
+    "type": "METRO",
+    "lines": [
+      "Red",
+      "Green"
+    ]
+  },
+  {
+    "id": "us-bos-south",
+    "name": "South Station",
+    "name_en": "South Station",
+    "lat": 42.3523,
+    "lon": -71.0552,
+    "country": "US",
+    "city": "Boston",
+    "type": "METRO",
+    "lines": [
+      "Red",
+      "Silver"
     ]
   }
 ]

@@ -17,7 +17,8 @@ struct WaveformView: View {
                 .blur(radius: 8)
                 .padding(.horizontal, 28)
         } else {
-            TimelineView(.animation(minimumInterval: 1.0 / 16.0)) { timeline in
+            // Periodic keeps waves alive during taps/drags (`.animation` freezes on interaction).
+            TimelineView(.periodic(from: .now, by: 1.0 / 16.0)) { timeline in
                 Canvas { context, size in
                     let t = timeline.date.timeIntervalSinceReferenceDate
                     let layers = max(1, config.layerCount)
