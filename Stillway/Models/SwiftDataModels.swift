@@ -177,17 +177,6 @@ final class UserPreferences {
     var lastSoundID: String
     var lastTimerMinutes: Int
 
-    /// Remember which system permission prompts were already shown.
-    var didRequestLocationPermission: Bool
-    var didRequestMotionPermission: Bool
-    var didRequestNotificationPermission: Bool
-    var locationPermissionRequestedAt: Date?
-    var motionPermissionRequestedAt: Date?
-    var notificationPermissionRequestedAt: Date?
-    var lastKnownLocationAuthRaw: Int
-    var lastKnownMotionAuthRaw: Int
-    var lastKnownNotificationAuthorized: Bool
-
     var hasCompletedOnboarding: Bool {
         get { onboardingCompleted }
         set { onboardingCompleted = newValue }
@@ -207,16 +196,7 @@ final class UserPreferences {
         lastKnownLatitude: Double = 0,
         lastKnownLongitude: Double = 0,
         lastSoundID: String = "tokyo_rain",
-        lastTimerMinutes: Int = 30,
-        didRequestLocationPermission: Bool = false,
-        didRequestMotionPermission: Bool = false,
-        didRequestNotificationPermission: Bool = false,
-        locationPermissionRequestedAt: Date? = nil,
-        motionPermissionRequestedAt: Date? = nil,
-        notificationPermissionRequestedAt: Date? = nil,
-        lastKnownLocationAuthRaw: Int = -1,
-        lastKnownMotionAuthRaw: Int = -1,
-        lastKnownNotificationAuthorized: Bool = false
+        lastTimerMinutes: Int = 30
     ) {
         self.id = id
         self.contextDetectionEnabled = contextDetectionEnabled
@@ -232,14 +212,5 @@ final class UserPreferences {
         self.lastKnownLongitude = lastKnownLongitude
         self.lastSoundID = lastSoundID
         self.lastTimerMinutes = lastTimerMinutes
-        self.didRequestLocationPermission = didRequestLocationPermission
-        self.didRequestMotionPermission = didRequestMotionPermission
-        self.didRequestNotificationPermission = didRequestNotificationPermission
-        self.locationPermissionRequestedAt = locationPermissionRequestedAt
-        self.motionPermissionRequestedAt = motionPermissionRequestedAt
-        self.notificationPermissionRequestedAt = notificationPermissionRequestedAt
-        self.lastKnownLocationAuthRaw = lastKnownLocationAuthRaw
-        self.lastKnownMotionAuthRaw = lastKnownMotionAuthRaw
-        self.lastKnownNotificationAuthorized = lastKnownNotificationAuthorized
     }
 }

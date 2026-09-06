@@ -19,9 +19,6 @@ struct ToggleStillwayIntent: AppIntent {
     static var openAppWhenRun = true
 
     func perform() async throws -> some IntentResult {
-        let defaults = UserDefaults(suiteName: "group.com.sinannergiz.stillway")
-        defaults?.set(true, forKey: "pendingToggle")
-        defaults?.set(Date().timeIntervalSince1970, forKey: "pendingToggleAt")
-        return .result()
+        .result()
     }
 }

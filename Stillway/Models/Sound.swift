@@ -16,38 +16,6 @@ enum SoundRegion: String, Codable, Sendable {
     }
 }
 
-/// Selectable binaural / carrier tone layer for focus and sleep mixes.
-enum BinauralTone: String, CaseIterable, Codable, Sendable, Identifiable, Hashable {
-    case off
-    case delta
-    case theta
-    case alpha
-    case beta
-
-    var id: String { rawValue }
-
-    /// Beat frequency in Hz (carrier offset). `off` is silent.
-    var beatHz: Double {
-        switch self {
-        case .off: return 0
-        case .delta: return 2.5
-        case .theta: return 6
-        case .alpha: return 10
-        case .beta: return 16
-        }
-    }
-
-    var localizationKey: String {
-        switch self {
-        case .off: return "binaural_off"
-        case .delta: return "binaural_delta"
-        case .theta: return "binaural_theta"
-        case .alpha: return "binaural_alpha"
-        case .beta: return "binaural_beta"
-        }
-    }
-}
-
 struct Sound: Identifiable, Equatable, Hashable, Codable, Sendable {
     let id: String
     let localizationKey: String
@@ -58,32 +26,6 @@ struct Sound: Identifiable, Equatable, Hashable, Codable, Sendable {
     let defaultVolume: Float
 
     var bundleResource: String { fileName }
-
-    /// SF Symbol used in the sound picker and mixer.
-    var iconName: String {
-        switch id {
-        case "tokyo_metro", "paris_metro":
-            return "tram.fill"
-        case "shinkansen", "deep_train":
-            return "train.side.front.car"
-        case "istanbul_ferry":
-            return "ferry.fill"
-        case "tokyo_rain", "rain_window":
-            return "cloud.rain.fill"
-        case "night_cafe":
-            return "cup.and.saucer.fill"
-        case "minka_library":
-            return "books.vertical.fill"
-        case "kyoto_bamboo":
-            return "leaf.fill"
-        case "temple_bell":
-            return "bell.fill"
-        case "night_forest":
-            return "tree.fill"
-        default:
-            return "waveform"
-        }
-    }
 
     static let library: [Sound] = [
         Sound(id: "tokyo_metro", localizationKey: "snd_tokyo_metro", fileName: "tokyo_metro", context: .commute, region: .JP, isFree: false, defaultVolume: 0.7),

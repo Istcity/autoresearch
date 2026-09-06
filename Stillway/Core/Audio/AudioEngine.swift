@@ -34,11 +34,11 @@ final class AudioEngine {
         didSet { secondaryMixer.outputVolume = secondaryVolume }
     }
 
-    /// Active binaural / carrier tone selection (bound from SoundPickerSheet / mixer).
-    var binauralTone: BinauralTone = .off
+    /// Binaural / tone layer level in 0...1 (bound from SoundPickerSheet / mixer UI).
+    var binauralTone: Float = 0
 
-    func setBinauralTone(_ value: BinauralTone) {
-        binauralTone = value
+    func setBinauralTone(_ value: Float) {
+        binauralTone = min(1, max(0, value))
     }
 
     var isHeadphonesConnected: Bool { headphonesConnected }
