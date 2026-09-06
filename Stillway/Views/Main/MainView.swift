@@ -181,9 +181,9 @@ struct MainView: View {
                 .tracking(1.2)
                 .lineLimit(1)
                 .minimumScaleFactor(0.75)
-                .truncationMode(.clip)
-                .layoutDirection(.leftToRight)
+                .truncationMode(.tail)
         }
+        .environment(\.layoutDirection, .leftToRight)
         .foregroundStyle(theme.gradient.accentColor.opacity(0.95))
         .padding(.horizontal, 12)
         .padding(.vertical, 7)
