@@ -1,0 +1,64 @@
+import SwiftUI
+
+struct TimerSelector: View {
+    var selection: Int?
+    var remainingSeconds: Int?
+    var onSelect: (Int?) -> Void
+    @Environment(ThemeEngine.self) private var theme
+    @Environment(\.lm) private var lm
+    @Namespace private var pillNS
+
+    private let options: [Int?] = [15, 30, 45, nil]
+
+    var body: some View {
+        VStack(spacing: 12) {
+            if let remainingSeconds {
+                TimerRing(progress: ringProgress(remainingSeconds), seconds: remainingSeconds)
+            }
+            HStack(spacing: 8) {
+                ForEach(Array(options.enumerated()), id: \.offset) { _, option in
+                    timerPill(option)
+                }
+            }
+            .animation(.easeInOut(duration: 0.7), value: selection)
+        }
+    }
+
+    private func timerPill(_ option: Int?) -> some View {
+        let selected = selection == option
+        return Button {
+            onSelect(option)
+        } label: {
+            Text(label(for: option))
+                .font(.system(size: 13, weight: .medium, design: .rounded))
+                .foregroundStyle(selected ? Color.white : Color.white.opacity(0.48))
+                .padding(.horizontal, 18)
+                .padding(.vertical, 9)
+                .background(pillBackground(selected: selected))
+        }
+        .buttonStyle(.plain)
+        .hapticButton()
+    }
+
+    @ViewBuilder
+    private func pillBackground(selected: Bool) -> some View {
+        if selected {
+            Capsule()
+                .fill(theme.gradient.accentColor)
+                .matchedGeometryEffect(id: "timerPill", in: pillNS)
+        } else {
+            Capsule().fill(Color.white.opacity(0.07))
+        }
+    }
+
+    private func label(for option: Int?) -> String {
+        if let option { return "\(option)" }
+        return lm.string("timer_until_end")
+    }
+
+    private func ringProgress(_ remaining: Int) -> Double {
+        let total = Double((selection ?? 45) * 60)
+        guard total > 0 else { return 0 }
+        return 1 - Double(remaining) / total
+    }
+}
