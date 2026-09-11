@@ -129,7 +129,14 @@ struct SettingsSheet: View {
                         Text(lm.string("privacy_body"))
                             .font(.system(size: 13))
                             .foregroundStyle(.white.opacity(0.55))
-                        Link(lm.string("settings_privacy"), destination: URL(string: "https://stillway.app/privacy")!)
+                        Button(lm.string("settings_privacy")) {
+                            if let url = URL(string: "https://stillway.app/privacy") {
+                                UIApplication.shared.open(url)
+                            }
+                        }
+                        .buttonStyle(.plain)
+                        .font(.system(size: 15, weight: .medium))
+                        .foregroundStyle(theme.gradient.accentColor)
                     }
                 }
                 .padding(20)

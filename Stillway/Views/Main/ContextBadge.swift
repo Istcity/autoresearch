@@ -1,5 +1,6 @@
 import SwiftUI
 
+/// Soft context pill — no underline, no hard outline. Used in secondary surfaces.
 struct ContextBadge: View {
     let context: AppContext
     var isAutomatic: Bool = false
@@ -7,29 +8,22 @@ struct ContextBadge: View {
     @Environment(ThemeEngine.self) private var theme
 
     var body: some View {
-        HStack(spacing: 6) {
+        HStack(spacing: 8) {
             Text(lm.string(context.localizationKey).uppercased())
                 .font(.system(size: 12, weight: .semibold, design: .rounded))
-                .tracking(1.4)
-                .lineLimit(1)
-                .minimumScaleFactor(0.7)
-                .contentTransition(.opacity)
+                .tracking(2.0)
             if isAutomatic {
                 PulsingDot()
                 Text(lm.string("ctx_auto").uppercased())
-                    .font(.system(size: 10, weight: .medium))
-                    .tracking(0.4)
+                    .font(.system(size: 10, weight: .medium, design: .rounded))
+                    .tracking(0.8)
                     .opacity(0.85)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.7)
-                    .contentTransition(.opacity)
             }
         }
         .foregroundStyle(theme.gradient.accentColor)
-        .padding(.horizontal, 14)
-        .padding(.vertical, 7)
-        .fixedSize(horizontal: true, vertical: true)
-        .background(theme.gradient.accentColor.opacity(0.2), in: Capsule())
+        .padding(.horizontal, 16)
+        .padding(.vertical, 8)
+        .background(theme.gradient.accentColor.opacity(0.16), in: Capsule())
         .animation(.easeInOut(duration: ThemeEngine.morphDuration), value: context)
         .animation(.easeInOut(duration: ThemeEngine.morphDuration), value: theme.blendProgress)
         .accessibilityElement(children: .combine)

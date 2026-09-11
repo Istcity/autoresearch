@@ -8,64 +8,49 @@ struct MainView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(PurchaseManager.self) private var store
     @Query private var preferences: [UserPreferences]
-    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
     var body: some View {
         ZStack {
             AtmosphereView()
                 .ignoresSafeArea()
 
+            // Soft vignette — depth without hard edges
             RadialGradient(
-                colors: [.clear, .black.opacity(0.42)],
+                colors: [.clear, .black.opacity(0.48)],
                 center: .center,
-                startRadius: 60,
-                endRadius: 480
+                startRadius: 90,
+                endRadius: 540
             )
             .ignoresSafeArea()
             .allowsHitTesting(false)
 
             VStack(spacing: 0) {
                 topBar
-                    .padding(.horizontal, 20)
-                    .padding(.top, 8)
+                    .padding(.horizontal, 22)
+                    .padding(.top, 12)
 
-                Spacer(minLength: 12)
+                Spacer(minLength: 28)
 
-                ContextBadge(
-                    context: theme.currentContext,
-                    isAutomatic: runtime.triggerType == .automatic
-                )
+                contextHero
 
-                if !runtime.audio.isUsingFileBed, runtime.audio.isPlaying {
-                    Text(lm.string("toast_demo_noise"))
-                        .font(.system(size: 11, weight: .medium, design: .rounded))
-                        .foregroundStyle(.orange.opacity(0.9))
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.85)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal, 24)
-                        .padding(.top, 8)
-                }
-
-                Spacer(minLength: 8)
+                Spacer(minLength: 20)
 
                 WaveformView()
-                    .frame(height: horizontalSizeClass == .compact ? 110 : 150)
-                    .padding(.horizontal, 8)
+                    .frame(height: 168)
+                    .padding(.horizontal, 4)
 
-                Spacer(minLength: 8)
+                Spacer(minLength: 20)
 
                 bottomControls
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-            .safeAreaPadding(.bottom, 8)
+            .safeAreaPadding(.bottom, 10)
 
             if runtime.showAutoBanner {
                 AutoStartBanner(text: lm.string("auto_banner"))
                     .transition(.move(edge: .top).combined(with: .opacity))
-                    .padding(.top, 8)
+                    .padding(.top, 72)
                     .frame(maxHeight: .infinity, alignment: .top)
-                    .safeAreaPadding(.top, 8)
             }
 
             if let toast = runtime.toast {
@@ -77,11 +62,11 @@ struct MainView: View {
                         .padding(.horizontal, 16)
                         .padding(.vertical, 10)
                         .background(.ultraThinMaterial, in: Capsule())
-                        .padding(.bottom, 12)
+                        .padding(.bottom, 16)
                 }
                 .safeAreaPadding(.bottom, 8)
                 .onAppear {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.2) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                         runtime.toast = nil
                     }
                 }
@@ -90,52 +75,94 @@ struct MainView: View {
         .contextThemed()
         .onAppear {
             ensurePreferences()
-            Task { await runtime.requestStartupPermissions() }
+            if preferences.first?.didRequestLocationPermission != true {
+                Task { await runtime.requestStartupPermissions() }
+            }
         }
     }
+
+    // MARK: - Top
 
     private var topBar: some View {
-        HStack(spacing: 10) {
-            Button {
-                HapticEngine.tap()
+        HStack {
+            iconButton(systemName: "location.north.fill", label: lm.string("places_title")) {
                 runtime.showPlaces = true
-            } label: {
-                Image(systemName: "location.north.fill")
-                    .font(.system(size: 18, weight: .medium))
-                    .foregroundStyle(.white.opacity(0.55))
-                    .frame(width: 40, height: 40)
-                    .background(.ultraThinMaterial.opacity(0.35), in: Circle())
             }
-            .accessibilityLabel(lm.string("places_title"))
-
-            Spacer(minLength: 4)
-
-            atmosphereChip
-                .layoutPriority(1)
-
-            Spacer(minLength: 4)
-
-            Button {
-                HapticEngine.tap()
+            Spacer()
+            brandMark
+            Spacer()
+            iconButton(systemName: "gearshape.fill", label: lm.string("settings_title")) {
                 runtime.showSettings = true
-            } label: {
-                Image(systemName: "gearshape.fill")
-                    .font(.system(size: 18, weight: .medium))
-                    .foregroundStyle(.white.opacity(0.55))
-                    .frame(width: 40, height: 40)
-                    .background(.ultraThinMaterial.opacity(0.35), in: Circle())
             }
-            .accessibilityLabel(lm.string("settings_title"))
         }
     }
 
+    private var brandMark: some View {
+        Text("STILLWAY")
+            .font(.system(size: 13, weight: .semibold, design: .rounded))
+            .tracking(3.2)
+            .foregroundStyle(.white.opacity(0.78))
+            .accessibilityAddTraits(.isHeader)
+    }
+
+    private func iconButton(systemName: String, label: String, action: @escaping () -> Void) -> some View {
+        Button {
+            HapticEngine.tap()
+            action()
+        } label: {
+            Image(systemName: systemName)
+                .font(.system(size: 18, weight: .medium))
+                .foregroundStyle(.white.opacity(0.52))
+                .frame(width: 44, height: 44)
+                .contentShape(Circle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(label)
+    }
+
+    // MARK: - Hero (Endel-like: one calm statement, no underline / no hard chip)
+
+    private var contextHero: some View {
+        VStack(spacing: 10) {
+            Text(lm.string(theme.currentContext.localizationKey))
+                .font(.system(size: 34, weight: .light, design: .default))
+                .tracking(1.6)
+                .foregroundStyle(.white.opacity(0.94))
+                .multilineTextAlignment(.center)
+                .contentTransition(.opacity)
+                .animation(.easeInOut(duration: ThemeEngine.morphDuration), value: theme.currentContext)
+                .animation(.easeInOut(duration: ThemeEngine.morphDuration), value: theme.blendProgress)
+
+            if runtime.triggerType == .automatic {
+                HStack(spacing: 8) {
+                    PulsingDot()
+                    Text(lm.string("ctx_auto").uppercased())
+                        .font(.system(size: 11, weight: .medium, design: .rounded))
+                        .tracking(1.8)
+                        .foregroundStyle(theme.gradient.accentColor.opacity(0.9))
+                }
+                .accessibilityElement(children: .combine)
+            } else if !runtime.audio.isUsingFileBed, runtime.audio.isPlaying {
+                Text(lm.string("toast_demo_noise"))
+                    .font(.system(size: 12, weight: .regular, design: .rounded))
+                    .foregroundStyle(.white.opacity(0.45))
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 28)
+            }
+        }
+        .padding(.horizontal, 24)
+    }
+
+    // MARK: - Bottom
+
     private var bottomControls: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 16) {
             if runtime.audio.isPlaying {
                 TimerRing(
                     progress: ringProgress,
                     seconds: runtime.audio.remainingSeconds
                 )
+                .padding(.bottom, 4)
             }
 
             StartStopButton(isPlaying: runtime.audio.isPlaying) {
@@ -148,6 +175,7 @@ struct MainView: View {
             ) { minutes in
                 runtime.selectTimer(minutes)
             }
+            .padding(.top, 2)
 
             SoundMixerRow(
                 sound: runtime.audio.primarySound ?? Sound.find("tokyo_rain")!,
@@ -157,31 +185,9 @@ struct MainView: View {
             ) {
                 runtime.showSounds = true
             }
-            .padding(.horizontal, 20)
+            .padding(.horizontal, 24)
+            .padding(.bottom, 20)
         }
-        .padding(.bottom, 8)
-    }
-
-    private var atmosphereChip: some View {
-        let kind = AtmosphereKind.resolve(
-            soundID: runtime.audio.primarySound?.id,
-            context: theme.currentContext
-        )
-        return HStack(spacing: 6) {
-            Image(systemName: kind.symbol)
-                .font(.system(size: 11, weight: .semibold))
-            Text("STILLWAY")
-                .font(.system(size: 11, weight: .bold, design: .rounded))
-                .tracking(1.2)
-                .lineLimit(1)
-                .minimumScaleFactor(0.75)
-        }
-        .foregroundStyle(theme.gradient.accentColor.opacity(0.95))
-        .padding(.horizontal, 12)
-        .padding(.vertical, 7)
-        .fixedSize(horizontal: true, vertical: true)
-        .background(theme.gradient.accentColor.opacity(0.14), in: Capsule())
-        .overlay(Capsule().stroke(theme.gradient.accentColor.opacity(0.25), lineWidth: 0.8))
     }
 
     private var ringProgress: Double {
@@ -204,13 +210,12 @@ private struct AutoStartBanner: View {
         HStack(spacing: 8) {
             PulsingDot()
             Text(text)
-                .font(.system(size: 13, weight: .semibold, design: .rounded))
+                .font(.system(size: 13, weight: .medium, design: .rounded))
                 .lineLimit(1)
-                .minimumScaleFactor(0.75)
+                .minimumScaleFactor(0.8)
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 10)
-        .fixedSize(horizontal: false, vertical: true)
         .background(.ultraThinMaterial, in: Capsule())
     }
 }

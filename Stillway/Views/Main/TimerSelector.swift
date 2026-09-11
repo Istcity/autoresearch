@@ -15,36 +15,39 @@ struct TimerSelector: View {
             if let remainingSeconds {
                 TimerRing(progress: ringProgress(remainingSeconds), seconds: remainingSeconds)
             }
-            HStack(spacing: 6) {
+            HStack(spacing: 8) {
                 ForEach(Array(options.enumerated()), id: \.offset) { _, option in
-                    let selected = selection == option
-                    Button {
-                        onSelect(option)
-                    } label: {
-                        Text(label(for: option))
-                            .font(.system(size: 12, weight: .medium))
-                            .foregroundStyle(selected ? Color.white : Color.white.opacity(0.5))
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.65)
-                            .frame(maxWidth: .infinity)
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 8)
-                            .background {
-                                if selected {
-                                    Capsule()
-                                        .fill(theme.gradient.accentColor)
-                                        .matchedGeometryEffect(id: "timerPill", in: pillNS)
-                                } else {
-                                    Capsule().fill(Color.white.opacity(0.08))
-                                }
-                            }
-                    }
-                    .hapticButton()
+                    timerPill(option)
                 }
             }
-            .frame(maxWidth: .infinity)
-            .padding(.horizontal, 16)
             .animation(.easeInOut(duration: 0.7), value: selection)
+        }
+    }
+
+    private func timerPill(_ option: Int?) -> some View {
+        let selected = selection == option
+        return Button {
+            onSelect(option)
+        } label: {
+            Text(label(for: option))
+                .font(.system(size: 13, weight: .medium, design: .rounded))
+                .foregroundStyle(selected ? Color.white : Color.white.opacity(0.48))
+                .padding(.horizontal, 18)
+                .padding(.vertical, 9)
+                .background(pillBackground(selected: selected))
+        }
+        .buttonStyle(.plain)
+        .hapticButton()
+    }
+
+    @ViewBuilder
+    private func pillBackground(selected: Bool) -> some View {
+        if selected {
+            Capsule()
+                .fill(theme.gradient.accentColor)
+                .matchedGeometryEffect(id: "timerPill", in: pillNS)
+        } else {
+            Capsule().fill(Color.white.opacity(0.07))
         }
     }
 

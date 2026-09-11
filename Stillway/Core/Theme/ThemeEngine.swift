@@ -32,8 +32,8 @@ final class ThemeEngine {
     var effectiveAmplitude: Double { waveConfig.amplitude * transitionAmplitude }
     var waveAmplitudeScale: Double { transitionAmplitude }
 
-    /// Soft theme morph duration — long ease, no snap.
-    static let morphDuration: TimeInterval = 2.8
+    /// Soft theme morph — weather-like palette shift (peak theme work).
+    static let morphDuration: TimeInterval = 4.8
 
     func apply(context: AppContext) {
         guard context != currentContext || blendProgress < 0.999 else { return }

@@ -77,6 +77,7 @@
 		000000000000000000A1007A /* en.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10079 /* en.lproj */; };
 		000000000000000000A1007C /* fr.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A1007B /* fr.lproj */; };
 		000000000000000000A10086 /* StillwayWidgets.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10082 /* StillwayWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		000000000000000000A100FA /* StillwayMemory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A100F9 /* StillwayMemory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -179,6 +180,7 @@
 		000000000000000000A10080 /* StillwayWidgets.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = StillwayWidgets.entitlements; sourceTree = "<group>"; };
 		000000000000000000A10081 /* Stillway.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stillway.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		000000000000000000A10082 /* StillwayWidgets.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = StillwayWidgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		000000000000000000A100F9 /* StillwayMemory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StillwayMemory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -267,6 +269,7 @@
 				000000000000000000A100F3 /* PermissionBootstrap.swift */,
 				000000000000000000A100F5 /* NotificationScheduler.swift */,
 				000000000000000000A100F7 /* TrainHeuristicClassifier.swift */,
+				000000000000000000A100F9 /* StillwayMemory.swift */,
 				000000000000000000A10013 /* ContextTransitionEngine.swift */,
 				000000000000000000A10015 /* MotionClassifier.swift */,
 				000000000000000000A10017 /* SleepDetector.swift */,
@@ -576,6 +579,7 @@
 				000000000000000000A100F4 /* PermissionBootstrap.swift in Sources */,
 				000000000000000000A100F6 /* NotificationScheduler.swift in Sources */,
 				000000000000000000A100F8 /* TrainHeuristicClassifier.swift in Sources */,
+				000000000000000000A100FA /* StillwayMemory.swift in Sources */,
 				000000000000000000A10014 /* ContextTransitionEngine.swift in Sources */,
 				000000000000000000A10016 /* MotionClassifier.swift in Sources */,
 				000000000000000000A10018 /* SleepDetector.swift in Sources */,

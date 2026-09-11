@@ -14,22 +14,22 @@ struct StartStopButton: View {
 
         ZStack {
             Circle()
-                .fill(glow.opacity(isPlaying ? 0.22 : 0.15))
-                .frame(width: 120)
-                .blur(radius: 20)
+                .fill(glow.opacity(isPlaying ? 0.28 : 0.16))
+                .frame(width: 128)
+                .blur(radius: 24)
             Circle()
-                .fill(glow.opacity(isPlaying ? 0.14 : 0.08))
-                .frame(width: 160)
-                .blur(radius: 48)
-                .scaleEffect(burst ? 1.08 : 1)
+                .fill(glow.opacity(isPlaying ? 0.16 : 0.09))
+                .frame(width: 176)
+                .blur(radius: 56)
+                .scaleEffect(burst ? 1.1 : 1)
 
             Circle()
-                .fill(accent.opacity(0.18))
-                .frame(width: 80, height: 80)
+                .fill(accent.opacity(0.16))
+                .frame(width: 84, height: 84)
                 .overlay(
                     Circle().stroke(
-                        LinearGradient(colors: [accent.opacity(0.6), .clear], startPoint: .top, endPoint: .bottom),
-                        lineWidth: 1
+                        LinearGradient(colors: [accent.opacity(0.45), .clear], startPoint: .top, endPoint: .bottom),
+                        lineWidth: 0.8
                     )
                 )
 
