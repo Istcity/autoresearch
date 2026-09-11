@@ -137,7 +137,7 @@ struct SoundPickerSheet: View {
         }
         .overlay {
             RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .stroke(selected ? theme.gradient.accentColor : .clear, lineWidth: 1.5)
+                .stroke(selected ? theme.gradient.accentColor.opacity(0.55) : .clear, lineWidth: 1)
         }
         .scaleEffect(selected ? 1.03 : 1)
     }
