@@ -78,6 +78,8 @@
 		000000000000000000A1007C /* fr.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A1007B /* fr.lproj */; };
 		000000000000000000A10086 /* StillwayWidgets.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10082 /* StillwayWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		000000000000000000A100FA /* StillwayMemory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A100F9 /* StillwayMemory.swift */; };
+		000000000000000000A10111 /* TimerFaceKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10110 /* TimerFaceKind.swift */; };
+		000000000000000000A10113 /* TimerFaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000A10112 /* TimerFaceView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -181,6 +183,8 @@
 		000000000000000000A10081 /* Stillway.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stillway.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		000000000000000000A10082 /* StillwayWidgets.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = StillwayWidgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		000000000000000000A100F9 /* StillwayMemory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StillwayMemory.swift; sourceTree = "<group>"; };
+		000000000000000000A10110 /* TimerFaceKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerFaceKind.swift; sourceTree = "<group>"; };
+		000000000000000000A10112 /* TimerFaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerFaceView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -376,6 +380,8 @@
 				000000000000000000A10049 /* SoundMixerRow.swift */,
 				000000000000000000A1004B /* StartStopButton.swift */,
 				000000000000000000A1004D /* TimerRing.swift */,
+				000000000000000000A10112 /* TimerFaceView.swift */,
+				000000000000000000A10110 /* TimerFaceKind.swift */,
 				000000000000000000A1004F /* TimerSelector.swift */,
 				000000000000000000A10051 /* WaveformView.swift */,
 			);
@@ -613,6 +619,8 @@
 				000000000000000000A1004A /* SoundMixerRow.swift in Sources */,
 				000000000000000000A1004C /* StartStopButton.swift in Sources */,
 				000000000000000000A1004E /* TimerRing.swift in Sources */,
+				000000000000000000A10113 /* TimerFaceView.swift in Sources */,
+				000000000000000000A10111 /* TimerFaceKind.swift in Sources */,
 				000000000000000000A10050 /* TimerSelector.swift in Sources */,
 				000000000000000000A10052 /* WaveformView.swift in Sources */,
 				000000000000000000A10054 /* OnboardPage1.swift in Sources */,

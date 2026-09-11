@@ -8,6 +8,8 @@ struct MainView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(PurchaseManager.self) private var store
     @Query private var preferences: [UserPreferences]
+    /// Tap the timer to preview all faces; nil = context-auto.
+    @State private var faceOverride: TimerFaceKind?
 
     var body: some View {
         ZStack {
@@ -78,6 +80,9 @@ struct MainView: View {
             if preferences.first?.didRequestLocationPermission != true {
                 Task { await runtime.requestStartupPermissions() }
             }
+        }
+        .onChange(of: theme.currentContext) { _, _ in
+            faceOverride = nil
         }
     }
 
@@ -160,9 +165,24 @@ struct MainView: View {
             if runtime.audio.isPlaying {
                 TimerRing(
                     progress: ringProgress,
-                    seconds: runtime.audio.remainingSeconds
+                    seconds: runtime.audio.remainingSeconds,
+                    face: faceOverride
                 )
                 .padding(.bottom, 4)
+                .onTapGesture {
+                    HapticEngine.select()
+                    let all = TimerFaceKind.allCases
+                    if let current = faceOverride ?? TimerFaceKind.resolve(context: theme.currentContext),
+                       let idx = all.firstIndex(of: current) {
+                        faceOverride = all[(idx + 1) % all.count]
+                    } else {
+                        faceOverride = .hourglass
+                    }
+                }
+                .onLongPressGesture {
+                    HapticEngine.tap()
+                    faceOverride = nil // back to context-auto
+                }
             }
 
             StartStopButton(isPlaying: runtime.audio.isPlaying) {
