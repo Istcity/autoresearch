@@ -7,6 +7,7 @@ struct OnboardPage3: View {
 
     var body: some View {
         ZStack {
+            // Fixed, strong reset/forest aura — no context carousel (not a journey app).
             AtmosphereView()
                 .ignoresSafeArea()
                 .allowsHitTesting(false)
@@ -24,14 +25,10 @@ struct OnboardPage3: View {
             .ignoresSafeArea()
             .allowsHitTesting(false)
 
-            VStack(spacing: 24) {
+            VStack(spacing: 28) {
                 Spacer()
-                Text("STILLWAY")
-                    .font(.system(size: 14, weight: .semibold, design: .rounded))
-                    .tracking(4)
-                    .foregroundStyle(.white.opacity(0.7))
                 WaveformView()
-                    .frame(height: UIScreen.main.bounds.height * 0.26)
+                    .frame(height: UIScreen.main.bounds.height * 0.28)
                     .padding(.horizontal, 12)
                 GradientText(
                     text: lm.string("onboard_3_title"),
@@ -41,8 +38,8 @@ struct OnboardPage3: View {
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 20)
                 Text(lm.string("onboard_3_body"))
-                    .font(.system(size: 17, weight: .regular))
-                    .foregroundStyle(.white.opacity(0.78))
+                    .font(.system(size: 17))
+                    .foregroundStyle(.white.opacity(0.8))
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 32)
                 Spacer()

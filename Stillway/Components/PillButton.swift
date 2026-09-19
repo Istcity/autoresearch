@@ -24,8 +24,9 @@ struct PillButton: View {
             .frame(maxWidth: .infinity)
             .frame(height: 44)
             .padding(.horizontal, 20)
-            .background(Capsule().fill((color ?? theme.gradient.accentColor).opacity(0.88)))
-            .shadow(color: (color ?? theme.gradient.glowColor).opacity(0.38), radius: 14)
+            .background(Capsule().fill((color ?? theme.gradient.accentColor).opacity(0.85)))
+            .overlay(Capsule().stroke((color ?? theme.gradient.accentColor).opacity(0.6), lineWidth: 1))
+            .shadow(color: (color ?? theme.gradient.glowColor).opacity(0.35), radius: 12)
         }
         .buttonStyle(.plain)
     }
@@ -41,8 +42,9 @@ struct PillButtonLabel: View {
             .foregroundStyle(.white)
             .frame(maxWidth: .infinity)
             .padding(.vertical, 16)
-            .background(Capsule().fill(theme.gradient.accentColor.opacity(0.88)))
-            .shadow(color: theme.gradient.glowColor.opacity(0.45), radius: 22)
-            .shadow(color: theme.gradient.glowColor.opacity(0.28), radius: 40, y: 10)
+            .background(Capsule().fill(theme.gradient.accentColor.opacity(0.85)))
+            .overlay(Capsule().stroke(theme.gradient.accentColor.opacity(0.6), lineWidth: 1))
+            .shadow(color: theme.gradient.glowColor, radius: 20)
+            .shadow(color: theme.gradient.glowColor.opacity(0.5), radius: 40, y: 10)
     }
 }

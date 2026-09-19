@@ -10,22 +10,24 @@ struct GlassCard<Content: View>: View {
             .padding(18)
             .background {
                 if reduceTransparency {
-                    RoundedRectangle(cornerRadius: 22, style: .continuous)
+                    RoundedRectangle(cornerRadius: 20, style: .continuous)
                         .fill(theme.gradient.cardTint)
                 } else {
-                    RoundedRectangle(cornerRadius: 22, style: .continuous)
+                    RoundedRectangle(cornerRadius: 20, style: .continuous)
                         .fill(.ultraThinMaterial)
                         .overlay {
-                            RoundedRectangle(cornerRadius: 22, style: .continuous)
-                                .fill(theme.gradient.cardTint.opacity(0.28))
+                            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                                .fill(theme.gradient.cardTint.opacity(0.35))
                         }
                 }
             }
-            // Soft edge only — no hard underline / hairline frame.
             .overlay {
-                RoundedRectangle(cornerRadius: 22, style: .continuous)
-                    .stroke(Color.white.opacity(0.08), lineWidth: 0.6)
+                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                    .stroke(
+                        LinearGradient(colors: [Color.white.opacity(0.15), Color.clear], startPoint: .topLeading, endPoint: .bottomTrailing),
+                        lineWidth: 1
+                    )
             }
-            .shadow(color: .black.opacity(0.22), radius: 18, y: 10)
+            .shadow(color: .black.opacity(0.3), radius: 16, y: 8)
     }
 }

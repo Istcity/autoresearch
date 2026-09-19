@@ -1,19 +1,26 @@
 import SwiftUI
 
-/// Facade — picks the living face for the active context.
 struct TimerRing: View {
     var progress: Double
     var seconds: Int
-    var face: TimerFaceKind? = nil
     @Environment(ThemeEngine.self) private var theme
 
-    private var resolved: TimerFaceKind {
-        face ?? .resolve(context: theme.currentContext)
-    }
-
     var body: some View {
-        TimerFaceView(kind: resolved, progress: progress, seconds: seconds)
-            .id(resolved) // soft rebuild on context/face change
+        ZStack {
+            Circle()
+                .stroke(.white.opacity(0.08), lineWidth: 2.5)
+            Circle()
+                .trim(from: 0, to: min(1, max(0, progress)))
+                .stroke(theme.gradient.accentColor, style: StrokeStyle(lineWidth: 2.5, lineCap: .round))
+                .rotationEffect(.degrees(-90))
+                .animation(.linear(duration: 1), value: progress)
+            Text(Self.format(seconds))
+                .font(.system(size: 22, weight: .medium, design: .monospaced))
+                .contentTransition(.numericText())
+                .foregroundStyle(.white)
+        }
+        .frame(width: 160, height: 160)
+        .accessibilityLabel(Self.format(seconds))
     }
 
     static func format(_ seconds: Int) -> String {

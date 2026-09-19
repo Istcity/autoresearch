@@ -15,13 +15,16 @@ struct TimerSelector: View {
             if let remainingSeconds {
                 TimerRing(progress: ringProgress(remainingSeconds), seconds: remainingSeconds)
             }
-            HStack(spacing: 8) {
+            HStack(spacing: 6) {
                 ForEach(Array(options.enumerated()), id: \.offset) { _, option in
                     timerPill(option)
                 }
             }
+            .frame(maxWidth: .infinity)
+            .padding(.horizontal, 16)
             .animation(.easeInOut(duration: 0.7), value: selection)
         }
+        .environment(\.layoutDirection, .leftToRight)
     }
 
     private func timerPill(_ option: Int?) -> some View {
@@ -30,10 +33,13 @@ struct TimerSelector: View {
             onSelect(option)
         } label: {
             Text(label(for: option))
-                .font(.system(size: 13, weight: .medium, design: .rounded))
-                .foregroundStyle(selected ? Color.white : Color.white.opacity(0.48))
-                .padding(.horizontal, 18)
-                .padding(.vertical, 9)
+                .font(.system(size: 12, weight: .medium))
+                .foregroundStyle(selected ? Color.white : Color.white.opacity(0.5))
+                .lineLimit(1)
+                .minimumScaleFactor(0.6)
+                .truncationMode(.tail)
+                .frame(maxWidth: .infinity)
+                .frame(height: 34)
                 .background(pillBackground(selected: selected))
         }
         .buttonStyle(.plain)
@@ -47,7 +53,7 @@ struct TimerSelector: View {
                 .fill(theme.gradient.accentColor)
                 .matchedGeometryEffect(id: "timerPill", in: pillNS)
         } else {
-            Capsule().fill(Color.white.opacity(0.07))
+            Capsule().fill(Color.white.opacity(0.08))
         }
     }
 

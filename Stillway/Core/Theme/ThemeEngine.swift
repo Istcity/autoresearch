@@ -32,7 +32,7 @@ final class ThemeEngine {
     var effectiveAmplitude: Double { waveConfig.amplitude * transitionAmplitude }
     var waveAmplitudeScale: Double { transitionAmplitude }
 
-    /// Soft theme morph — weather-like palette shift (peak theme work).
+    /// Soft theme morph — deliberately slow so palette shifts feel like weather, not a hard cut.
     static let morphDuration: TimeInterval = 4.8
 
     func apply(context: AppContext) {
