@@ -1,92 +1,110 @@
-# autoresearch
+# Stillway
 
-![teaser](progress.png)
+Stillway is an offline, dark-only ambient companion for iPhone. It watches where you are and what you are doing, then starts the right sound — commute, focus, reset, or sleep — without asking you to pick a track.
 
-*One day, frontier AI research used to be done by meat computers in between eating, sleeping, having other fun, and synchronizing once in a while using sound wave interconnect in the ritual of "group meeting". That era is long gone. Research is now entirely the domain of autonomous swarms of AI agents running across compute cluster megastructures in the skies. The agents claim that we are now in the 10,205th generation of the code base, in any case no one could tell if that's right or wrong as the "code" is now a self-modifying binary that has grown beyond human comprehension. This repo is the story of how it all began. -@karpathy, March 2026*.
+> Sen sadece yaşa. Geri kalanı biz anlıyoruz.
 
-The idea: give an AI agent a small but real LLM training setup and let it experiment autonomously overnight. It modifies the code, trains for 5 minutes, checks if the result improved, keeps or discards, and repeats. You wake up in the morning to a log of experiments and (hopefully) a better model. The training code here is a simplified single-GPU implementation of [nanochat](https://github.com/karpathy/nanochat). The core idea is that you're not touching any of the Python files like you normally would as a researcher. Instead, you are programming the `program.md` Markdown files that provide context to the AI agents and set up your autonomous research org. The default `program.md` in this repo is intentionally kept as a bare bones baseline, though it's obvious how one would iterate on it over time to find the "research org code" that achieves the fastest research progress, how you'd add more agents to the mix, etc. A bit more context on this project is here in this [tweet](https://x.com/karpathy/status/2029701092347630069) and [this tweet](https://x.com/karpathy/status/2031135152349524125).
+## Features
 
-## How it works
+- Context-aware themes (commute, focus, sleep, reset, walking, deep work)
+- AVAudioEngine playback with Journey Arc volume shaping
+- Transit geofencing from an on-device station database
+- CLVisit place learning and optional auto-start (Pro)
+- Sleep detection (home + hour + phone orientation)
+- Core Haptics box-breathing guide (Pro / Taptic Engine)
+- Dynamic Island Live Activity, Lock Screen and Home Screen widgets
+- Turkish, Japanese, English, French — language changes apply instantly
+- No account, no analytics, no ads, no backend
 
-The repo is deliberately kept small and only really has three files that matter:
+## Requirements
 
-- **`prepare.py`** — fixed constants, one-time data prep (downloads training data, trains a BPE tokenizer), and runtime utilities (dataloader, evaluation). Not modified.
-- **`train.py`** — the single file the agent edits. Contains the full GPT model, optimizer (Muon + AdamW), and training loop. Everything is fair game: architecture, hyperparameters, optimizer, batch size, etc. **This file is edited and iterated on by the agent**.
-- **`program.md`** — baseline instructions for one agent. Point your agent here and let it go. **This file is edited and iterated on by the human**.
+- Xcode 16+
+- iOS 17.0+
+- macOS 14+
+- Apple Developer Team `R9VURFRPRC` (same team as Lokus / FLOW)
+- Physical device for geofence, motion, and Dynamic Island
 
-By design, training runs for a **fixed 5-minute time budget** (wall clock, excluding startup/compilation), regardless of the details of your compute. The metric is **val_bpb** (validation bits per byte) — lower is better, and vocab-size-independent so architectural changes are fairly compared.
+## Signing
 
-If you are new to neural networks, this ["Dummy's Guide"](https://x.com/hooeem/status/2030720614752039185) looks pretty good for a lot more context.
+Same paid team as Lokus / FLOW. The App Store Connect app is already named **Stillway** — do not create a second one.
 
-## Quick start
+| | |
+|---|---|
+| Team | `R9VURFRPRC` |
+| App bundle ID | `com.sinannergiz.stillway` |
+| Widget bundle ID | `com.sinannergiz.stillway.widget` |
+| App Group | `group.com.sinannergiz.stillway` |
+| Pro IAP | `com.sinannergiz.stillway.pro` |
 
-**Requirements:** A single NVIDIA GPU (tested on H100), Python 3.10+, [uv](https://docs.astral.sh/uv/).
+Automatic signing is on. Home-screen name stays **Stillway**.
+
+## Setup
+
+1. `git pull` then open `Stillway.xcodeproj`.
+2. Scheme **Stillway**, destination an iPhone simulator or your device.
+3. Signing & Capabilities → Team should already be **R9VURFRPRC** on **Stillway** and **StillwayWidgets**.
+4. Run (`⌘R`).
+
+## TestFlight / App Store
+
+Do **not** click **My Apps → + → New App**. The name `Stillway` is already used in this account. Open the existing Stillway record and upload to it.
+
+1. [App Store Connect](https://appstoreconnect.apple.com) → **Apps** → **Stillway**
+2. App Information → Bundle ID must be **`com.sinannergiz.stillway`**
+3. If that Stillway row is empty / wrong and you do not need it: remove it, then you may create a new app. Otherwise leave it.
+4. In-App Purchase on that same app: non-consumable `com.sinannergiz.stillway.pro`
+5. Xcode → **Product → Archive** → Organizer → **Distribute App** → **App Store Connect** → **Upload** (skip “Create app record”)
+
+If Xcode still tries to create a record: the existing Stillway already is the record. Upload the IPA with Transporter, or Distribute again after confirming the bundle ID matches.
+
+CLI (same pattern as Şantiye Asist):
 
 ```bash
+xcodebuild -project Stillway.xcodeproj -scheme Stillway \
+  -configuration Release -destination 'generic/platform=iOS' \
+  -archivePath build/Stillway.xcarchive archive
 
-# 1. Install uv project manager (if you don't already have it)
-curl -LsSf https://astral.sh/uv/install.sh | sh
-
-# 2. Install dependencies
-uv sync
-
-# 3. Download data and train tokenizer (one-time, ~2 min)
-uv run prepare.py
-
-# 4. Manually run a single training experiment (~5 min)
-uv run train.py
+xcodebuild -exportArchive -archivePath build/Stillway.xcarchive \
+  -exportPath build/export -exportOptionsPlist ExportOptions.plist
 ```
 
-If the above commands all work ok, your setup is working and you can go into autonomous research mode.
+## Station database
 
-## Running the agent
+A sample set ships in `Stillway/Resources/stations.json`. To build the full ~56k-stop file:
 
-Simply spin up your Claude/Codex or whatever you want in this repo (and disable all permissions), then you can prompt something like:
-
-```
-Hi have a look at program.md and let's kick off a new experiment! let's do the setup first.
-```
-
-The `program.md` file is essentially a super lightweight "skill".
-
-## Project structure
-
-```
-prepare.py      — constants, data prep + runtime utilities (do not modify)
-train.py        — model, optimizer, training loop (agent modifies this)
-program.md      — agent instructions
-pyproject.toml  — dependencies
+```bash
+./scripts/download_gtfs.sh
+python3 scripts/build_station_db.py
 ```
 
-## Design choices
+Japan (ODPT) and France (IDFM) need a free API key. Set `ODPT_GTFS_URL`, `IDFM_GTFS_URL`, and `IBB_GTFS_URL`. Output schema:
 
-- **Single file to modify.** The agent only touches `train.py`. This keeps the scope manageable and diffs reviewable.
-- **Fixed time budget.** Training always runs for exactly 5 minutes, regardless of your specific platform. This means you can expect approx 12 experiments/hour and approx 100 experiments while you sleep. There are two upsides of this design decision. First, this makes experiments directly comparable regardless of what the agent changes (model size, batch size, architecture, etc). Second, this means that autoresearch will find the most optimal model for your platform in that time budget. The downside is that your runs (and results) become not comparable to other people running on other compute platforms.
-- **Self-contained.** No external dependencies beyond PyTorch and a few small packages. No distributed training, no complex configs. One GPU, one file, one metric.
+```json
+{"id":"...","name":"...","name_en":"...","lat":0.0,"lon":0.0,"country":"JP","city":"Tokyo","type":"METRO","lines":["..."]}
+```
 
-## Platform support
+## Sound files
 
-This code currently requires that you have a single NVIDIA GPU. In principle it is quite possible to support CPU, MPS and other platforms but this would also bloat the code. I'm not 100% sure that I want to take this on personally right now. People can reference (or have their agents reference) the full/parent nanochat repository that has wider platform support and shows the various solutions (e.g. a Flash Attention 3 kernels fallback implementation, generic device support, autodetection, etc.), feel free to create forks or discussions for other platforms and I'm happy to link to them here in the README in some new notable forks section or etc.
+Drop seamless-loop `.m4a` files into `Stillway/Resources/Sounds/` using IDs from `Sound.swift`:
 
-Seeing as there seems to be a lot of interest in tinkering with autoresearch on much smaller compute platforms than an H100, a few extra words. If you're going to try running autoresearch on smaller computers (Macbooks etc.), I'd recommend one of the forks below. On top of this, here are some recommendations for how to tune the defaults for much smaller models for aspiring forks:
+`tokyo_metro.m4a`, `shinkansen.m4a`, `paris_metro.m4a`, `istanbul_ferry.m4a`, `tokyo_rain.m4a`, `deep_train.m4a`, `night_cafe.m4a`, `minka_library.m4a`, `kyoto_bamboo.m4a`, `temple_bell.m4a`, `rain_window.m4a`, `night_forest.m4a`
 
-1. To get half-decent results I'd use a dataset with a lot less entropy, e.g. this [TinyStories dataset](https://huggingface.co/datasets/karpathy/tinystories-gpt4-clean). These are GPT-4 generated short stories. Because the data is a lot narrower in scope, you will see reasonable results with a lot smaller models (if you try to sample from them after training).
-2. You might experiment with decreasing `vocab_size`, e.g. from 8192 down to 4096, 2048, 1024, or even - simply byte-level tokenizer with 256 possibly bytes after utf-8 encoding.
-3. In `prepare.py`, you'll want to lower `MAX_SEQ_LEN` a lot, depending on the computer even down to 256 etc. As you lower `MAX_SEQ_LEN`, you may want to experiment with increasing `DEVICE_BATCH_SIZE` in `train.py` slightly to compensate. The number of tokens per fwd/bwd pass is the product of these two.
-4. Also in `prepare.py`, you'll want to decrease `EVAL_TOKENS` so that your validation loss is evaluated on a lot less data.
-5. In `train.py`, the primary single knob that controls model complexity is the `DEPTH` (default 8, here). A lot of variables are just functions of this, so e.g. lower it down to e.g. 4.
-6. You'll want to most likely use `WINDOW_PATTERN` of just "L", because "SSSL" uses alternating banded attention pattern that may be very inefficient for you. Try it.
-7. You'll want to lower `TOTAL_BATCH_SIZE` a lot, but keep it powers of 2, e.g. down to `2**14` (~16K) or so even, hard to tell.
+Until those files exist, `AudioEngine` generates distinct procedural beds. For production loops, use prompts in `SUNO_SOUND_PROMPTS.md`.
 
-I think these would be the reasonable hyperparameters to play with. Ask your favorite coding agent for help and copy paste them this guide, as well as the full source code.
+## App Store checklist
 
-## Notable forks
+- [ ] 12 field recordings in the bundle
+- [ ] Full `stations.json` from GTFS
+- [ ] `TrainClassifier.mlmodel` (optional; motion automotive is the fallback)
+- [ ] StoreKit product `com.sinannergiz.stillway.pro` live in App Store Connect
+- [ ] Privacy nutrition label: location and motion, on-device only
+- [ ] Screenshots and metadata in TR / JA / EN / FR
+- [ ] TestFlight on a real device (geofence + headphones auto-start)
 
-- [miolini/autoresearch-macos](https://github.com/miolini/autoresearch-macos) (MacOS)
-- [trevin-creator/autoresearch-mlx](https://github.com/trevin-creator/autoresearch-mlx) (MacOS)
-- [jsegov/autoresearch-win-rtx](https://github.com/jsegov/autoresearch-win-rtx) (Windows)
-- [andyluo7/autoresearch](https://github.com/andyluo7/autoresearch) (AMD)
+## Specs
 
-## License
+`PRODUCT_SPEC.md` · `DESIGN_SYSTEM.md` · `BUILD_PLAN.md` · `MISSING_AND_TODOS.md`
 
-MIT
+## Contributing
+
+Keep the app offline-first. Do not add analytics, accounts, or network calls except StoreKit. Prefer simpler diffs that match the design system over extra abstraction.
